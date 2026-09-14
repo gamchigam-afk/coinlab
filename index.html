@@ -2,61 +2,5163 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Service Terminated</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COINLAB</title>
+
 <style>
-    body {
-        margin: 0;
-        background: black;
-        color: white;
-        font-family: monospace;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
-    }
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-    .box {
-        animation: flicker 1.5s infinite;
-    }
+:root{
+  --page-bg:#f4f6fa;
+  --header-bg:#ffffff;
+  --card-bg:#ffffff;
+  --input-bg:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --accent2:#60a5fa;
+  --border:#e5e7eb;
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+  --button-text:#ffffff;
+}
 
-    h1 {
-        font-size: 40px;
-        margin-bottom: 10px;
-        letter-spacing: 2px;
-    }
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  background:var(--page-bg);
+  color:var(--text);
+  transition:
+    background .35s ease,
+    color .35s ease;
+}
 
-    p {
-        font-size: 18px;
-        opacity: 0.8;
-    }
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    @keyframes flicker {
-        0% { opacity: 1; }
-        50% { opacity: 0.6; }
-        100% { opacity: 1; }
-    }
+/* =========================
+   BACKGROUND FX
+   ========================= */
 
-    .small {
-        margin-top: 20px;
-        font-size: 14px;
-        opacity: 0.5;
-    }
+#backgroundFx{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+main,
+.topbar{
+  position:relative;
+  z-index:2;
+}
+
+/* 기본 */
+body.bg-none #backgroundFx{
+  display:none;
+}
+
+/* 🌌 은하수 */
+body.bg-galaxy #backgroundFx{
+  display:block;
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(120,150,255,.10),
+      transparent 55%
+    );
+}
+
+/* 작은 별 */
+.galaxy-star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:rgba(255,255,255,.8);
+  box-shadow:0 0 6px rgba(140,180,255,.8);
+  animation:galaxyFloat linear infinite;
+  opacity:.55;
+}
+
+@keyframes galaxyFloat{
+  0%{
+    transform:translate3d(0,30px,0) scale(.7);
+    opacity:0;
+  }
+  15%{
+    opacity:.6;
+  }
+  50%{
+    transform:translate3d(18px,-20px,0) scale(1);
+    opacity:.75;
+  }
+  85%{
+    opacity:.45;
+  }
+  100%{
+    transform:translate3d(-10px,-90px,0) scale(.65);
+    opacity:0;
+  }
+}
+
+/* 테크 그리드 */
+body.bg-grid #backgroundFx{
+  display:block;
+  opacity:.35;
+  background-image:
+    linear-gradient(
+      rgba(100,140,255,.18) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(100,140,255,.18) 1px,
+      transparent 1px
+    );
+  background-size:32px 32px;
+}
+
+/* 웨이브 */
+body.bg-wave #backgroundFx{
+  display:block;
+  opacity:.3;
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      transparent 0 80px,
+      rgba(80,140,255,.25) 82px,
+      transparent 85px
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      transparent 0 100px,
+      rgba(120,90,255,.2) 102px,
+      transparent 105px
+    );
+  background-size:420px 420px;
+  animation:waveMove 15s linear infinite;
+}
+
+@keyframes waveMove{
+  from{
+    background-position:0 0,100px 100px;
+  }
+  to{
+    background-position:420px 420px,520px 520px;
+  }
+}
+
+
+/* =========================
+   TOP BAR
+   ========================= */
+
+.topbar{
+  position:sticky;
+  top:0;
+  width:100%;
+  background:var(--header-bg);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow);
+  padding:12px 14px;
+  z-index:20;
+}
+
+.topbarInner{
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900;
+  white-space:nowrap;
+  color:var(--accent);
+}
+
+.balanceTop{
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.nav{
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  flex:1;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav button{
+  white-space:nowrap;
+  border:1px solid var(--border);
+  background:var(--card-bg);
+  color:var(--text);
+  padding:9px 11px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav button:hover{
+  border-color:var(--accent);
+}
+
+.nav button.active{
+  background:var(--accent);
+  color:var(--button-text);
+  border-color:var(--accent);
+}
+
+
+/* =========================
+   MAIN
+   ========================= */
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:25px 15px 60px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow);
+}
+
+.hero h1{
+  margin:0 0 7px;
+}
+
+.hero p{
+  margin:0;
+  color:var(--muted);
+}
+
+
+/* =========================
+   CARDS
+   ========================= */
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  transition:
+    background .35s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .2s ease;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
+
+.sectionTitle{
+  margin:25px 0 12px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button{
+  font-family:inherit;
+}
+
+.btn{
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:var(--button-text);
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn:hover{
+  filter:brightness(1.08);
+}
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.btn.secondary{
+  background:var(--card-bg);
+  color:var(--text);
+  border-color:var(--border);
+}
+
+.btn.danger{
+  background:#dc2626;
+  border-color:#dc2626;
+}
+
+
+/* =========================
+   INPUT
+   ========================= */
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--input-bg);
+  color:var(--text);
+  outline:none;
+  transition:.2s;
+}
+
+input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(
+    in srgb,
+    var(--accent) 15%,
+    transparent
+  );
+}
+
+
+/* =========================
+   BETTING
+   ========================= */
+
+.balanceBig{
+  font-size:38px;
+  font-weight:900;
+  margin:10px 0;
+  color:var(--accent);
+}
+
+.betBox{
+  max-width:600px;
+  margin:auto;
+}
+
+.quickBet{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:10px 0;
+}
+
+.quickBet button{
+  padding:8px 12px;
+  border:1px solid var(--border);
+  background:var(--card-bg);
+  color:var(--text);
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.betButton{
+  width:100%;
+  margin-top:10px;
+  padding:16px;
+  font-size:18px;
+}
+
+.result{
+  text-align:center;
+  font-size:25px;
+  font-weight:900;
+  min-height:35px;
+  margin:18px 0;
+}
+
+.win{
+  color:#16a34a;
+}
+
+.loss{
+  color:#dc2626;
+}
+
+
+/* =========================
+   HISTORY
+   ========================= */
+
+.history{
+  margin-top:20px;
+}
+
+.historyRow{
+  display:grid;
+  grid-template-columns:
+    1.3fr .8fr .8fr .8fr .8fr;
+  gap:8px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+
+@media(max-width:650px){
+  .historyRow{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+
+/* =========================
+   PROGRESS
+   ========================= */
+
+.progress{
+  height:9px;
+  border-radius:99px;
+  background:color-mix(
+    in srgb,
+    var(--text) 10%,
+    transparent
+  );
+  overflow:hidden;
+  margin:10px 0;
+}
+
+.progressBar{
+  height:100%;
+  width:0%;
+  background:var(--accent);
+  transition:.3s;
+}
+
+
+/* =========================
+   SHOP
+   ========================= */
+
+.shopSection{
+  margin-top:25px;
+}
+
+.shopGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+}
+
+.shopItem{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:17px;
+  box-shadow:var(--shadow);
+  transition:.2s;
+}
+
+.shopItem:hover{
+  transform:translateY(-2px);
+}
+
+.shopIcon{
+  font-size:30px;
+}
+
+.shopName{
+  font-weight:900;
+  margin:8px 0 4px;
+}
+
+.shopPrice{
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+
+/* =========================
+   PROFILE
+   ========================= */
+
+.profileHead{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+}
+
+.avatar-wrap{
+  width:105px;
+  height:105px;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.profile-avatar{
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  background:var(--card-bg);
+  border:3px solid var(--border);
+  position:relative;
+  z-index:2;
+}
+
+.avatar-ring{
+  position:absolute;
+  inset:3px;
+  border-radius:50%;
+  border:4px solid transparent;
+  z-index:1;
+}
+
+/* 타이틀별 프로필 테두리 */
+
+.title-newbie .avatar-ring{
+  border-color:#94a3b8;
+}
+
+.title-bettor .avatar-ring{
+  border-color:#3b82f6;
+  box-shadow:0 0 12px rgba(59,130,246,.55);
+}
+
+.title-streak .avatar-ring{
+  border-color:#f97316;
+  box-shadow:
+    0 0 10px rgba(249,115,22,.65),
+    0 0 22px rgba(239,68,68,.35);
+}
+
+.title-whale .avatar-ring{
+  border-color:#eab308;
+  box-shadow:0 0 15px rgba(234,179,8,.6);
+}
+
+.title-legend .avatar-ring{
+  border-color:#a855f7;
+  box-shadow:
+    0 0 10px rgba(168,85,247,.7),
+    0 0 25px rgba(59,130,246,.45);
+}
+
+.title-legend::after{
+  content:"👑";
+  position:absolute;
+  top:-9px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:22px;
+  z-index:5;
+}
+
+.nickname{
+  font-size:25px;
+  font-weight:900;
+}
+
+.nicknameColor-newbie{
+  color:var(--text);
+}
+
+.nicknameColor-bettor{
+  color:#3b82f6;
+}
+
+.nicknameColor-streak{
+  color:#f97316;
+}
+
+.nicknameColor-whale{
+  color:#ca8a04;
+}
+
+.nicknameColor-legend{
+  color:#9333ea;
+}
+
+.honor{
+  font-size:.34em;
+  margin-top:6px;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.profileBalance{
+  margin-top:8px;
+  font-size:18px;
+  font-weight:800;
+}
+
+.statsGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+
+.stat{
+  padding:14px;
+  background:color-mix(
+    in srgb,
+    var(--card-bg) 90%,
+    var(--accent)
+  );
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.statName{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.statValue{
+  margin-top:5px;
+  font-size:19px;
+  font-weight:900;
+}
+
+
+/* =========================
+   TITLE / HONOR
+   ========================= */
+
+.itemLocked{
+  opacity:.45;
+}
+
+.equipBox{
+  margin-top:10px;
+}
+
+.currentBadge{
+  display:inline-block;
+  margin-top:7px;
+  padding:4px 8px;
+  border-radius:7px;
+  font-size:11px;
+  background:color-mix(
+    in srgb,
+    var(--accent) 15%,
+    transparent
+  );
+  color:var(--accent);
+}
+
+
+/* =========================
+   GRAPH
+   ========================= */
+
+canvas{
+  width:100%;
+  max-width:100%;
+  display:block;
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+
+/* =========================
+   RECOVERY
+   ========================= */
+
+.recoveryNumber{
+  text-align:center;
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:8px;
+  margin:25px 0;
+  min-height:55px;
+}
+
+.recoveryStage{
+  text-align:center;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.recoveryInput{
+  max-width:300px;
+  margin:10px auto;
+}
+
+.recoveryInput input{
+  text-align:center;
+  font-size:20px;
+  letter-spacing:4px;
+}
+
+
+/* =========================
+   MODAL
+   ========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100;
+}
+
+.modal.hidden{
+  display:none;
+}
+
+.modalCard{
+  width:min(420px,100%);
+  background:var(--card-bg);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+
+.modalActions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.modalActions button{
+  flex:1;
+}
+
+
+/* =========================
+   TOAST
+   ========================= */
+
+#toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  background:#111827;
+  color:white;
+  padding:12px 17px;
+  border-radius:10px;
+  z-index:200;
+  transition:.25s;
+  font-weight:700;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+
+/* =====================================================
+   UI EFFECTS
+   ⚠️ 카드 + 버튼 테두리에만 적용
+   ===================================================== */
+
+/* Smooth */
+body.ui-smooth .card,
+body.ui-smooth .shopItem,
+body.ui-smooth button{
+  transition:
+    border-color .35s ease,
+    box-shadow .35s ease,
+    transform .35s ease,
+    background .35s ease;
+}
+
+/* Neon */
+body.ui-neon .card,
+body.ui-neon .shopItem{
+  border-color:color-mix(
+    in srgb,
+    var(--accent) 70%,
+    var(--border)
+  );
+  box-shadow:
+    0 0 0 1px color-mix(
+      in srgb,
+      var(--accent) 20%,
+      transparent
+    ),
+    0 0 15px color-mix(
+      in srgb,
+      var(--accent) 20%,
+      transparent
+    );
+}
+
+body.ui-neon .btn,
+body.ui-neon button{
+  border-color:var(--accent);
+  box-shadow:
+    0 0 7px color-mix(
+      in srgb,
+      var(--accent) 35%,
+      transparent
+    );
+}
+
+/* Pop */
+body.ui-pop .card,
+body.ui-pop .shopItem{
+  border-width:2px;
+}
+
+body.ui-pop button{
+  border-width:2px;
+}
+
+body.ui-pop button:hover{
+  transform:translateY(-2px);
+}
+
+/* Minimal */
+body.ui-minimal .card,
+body.ui-minimal .shopItem{
+  box-shadow:none;
+}
+
+body.ui-minimal button{
+  box-shadow:none;
+}
+
+
+/* =========================
+   THEMES
+   ========================= */
+
+/* 🤍 기본 */
+body.theme-default{
+  --page-bg:#f4f6fa;
+  --header-bg:#ffffff;
+  --card-bg:#ffffff;
+  --input-bg:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --accent2:#60a5fa;
+  --border:#e5e7eb;
+  --button-text:#ffffff;
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+/* 🌌 네온 블루 */
+body.theme-neon{
+  --page-bg:#07111f;
+  --header-bg:#0b1728;
+  --card-bg:#0d1b2f;
+  --input-bg:#091525;
+  --text:#e5f3ff;
+  --muted:#91a9c2;
+  --accent:#22d3ee;
+  --accent2:#3b82f6;
+  --border:#1b4260;
+  --button-text:#00151c;
+  --shadow:0 10px 35px rgba(0,0,0,.3);
+}
+
+/* 🌿 그린 터미널 */
+body.theme-green{
+  --page-bg:#06120b;
+  --header-bg:#091a10;
+  --card-bg:#0b1f13;
+  --input-bg:#07170d;
+  --text:#d8ffe6;
+  --muted:#83b995;
+  --accent:#22c55e;
+  --accent2:#4ade80;
+  --border:#1e5632;
+  --button-text:#001b09;
+  --shadow:0 10px 35px rgba(0,0,0,.3);
+}
+
+/* 🌙 다크 나이트 */
+body.theme-night{
+  --page-bg:#08090f;
+  --header-bg:#10111b;
+  --card-bg:#131521;
+  --input-bg:#0d0e16;
+  --text:#f0f1ff;
+  --muted:#9a9caf;
+  --accent:#8b5cf6;
+  --accent2:#6366f1;
+  --border:#292b3c;
+  --button-text:#ffffff;
+  --shadow:0 10px 35px rgba(0,0,0,.4);
+}
+
+/* 🔥 레드 알림 */
+body.theme-red{
+  --page-bg:#170707;
+  --header-bg:#210909;
+  --card-bg:#2a0d0d;
+  --input-bg:#1e0909;
+  --text:#fff0f0;
+  --muted:#c89696;
+  --accent:#ef4444;
+  --accent2:#f97316;
+  --border:#642020;
+  --button-text:#ffffff;
+  --shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+/* 🌊 오션 */
+body.theme-ocean{
+  --page-bg:#04131b;
+  --header-bg:#06212b;
+  --card-bg:#07303d;
+  --input-bg:#05242e;
+  --text:#e3fbff;
+  --muted:#86b9c5;
+  --accent:#06b6d4;
+  --accent2:#38bdf8;
+  --border:#17596b;
+  --button-text:#002027;
+  --shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+/* 🌅 선셋 */
+body.theme-sunset{
+  --page-bg:#21100b;
+  --header-bg:#32150d;
+  --card-bg:#3a1b11;
+  --input-bg:#2b130d;
+  --text:#fff2e7;
+  --muted:#cda795;
+  --accent:#f97316;
+  --accent2:#f59e0b;
+  --border:#75402a;
+  --button-text:#2b1000;
+  --shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+/* 🟣 퍼플 보이드 */
+body.theme-purple{
+  --page-bg:#10071b;
+  --header-bg:#190b27;
+  --card-bg:#211034;
+  --input-bg:#160b23;
+  --text:#f8eaff;
+  --muted:#b79bc8;
+  --accent:#a855f7;
+  --accent2:#c084fc;
+  --border:#542b72;
+  --button-text:#ffffff;
+  --shadow:0 10px 35px rgba(0,0,0,.4);
+}
+
+/* ⚪ 실버 */
+body.theme-silver{
+  --page-bg:#dce1e7;
+  --header-bg:#eef1f4;
+  --card-bg:#f8fafc;
+  --input-bg:#ffffff;
+  --text:#1f2937;
+  --muted:#64748b;
+  --accent:#64748b;
+  --accent2:#94a3b8;
+  --border:#b9c1cb;
+  --button-text:#ffffff;
+  --shadow:0 10px 25px rgba(15,23,42,.12);
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:800px){
+  .topbarInner{
+    flex-wrap:wrap;
+  }
+
+  .nav{
+    order:3;
+    flex-basis:100%;
+  }
+
+  .logo{
+    flex:1;
+  }
+
+  main{
+    padding-top:18px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h1>⚠ SERVICE TERMINATED ⚠</h1>
-    <p>SERVER CLOSED</p>
-    <p>ALL DATA HAS BEEN ERASED</p>
+<!-- 뒤쪽 배경 효과 -->
+<div id="backgroundFx"></div>
 
-    <div class="small">
-        connection lost...<br>
-        you can close this page
+<header class="topbar">
+  <div class="topbarInner">
+
+    <div class="logo">COINLAB</div>
+
+    <div class="balanceTop">
+      <span id="topBalance">10,000</span> COIN
     </div>
+
+    <nav class="nav">
+
+      <button class="active"
+        onclick="showPage('bet',this)">
+        배팅
+      </button>
+
+      <button onclick="showPage('attendance',this)">
+        출석 보상
+      </button>
+
+      <button onclick="showPage('missions',this)">
+        일일 미션
+      </button>
+
+      <button onclick="showPage('achievements',this)">
+        업적
+      </button>
+
+      <button onclick="showPage('profile',this)">
+        👤 프로필
+      </button>
+
+      <button onclick="showPage('shop',this)">
+        상점
+      </button>
+
+      <button onclick="showPage('graph',this)">
+        📈 그래프
+      </button>
+
+      <button onclick="showPage('recovery',this)">
+        🆘 회생
+      </button>
+
+    </nav>
+  </div>
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     BET
+===================================================== -->
+
+<section id="bet" class="page active">
+
+  <div class="hero">
+    <h1>🎲 COINLAB</h1>
+    <p>50:50 확률로 COIN을 걸어보세요.</p>
+  </div>
+
+  <div class="card betBox">
+
+    <div class="muted">현재 보유 COIN</div>
+
+    <div class="balanceBig" id="betBalance">
+      10,000
+    </div>
+
+    <label>배팅 금액</label>
+
+    <input
+      id="betAmount"
+      type="number"
+      min="1"
+      placeholder="배팅 금액 입력"
+    >
+
+    <div class="quickBet">
+
+      <button onclick="setBet(100)">
+        100
+      </button>
+
+      <button onclick="setBet(500)">
+        500
+      </button>
+
+      <button onclick="setBet(1000)">
+        1,000
+      </button>
+
+      <button onclick="setAllIn()">
+        ALL IN
+      </button>
+
+    </div>
+
+    <button
+      class="btn betButton"
+      onclick="placeBet()">
+      🎲 배팅하기
+    </button>
+
+    <div id="betResult" class="result"></div>
+
+    <div id="bankruptcy"></div>
+
+  </div>
+
+
+  <h2 class="sectionTitle">📊 자산 그래프</h2>
+
+  <canvas id="miniGraph" width="900" height="280"></canvas>
+
+
+  <h2 class="sectionTitle">📜 배팅 기록</h2>
+
+  <div class="card history">
+    <div id="historyList"></div>
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ATTENDANCE
+===================================================== -->
+
+<section id="attendance" class="page">
+
+  <div class="hero">
+    <h1>🎁 출석 보상</h1>
+    <p>24시간마다 한 번씩 받을 수 있습니다.</p>
+  </div>
+
+  <div class="card">
+
+    <h2>🔥 출석 스트릭</h2>
+
+    <div id="streakText"></div>
+
+    <div class="balanceBig" id="rewardAmount">
+      +1,000 COIN
+    </div>
+
+    <button
+      id="rewardButton"
+      class="btn"
+      onclick="claimAttendance()">
+      출석 보상 받기
+    </button>
+
+    <p id="rewardTimer" class="muted"></p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MISSIONS
+===================================================== -->
+
+<section id="missions" class="page">
+
+  <div class="hero">
+    <h1>🎯 일일 미션</h1>
+    <p>하루에 한 번만 보상을 받을 수 있습니다.</p>
+  </div>
+
+  <div id="missionList" class="grid"></div>
+
+</section>
+
+
+<!-- =====================================================
+     ACHIEVEMENTS
+===================================================== -->
+
+<section id="achievements" class="page">
+
+  <div class="hero">
+    <h1>🏆 업적</h1>
+    <p>COINLAB에서 달성한 기록입니다.</p>
+  </div>
+
+  <div id="achievementList" class="grid"></div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section id="profile" class="page">
+
+  <div class="hero">
+    <h1>👤 프로필</h1>
+    <p>나의 COINLAB 기록과 장식을 관리하세요.</p>
+  </div>
+
+
+  <div class="card">
+
+    <div class="profileHead">
+
+      <div
+        id="avatarWrap"
+        class="avatar-wrap title-newbie">
+
+        <div class="avatar-ring"></div>
+
+        <div class="profile-avatar">
+          👤
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <div style="display:flex;align-items:center;gap:8px;">
+
+          <div
+            id="profileNickname"
+            class="nickname">
+            플레이어
+          </div>
+
+          <button
+            class="btn secondary"
+            onclick="openNicknameEditor()">
+            이름 수정
+          </button>
+
+        </div>
+
+        <div
+          id="profileHonor"
+          class="honor">
+          🌱 새내기
+        </div>
+
+        <div
+          id="profileTitleName"
+          class="muted">
+          타이틀: 🌱 초보자
+        </div>
+
+        <div
+          id="profileBalance"
+          class="profileBalance">
+          10,000 COIN
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <h2 class="sectionTitle">📊 상세 기록</h2>
+
+  <div
+    id="profileStats"
+    class="statsGrid">
+  </div>
+
+
+  <h2 class="sectionTitle">🎨 타이틀</h2>
+
+  <p class="muted">
+    타이틀은 프로필 사진의 원형 테두리와 닉네임 색상을 변경합니다.
+  </p>
+
+  <div
+    id="titleList"
+    class="grid">
+  </div>
+
+
+  <h2 class="sectionTitle">🏷️ 칭호</h2>
+
+  <p class="muted">
+    칭호는 닉네임 아래에 작게 표시됩니다. 타이틀과 별개입니다.
+  </p>
+
+  <div
+    id="honorList"
+    class="grid">
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SHOP
+===================================================== -->
+
+<section id="shop" class="page">
+
+  <div class="hero">
+    <h1>🛒 상점</h1>
+    <p>모은 COIN으로 테마와 각종 효과를 구매하세요.</p>
+  </div>
+
+
+  <div class="shopSection">
+
+    <h2>🎨 테마</h2>
+
+    <div
+      id="themeShop"
+      class="shopGrid">
+    </div>
+
+  </div>
+
+
+  <div class="shopSection">
+
+    <h2>🌌 배경 효과</h2>
+
+    <div
+      id="backgroundShop"
+      class="shopGrid">
+    </div>
+
+  </div>
+
+
+  <div class="shopSection">
+
+    <h2>✨ UI 효과</h2>
+
+    <div
+      id="uiShop"
+      class="shopGrid">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     GRAPH
+===================================================== -->
+
+<section id="graph" class="page">
+
+  <div class="hero">
+    <h1>📈 자산 그래프</h1>
+    <p>배팅에 따른 COIN 변화를 확인하세요.</p>
+  </div>
+
+  <div class="card">
+
+    <canvas
+      id="largeGraph"
+      width="1100"
+      height="500">
+    </canvas>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     RECOVERY
+===================================================== -->
+
+<section id="recovery" class="page">
+
+  <div class="hero">
+    <h1>🆘 회생</h1>
+    <p>
+      COIN이 0일 때 기억력 테스트를 통과하면
+      1,000 COIN을 회복합니다.
+    </p>
+  </div>
+
+
+  <div class="card">
+
+    <div
+      id="recoveryStatus"
+      style="text-align:center;font-weight:800;">
+    </div>
+
+    <div
+      id="recoveryStage"
+      class="recoveryStage">
+    </div>
+
+    <div
+      id="recoveryNumber"
+      class="recoveryNumber">
+    </div>
+
+    <div
+      id="recoveryInputBox"
+      class="recoveryInput"
+      style="display:none;">
+
+      <input
+        id="recoveryInput"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="숫자를 입력하세요">
+
+      <button
+        class="btn"
+        style="width:100%;margin-top:8px;"
+        onclick="submitRecovery()">
+        확인
+      </button>
+
+    </div>
+
+    <button
+      id="recoveryStart"
+      class="btn"
+      style="width:100%;"
+      onclick="startRecovery()">
+      🧠 회생 테스트 시작
+    </button>
+
+    <div
+      id="recoveryMessage"
+      style="text-align:center;margin-top:15px;">
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     NICKNAME MODAL
+===================================================== -->
+
+<div
+  id="nicknameModal"
+  class="modal hidden">
+
+  <div class="modalCard">
+
+    <h2>✏️ 이름 수정</h2>
+
+    <p class="muted">
+      1~16글자로 입력하세요.
+    </p>
+
+    <input
+      id="nicknameInput"
+      maxlength="16"
+      placeholder="닉네임">
+
+    <div class="modalActions">
+
+      <button
+        class="btn secondary"
+        onclick="closeNicknameEditor()">
+        취소
+      </button>
+
+      <button
+        class="btn"
+        onclick="saveNickname()">
+        저장
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const BALANCE_KEY = "coinlab_balance";
+const HISTORY_KEY = "coinlab_history";
+const REWARD_KEY = "coinlab_reward_time";
+const STREAK_KEY = "coinlab_streak";
+const LAST_STREAK_KEY = "coinlab_last_streak";
+
+const THEME_KEY = "coinlab_theme";
+const OWNED_THEMES_KEY = "coinlab_owned_themes";
+
+const OWNED_BG_KEY = "coinlab_owned_backgrounds";
+const BG_KEY = "coinlab_background";
+
+const OWNED_UI_KEY = "coinlab_owned_ui";
+const UI_KEY = "coinlab_ui";
+
+const TITLE_KEY = "coinlab_title";
+const HONOR_KEY = "coinlab_honor";
+
+const MISSION_KEY = "coinlab_daily_missions";
+const ACHIEVEMENT_KEY = "coinlab_achievements";
+
+const REVIVE_KEY = "coinlab_revive_time";
+const REVIVE_COUNT_KEY = "coinlab_revive_count";
+const REVIVE_BEST_KEY = "coinlab_revive_best";
+
+const NICKNAME_KEY = "coinlab_nickname";
+
+
+/* =====================================================
+   CONSTANTS
+===================================================== */
+
+const START_BALANCE = 10000;
+const REWARD_AMOUNT = 1000;
+const REWARD_COOLDOWN = 24 * 60 * 60 * 1000;
+
+const RECOVERY_COOLDOWN = 5 * 60 * 1000;
+
+
+/* =====================================================
+   SAFE STORAGE
+===================================================== */
+
+function safeJSON(key, fallback){
+
+  try{
+
+    const raw = localStorage.getItem(key);
+
+    if(raw === null){
+      return fallback;
+    }
+
+    return JSON.parse(raw);
+
+  }catch(e){
+
+    return fallback;
+
+  }
+
+}
+
+
+function saveJSON(key,value){
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(value)
+  );
+
+}
+
+
+/*
+  중요:
+  0은 정상적인 값이다.
+  따라서 0일 때 절대로 10,000으로 되돌리지 않는다.
+*/
+
+function getBalance(){
+
+  const raw = localStorage.getItem(
+    BALANCE_KEY
+  );
+
+  if(raw === null){
+
+    localStorage.setItem(
+      BALANCE_KEY,
+      String(START_BALANCE)
+    );
+
+    return START_BALANCE;
+
+  }
+
+  const n = Number(raw);
+
+  if(
+    !Number.isFinite(n) ||
+    n < 0
+  ){
+
+    localStorage.setItem(
+      BALANCE_KEY,
+      String(START_BALANCE)
+    );
+
+    return START_BALANCE;
+
+  }
+
+  return Math.floor(n);
+
+}
+
+
+function setBalance(value){
+
+  const n = Math.max(
+    0,
+    Math.floor(
+      Number(value) || 0
+    )
+  );
+
+  localStorage.setItem(
+    BALANCE_KEY,
+    String(n)
+  );
+
+  return n;
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function getToday(){
+
+  return new Intl.DateTimeFormat(
+    "en-CA",
+    {
+      timeZone:"Asia/Seoul"
+    }
+  ).format(new Date());
+
+}
+
+
+/* =====================================================
+   NICKNAME
+===================================================== */
+
+function makeDefaultNickname(){
+
+  return "플레이어 " +
+    Math.floor(
+      1000 +
+      Math.random() * 9000
+    );
+
+}
+
+
+function getNickname(){
+
+  let name =
+    localStorage.getItem(
+      NICKNAME_KEY
+    );
+
+  if(!name){
+
+    name = makeDefaultNickname();
+
+    localStorage.setItem(
+      NICKNAME_KEY,
+      name
+    );
+
+  }
+
+  return name;
+
+}
+
+
+function openNicknameEditor(){
+
+  const modal =
+    document.getElementById(
+      "nicknameModal"
+    );
+
+  const input =
+    document.getElementById(
+      "nicknameInput"
+    );
+
+  input.value = getNickname();
+
+  modal.classList.remove(
+    "hidden"
+  );
+
+  setTimeout(
+    ()=>input.focus(),
+    50
+  );
+
+}
+
+
+function closeNicknameEditor(){
+
+  document
+    .getElementById("nicknameModal")
+    .classList.add("hidden");
+
+}
+
+
+function saveNickname(){
+
+  const input =
+    document.getElementById(
+      "nicknameInput"
+    );
+
+  const name =
+    input.value.trim();
+
+  if(!name){
+
+    showToast(
+      "닉네임을 입력해주세요."
+    );
+
+    return;
+
+  }
+
+  if(name.length > 16){
+
+    showToast(
+      "닉네임은 16글자 이하입니다."
+    );
+
+    return;
+
+  }
+
+  localStorage.setItem(
+    NICKNAME_KEY,
+    name
+  );
+
+  closeNicknameEditor();
+
+  renderProfile();
+  updateIdentity();
+
+  showToast(
+    "닉네임이 변경되었습니다."
+  );
+
+}
+
+
+/* =====================================================
+   THEMES
+===================================================== */
+
+const themes = [
+
+  {
+    id:"default",
+    name:"🤍 기본",
+    price:0
+  },
+
+  {
+    id:"neon",
+    name:"🌌 네온 블루",
+    price:5000
+  },
+
+  {
+    id:"green",
+    name:"🌿 그린 터미널",
+    price:7500
+  },
+
+  {
+    id:"night",
+    name:"🌙 다크 나이트",
+    price:10000
+  },
+
+  {
+    id:"red",
+    name:"🔥 레드 알림",
+    price:15000
+  },
+
+  {
+    id:"ocean",
+    name:"🌊 오션",
+    price:20000
+  },
+
+  {
+    id:"sunset",
+    name:"🌅 선셋",
+    price:25000
+  },
+
+  {
+    id:"purple",
+    name:"🟣 퍼플 보이드",
+    price:30000
+  },
+
+  {
+    id:"silver",
+    name:"⚪ 실버",
+    price:40000
+  }
+
+];
+
+
+const backgrounds = [
+
+  {
+    id:"none",
+    name:"⬜ 없음",
+    price:0
+  },
+
+  {
+    id:"galaxy",
+    name:"🌌 은하수",
+    price:5000
+  },
+
+  {
+    id:"grid",
+    name:"▦ 테크 그리드",
+    price:7500
+  },
+
+  {
+    id:"wave",
+    name:"〰️ 웨이브",
+    price:10000
+  }
+
+];
+
+
+const uiEffects = [
+
+  {
+    id:"default",
+    name:"🖥️ 기본",
+    price:0
+  },
+
+  {
+    id:"smooth",
+    name:"🌊 Smooth",
+    price:5000
+  },
+
+  {
+    id:"neon",
+    name:"💡 Neon",
+    price:10000
+  },
+
+  {
+    id:"pop",
+    name:"✨ Pop",
+    price:7500
+  },
+
+  {
+    id:"minimal",
+    name:"▫️ Minimal",
+    price:5000
+  }
+
+];
+
+
+/* =====================================================
+   SHOP STORAGE
+===================================================== */
+
+function getOwned(key, defaultValue){
+
+  const arr =
+    safeJSON(
+      key,
+      defaultValue
+    );
+
+  return Array.isArray(arr)
+    ? arr
+    : defaultValue;
+
+}
+
+
+function ensureShopDefaults(){
+
+  let themesOwned =
+    getOwned(
+      OWNED_THEMES_KEY,
+      ["default"]
+    );
+
+  if(!themesOwned.includes("default")){
+    themesOwned.push("default");
+  }
+
+  saveJSON(
+    OWNED_THEMES_KEY,
+    themesOwned
+  );
+
+
+  let bgOwned =
+    getOwned(
+      OWNED_BG_KEY,
+      ["none"]
+    );
+
+  if(!bgOwned.includes("none")){
+    bgOwned.push("none");
+  }
+
+  saveJSON(
+    OWNED_BG_KEY,
+    bgOwned
+  );
+
+
+  let uiOwned =
+    getOwned(
+      OWNED_UI_KEY,
+      ["default"]
+    );
+
+  if(!uiOwned.includes("default")){
+    uiOwned.push("default");
+  }
+
+  saveJSON(
+    OWNED_UI_KEY,
+    uiOwned
+  );
+
+}
+
+
+/* =====================================================
+   APPLY THEME
+===================================================== */
+
+function applyTheme(){
+
+  const selected =
+    localStorage.getItem(
+      THEME_KEY
+    ) || "default";
+
+  document.body.className =
+    document.body.className
+      .replace(/\btheme-\S+/g,"");
+
+  document.body.classList.add(
+    "theme-" + selected
+  );
+
+}
+
+
+/* =====================================================
+   APPLY BACKGROUND
+===================================================== */
+
+function applyBackground(){
+
+  const selected =
+    localStorage.getItem(
+      BG_KEY
+    ) || "none";
+
+  document.body.classList.remove(
+    "bg-none",
+    "bg-galaxy",
+    "bg-grid",
+    "bg-wave"
+  );
+
+  document.body.classList.add(
+    "bg-" + selected
+  );
+
+
+  createGalaxyStars(
+    selected === "galaxy"
+  );
+
+}
+
+
+function createGalaxyStars(active){
+
+  const fx =
+    document.getElementById(
+      "backgroundFx"
+    );
+
+  fx.innerHTML = "";
+
+  if(!active){
+    return;
+  }
+
+  /*
+    너무 크고 화려한 파티클이 아니라
+    작게 조금씩 움직이는 별.
+  */
+
+  for(let i=0;i<55;i++){
+
+    const star =
+      document.createElement("div");
+
+    star.className =
+      "galaxy-star";
+
+    const size =
+      Math.random() < .75
+        ? 2
+        : 3;
+
+    star.style.width =
+      size + "px";
+
+    star.style.height =
+      size + "px";
+
+    star.style.left =
+      Math.random() * 100 + "%";
+
+    star.style.top =
+      Math.random() * 100 + "%";
+
+    star.style.animationDuration =
+      (8 + Math.random()*16) + "s";
+
+    star.style.animationDelay =
+      (-Math.random()*18) + "s";
+
+    fx.appendChild(star);
+
+  }
+
+}
+
+
+/* =====================================================
+   APPLY UI
+===================================================== */
+
+function applyUI(){
+
+  const selected =
+    localStorage.getItem(
+      UI_KEY
+    ) || "default";
+
+  document.body.classList.remove(
+    "ui-default",
+    "ui-smooth",
+    "ui-neon",
+    "ui-pop",
+    "ui-minimal"
+  );
+
+  document.body.classList.add(
+    "ui-" + selected
+  );
+
+}
+
+
+/* =====================================================
+   BUY SHOP ITEM
+===================================================== */
+
+function buyOrUse(type,id){
+
+  let item;
+  let ownedKey;
+  let selectedKey;
+
+  if(type === "theme"){
+
+    item =
+      themes.find(
+        x=>x.id===id
+      );
+
+    ownedKey =
+      OWNED_THEMES_KEY;
+
+    selectedKey =
+      THEME_KEY;
+
+  }
+
+  else if(type === "background"){
+
+    item =
+      backgrounds.find(
+        x=>x.id===id
+      );
+
+    ownedKey =
+      OWNED_BG_KEY;
+
+    selectedKey =
+      BG_KEY;
+
+  }
+
+  else{
+
+    item =
+      uiEffects.find(
+        x=>x.id===id
+      );
+
+    ownedKey =
+      OWNED_UI_KEY;
+
+    selectedKey =
+      UI_KEY;
+
+  }
+
+
+  if(!item){
+    return;
+  }
+
+
+  let owned =
+    getOwned(
+      ownedKey,
+      []
+    );
+
+
+  /* 구매 */
+  if(!owned.includes(id)){
+
+    const balance =
+      getBalance();
+
+    if(balance < item.price){
+
+      showToast(
+        "COIN이 부족합니다."
+      );
+
+      return;
+
+    }
+
+    setBalance(
+      balance - item.price
+    );
+
+    owned.push(id);
+
+    saveJSON(
+      ownedKey,
+      owned
+    );
+
+    showToast(
+      item.name +
+      " 구매 완료!"
+    );
+
+  }
+
+
+  /* 사용 */
+  localStorage.setItem(
+    selectedKey,
+    id
+  );
+
+
+  if(type === "theme"){
+
+    applyTheme();
+
+  }
+
+  else if(type === "background"){
+
+    applyBackground();
+
+  }
+
+  else{
+
+    applyUI();
+
+  }
+
+
+  renderShop();
+  updateTopBalance();
+  drawGraphs();
+
+}
+
+
+/* =====================================================
+   RENDER SHOP
+===================================================== */
+
+function renderShop(){
+
+  renderShopCategory(
+    "themeShop",
+    themes,
+    OWNED_THEMES_KEY,
+    THEME_KEY,
+    "theme"
+  );
+
+  renderShopCategory(
+    "backgroundShop",
+    backgrounds,
+    OWNED_BG_KEY,
+    BG_KEY,
+    "background"
+  );
+
+  renderShopCategory(
+    "uiShop",
+    uiEffects,
+    OWNED_UI_KEY,
+    UI_KEY,
+    "ui"
+  );
+
+}
+
+
+function renderShopCategory(
+  elementId,
+  items,
+  ownedKey,
+  selectedKey,
+  type
+){
+
+  const container =
+    document.getElementById(
+      elementId
+    );
+
+  const owned =
+    getOwned(
+      ownedKey,
+      []
+    );
+
+  const selected =
+    localStorage.getItem(
+      selectedKey
+    ) ||
+    (
+      type === "background"
+        ? "none"
+        : "default"
+    );
+
+
+  container.innerHTML =
+    items.map(item=>{
+
+      const isOwned =
+        owned.includes(item.id);
+
+      const isSelected =
+        selected === item.id;
+
+
+      let buttonText;
+
+      if(isSelected){
+
+        buttonText =
+          "사용 중";
+
+      }else if(isOwned){
+
+        buttonText =
+          "사용";
+
+      }else{
+
+        buttonText =
+          item.price === 0
+            ? "무료 사용"
+            : "구매";
+
+      }
+
+
+      return `
+
+        <div class="shopItem">
+
+          <div class="shopIcon">
+            ${item.name.slice(0,2)}
+          </div>
+
+          <div class="shopName">
+            ${item.name}
+          </div>
+
+          <div class="shopPrice">
+
+            ${
+              item.price === 0
+                ? "무료"
+                : item.price.toLocaleString()+" COIN"
+            }
+
+          </div>
+
+          <button
+            class="btn ${isSelected ? "secondary" : ""}"
+            ${isSelected ? "disabled" : ""}
+            onclick="buyOrUse('${type}','${item.id}')">
+
+            ${buttonText}
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   BETTING
+===================================================== */
+
+function setBet(amount){
+
+  const balance =
+    getBalance();
+
+  const value =
+    Math.min(
+      amount,
+      balance
+    );
+
+  document.getElementById(
+    "betAmount"
+  ).value = value;
+
+}
+
+
+function setAllIn(){
+
+  document.getElementById(
+    "betAmount"
+  ).value =
+    getBalance();
+
+}
+
+
+function placeBet(){
+
+  let balance =
+    getBalance();
+
+  if(balance <= 0){
+
+    showToast(
+      "COIN이 모두 소진되었습니다."
+    );
+
+    update();
+
+    return;
+
+  }
+
+
+  const input =
+    document.getElementById(
+      "betAmount"
+    );
+
+  const bet =
+    Math.floor(
+      Number(input.value)
+    );
+
+
+  if(
+    !Number.isFinite(bet) ||
+    bet <= 0
+  ){
+
+    showToast(
+      "배팅 금액을 입력해주세요."
+    );
+
+    return;
+
+  }
+
+
+  if(bet > balance){
+
+    showToast(
+      "현재 COIN보다 많이 걸 수 없습니다."
+    );
+
+    return;
+
+  }
+
+
+  const win =
+    Math.random() < .5;
+
+  const change =
+    win ? bet : -bet;
+
+  balance =
+    setBalance(
+      balance + change
+    );
+
+
+  const history =
+    safeJSON(
+      HISTORY_KEY,
+      []
+    );
+
+  history.unshift({
+
+    time:new Date().toISOString(),
+
+    date:getToday(),
+
+    result:win
+      ? "WIN"
+      : "LOSS",
+
+    amount:bet,
+
+    change:change,
+
+    balance:balance
+
+  });
+
+
+  if(history.length > 100){
+    history.length = 100;
+  }
+
+  saveJSON(
+    HISTORY_KEY,
+    history
+  );
+
+
+  const result =
+    document.getElementById(
+      "betResult"
+    );
+
+  result.className =
+    "result " +
+    (
+      win
+        ? "win"
+        : "loss"
+    );
+
+  result.textContent =
+    win
+      ? `🎉 WIN +${bet.toLocaleString()} COIN`
+      : `💥 LOSS -${bet.toLocaleString()} COIN`;
+
+
+  input.value = "";
+
+  update();
+
+  checkAchievements();
+
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function renderHistory(){
+
+  const list =
+    document.getElementById(
+      "historyList"
+    );
+
+  const history =
+    safeJSON(
+      HISTORY_KEY,
+      []
+    );
+
+
+  if(!history.length){
+
+    list.innerHTML =
+      `<div class="muted">
+        아직 배팅 기록이 없습니다.
+      </div>`;
+
+    return;
+
+  }
+
+
+  list.innerHTML = `
+
+    <div class="historyRow"
+         style="font-weight:900;">
+
+      <div>시간</div>
+      <div>결과</div>
+      <div>배팅</div>
+      <div>변화</div>
+      <div>잔액</div>
+
+    </div>
+
+    ${
+      history.map(h=>`
+
+        <div class="historyRow">
+
+          <div>
+            ${formatDate(h.time)}
+          </div>
+
+          <div class="${h.result==="WIN" ? "win":"loss"}">
+            ${h.result}
+          </div>
+
+          <div>
+            ${Number(h.amount).toLocaleString()}
+          </div>
+
+          <div class="${h.change>=0 ? "win":"loss"}">
+            ${
+              h.change>=0
+                ? "+"
+                : ""
+            }${Number(h.change).toLocaleString()}
+          </div>
+
+          <div>
+            ${Number(h.balance).toLocaleString()}
+          </div>
+
+        </div>
+
+      `).join("")
+    }
+
+  `;
+
+}
+
+
+function formatDate(value){
+
+  const d =
+    new Date(value);
+
+  if(Number.isNaN(d.getTime())){
+    return "-";
+  }
+
+  return d.toLocaleString(
+    "ko-KR",
+    {
+      month:"numeric",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ATTENDANCE
+===================================================== */
+
+function claimAttendance(){
+
+  const now =
+    Date.now();
+
+  const last =
+    Number(
+      localStorage.getItem(
+        REWARD_KEY
+      )
+    );
+
+
+  /*
+    중복 지급 방지.
+    먼저 쿨타임 검사.
+  */
+
+  if(
+    Number.isFinite(last) &&
+    last > 0 &&
+    now - last < REWARD_COOLDOWN
+  ){
+
+    showToast(
+      "아직 출석 보상을 받을 수 없습니다."
+    );
+
+    return;
+
+  }
+
+
+  let streak =
+    Number(
+      localStorage.getItem(
+        STREAK_KEY
+      )
+    ) || 0;
+
+
+  const lastStreak =
+    Number(
+      localStorage.getItem(
+        LAST_STREAK_KEY
+      )
+    );
+
+
+  if(
+    Number.isFinite(lastStreak) &&
+    now - lastStreak <=
+      REWARD_COOLDOWN * 2
+  ){
+
+    streak++;
+
+  }else{
+
+    streak = 1;
+
+  }
+
+
+  const reward =
+    1000 +
+    Math.min(
+      streak - 1,
+      6
+    ) * 100;
+
+
+  const balance =
+    getBalance();
+
+
+  setBalance(
+    balance + reward
+  );
+
+
+  localStorage.setItem(
+    REWARD_KEY,
+    String(now)
+  );
+
+  localStorage.setItem(
+    STREAK_KEY,
+    String(streak)
+  );
+
+  localStorage.setItem(
+    LAST_STREAK_KEY,
+    String(now)
+  );
+
+
+  showToast(
+    `출석 보상 +${reward.toLocaleString()} COIN!`
+  );
+
+  update();
+
+}
+
+
+function updateAttendance(){
+
+  const last =
+    Number(
+      localStorage.getItem(
+        REWARD_KEY
+      )
+    );
+
+
+  const streak =
+    Number(
+      localStorage.getItem(
+        STREAK_KEY
+      )
+    ) || 0;
+
+
+  document.getElementById(
+    "streakText"
+  ).textContent =
+    `현재 ${streak}일 연속 출석`;
+
+
+  const button =
+    document.getElementById(
+      "rewardButton"
+    );
+
+
+  const timer =
+    document.getElementById(
+      "rewardTimer"
+    );
+
+
+  if(
+    !Number.isFinite(last) ||
+    last <= 0
+  ){
+
+    button.disabled = false;
+
+    timer.textContent =
+      "지금 받을 수 있습니다.";
+
+    return;
+
+  }
+
+
+  const remaining =
+    REWARD_COOLDOWN -
+    (
+      Date.now() - last
+    );
+
+
+  if(remaining <= 0){
+
+    button.disabled = false;
+
+    timer.textContent =
+      "지금 받을 수 있습니다.";
+
+  }else{
+
+    button.disabled = true;
+
+    timer.textContent =
+      `다음 보상까지 ${formatTime(remaining)}`;
+
+  }
+
+}
+
+
+/* =====================================================
+   MISSIONS
+===================================================== */
+
+const missionData = [
+
+  {
+    id:"bets",
+    name:"🎲 오늘 3번 배팅",
+    reward:500
+  },
+
+  {
+    id:"wins",
+    name:"🎉 오늘 1번 승리",
+    reward:700
+  },
+
+  {
+    id:"profit",
+    name:"💰 오늘 +2,000 순수익",
+    reward:1000
+  }
+
+];
+
+
+function getMissionState(){
+
+  const today =
+    getToday();
+
+  let state =
+    safeJSON(
+      MISSION_KEY,
+      null
+    );
+
+
+  if(
+    !state ||
+    state.date !== today
+  ){
+
+    state = {
+
+      date:today,
+
+      claimed:{
+
+        bets:false,
+        wins:false,
+        profit:false
+
+      }
+
+    };
+
+    saveJSON(
+      MISSION_KEY,
+      state
+    );
+
+  }
+
+
+  if(!state.claimed){
+    state.claimed = {};
+  }
+
+  return state;
+
+}
+
+
+function getTodayStats(){
+
+  const history =
+    safeJSON(
+      HISTORY_KEY,
+      []
+    );
+
+  const today =
+    getToday();
+
+  const todayHistory =
+    history.filter(
+      x=>x.date === today
+    );
+
+
+  const bets =
+    todayHistory.length;
+
+  const wins =
+    todayHistory.filter(
+      x=>x.result==="WIN"
+    ).length;
+
+  const profit =
+    todayHistory.reduce(
+      (sum,x)=>
+        sum + Number(x.change || 0),
+      0
+    );
+
+
+  return {
+    bets,
+    wins,
+    profit
+  };
+
+}
+
+
+function missionProgress(index){
+
+  const stats =
+    getTodayStats();
+
+
+  if(index === 0){
+
+    return {
+      current:stats.bets,
+      max:3
+    };
+
+  }
+
+
+  if(index === 1){
+
+    return {
+      current:stats.wins,
+      max:1
+    };
+
+  }
+
+
+  return {
+    current:Math.max(
+      0,
+      stats.profit
+    ),
+    max:2000
+  };
+
+}
+
+
+function claimMission(index){
+
+  const state =
+    getMissionState();
+
+
+  const mission =
+    missionData[index];
+
+
+  if(!mission){
+    return;
+  }
+
+
+  /*
+    이미 받은 미션은 절대 재지급하지 않음.
+  */
+
+  if(
+    state.claimed[mission.id] === true
+  ){
+
+    showToast(
+      "이미 받은 미션 보상입니다."
+    );
+
+    return;
+
+  }
+
+
+  const p =
+    missionProgress(index);
+
+
+  if(p.current < p.max){
+
+    showToast(
+      "아직 미션을 완료하지 않았습니다."
+    );
+
+    return;
+
+  }
+
+
+  const balance =
+    getBalance();
+
+
+  setBalance(
+    balance + mission.reward
+  );
+
+
+  state.claimed[mission.id] =
+    true;
+
+
+  saveJSON(
+    MISSION_KEY,
+    state
+  );
+
+
+  showToast(
+    `미션 보상 +${mission.reward.toLocaleString()} COIN!`
+  );
+
+
+  renderMissions();
+  update();
+
+}
+
+
+function renderMissions(){
+
+  const container =
+    document.getElementById(
+      "missionList"
+    );
+
+  const state =
+    getMissionState();
+
+
+  container.innerHTML =
+    missionData.map(
+      (mission,index)=>{
+
+        const p =
+          missionProgress(index);
+
+        const done =
+          p.current >= p.max;
+
+        const claimed =
+          state.claimed[mission.id] === true;
+
+        const percent =
+          Math.min(
+            100,
+            p.current / p.max * 100
+          );
+
+
+        return `
+
+          <div class="card">
+
+            <h3>
+              ${mission.name}
+            </h3>
+
+            <div class="muted">
+              보상:
+              ${mission.reward.toLocaleString()}
+              COIN
+            </div>
+
+            <div class="progress">
+              <div
+                class="progressBar"
+                style="width:${percent}%">
+              </div>
+            </div>
+
+            <div>
+              ${
+                mission.id==="profit"
+                  ? `${p.current.toLocaleString()} / ${p.max.toLocaleString()}`
+                  : `${Math.min(p.current,p.max)} / ${p.max}`
+              }
+            </div>
+
+            <br>
+
+            <button
+              class="btn ${claimed ? "secondary":""}"
+              ${
+                claimed || !done
+                  ? "disabled"
+                  : ""
+              }
+              onclick="claimMission(${index})">
+
+              ${
+                claimed
+                  ? "수령 완료"
+                  : done
+                    ? "보상 받기"
+                    : "진행 중"
+              }
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =====================================================
+   ACHIEVEMENTS
+===================================================== */
+
+const achievements = [
+
+  {
+    id:"first",
+    name:"🎯 첫걸음",
+    desc:"첫 배팅을 완료하세요.",
+    reward:500
+  },
+
+  {
+    id:"ten",
+    name:"🎲 슬슬 감 잡는 중",
+    desc:"10번 배팅하세요.",
+    reward:1000
+  },
+
+  {
+    id:"fifty",
+    name:"🔥 승부사",
+    desc:"50번 배팅하세요.",
+    reward:2500
+  },
+
+  {
+    id:"hundred",
+    name:"👑 COINLAB 단골",
+    desc:"100번 배팅하세요.",
+    reward:5000
+  },
+
+  {
+    id:"streak5",
+    name:"⚡ 연승 시작",
+    desc:"5연승을 달성하세요.",
+    reward:1500
+  },
+
+  {
+    id:"bigwin",
+    name:"💰 한 방",
+    desc:"한 번에 5,000 COIN 이상 승리하세요.",
+    reward:3000
+  },
+
+  {
+    id:"rich",
+    name:"💎 부자",
+    desc:"25,000 COIN 이상 보유하세요.",
+    reward:5000
+  }
+
+];
+
+
+function getAchievementState(){
+
+  const state =
+    safeJSON(
+      ACHIEVEMENT_KEY,
+      {}
+    );
+
+  return (
+    state &&
+    typeof state==="object"
+  )
+    ? state
+    : {};
+
+}
+
+
+function calculateStats(){
+
+  const history =
+    safeJSON(
+      HISTORY_KEY,
+      []
+    );
+
+
+  const bets =
+    history.length;
+
+  const wins =
+    history.filter(
+      x=>x.result==="WIN"
+    );
+
+  const losses =
+    history.filter(
+      x=>x.result==="LOSS"
+    );
+
+
+  const totalBet =
+    history.reduce(
+      (s,x)=>
+        s + Number(x.amount || 0),
+      0
+    );
+
+  const totalProfit =
+    history.reduce(
+      (s,x)=>
+        s + Number(x.change || 0),
+      0
+    );
+
+
+  let currentStreak = 0;
+  let maxStreak = 0;
+
+
+  for(const h of history){
+
+    if(h.result==="WIN"){
+
+      currentStreak++;
+      maxStreak =
+        Math.max(
+          maxStreak,
+          currentStreak
+        );
+
+    }else{
+
+      currentStreak = 0;
+
+    }
+
+  }
+
+
+  const balances =
+    history
+      .map(x=>Number(x.balance))
+      .filter(Number.isFinite);
+
+
+  balances.push(
+    getBalance()
+  );
+
+
+  const maxBalance =
+    balances.length
+      ? Math.max(...balances)
+      : getBalance();
+
+
+  const minBalance =
+    balances.length
+      ? Math.min(...balances)
+      : getBalance();
+
+
+  const maxWin =
+    wins.length
+      ? Math.max(
+          ...wins.map(
+            x=>Number(x.change)
+          )
+        )
+      : 0;
+
+
+  const maxLoss =
+    losses.length
+      ? Math.max(
+          ...losses.map(
+            x=>Math.abs(
+              Number(x.change)
+            )
+          )
+        )
+      : 0;
+
+
+  return {
+
+    bets,
+
+    wins:wins.length,
+
+    losses:losses.length,
+
+    winRate:
+      bets
+        ? wins.length / bets * 100
+        : 0,
+
+    totalBet,
+
+    totalProfit,
+
+    avgBet:
+      bets
+        ? totalBet / bets
+        : 0,
+
+    avgProfit:
+      bets
+        ? totalProfit / bets
+        : 0,
+
+    maxBalance,
+
+    minBalance,
+
+    maxWin,
+
+    maxLoss,
+
+    maxStreak,
+
+    currentStreak,
+
+    returnRate:
+      totalBet
+        ? totalProfit / totalBet * 100
+        : 0,
+
+    firstDate:
+      history.length
+        ? history[history.length-1].time
+        : null,
+
+    lastDate:
+      history.length
+        ? history[0].time
+        : null
+
+  };
+
+}
+
+
+function checkAchievements(){
+
+  const stats =
+    calculateStats();
+
+  const state =
+    getAchievementState();
+
+
+  achievements.forEach(a=>{
+
+    if(state[a.id]){
+      return;
+    }
+
+
+    let unlocked = false;
+
+
+    if(a.id==="first"){
+      unlocked =
+        stats.bets >= 1;
+    }
+
+    if(a.id==="ten"){
+      unlocked =
+        stats.bets >= 10;
+    }
+
+    if(a.id==="fifty"){
+      unlocked =
+        stats.bets >= 50;
+    }
+
+    if(a.id==="hundred"){
+      unlocked =
+        stats.bets >= 100;
+    }
+
+    if(a.id==="streak5"){
+      unlocked =
+        stats.maxStreak >= 5;
+    }
+
+    if(a.id==="bigwin"){
+      unlocked =
+        stats.maxWin >= 5000;
+    }
+
+    if(a.id==="rich"){
+      unlocked =
+        stats.maxBalance >= 25000;
+    }
+
+
+    if(unlocked){
+
+      state[a.id] = true;
+
+      setBalance(
+        getBalance() + a.reward
+      );
+
+      showToast(
+        `🏆 업적 달성: ${a.name} +${a.reward.toLocaleString()} COIN`
+      );
+
+    }
+
+  });
+
+
+  saveJSON(
+    ACHIEVEMENT_KEY,
+    state
+  );
+
+  renderAchievements();
+
+}
+
+
+function renderAchievements(){
+
+  const container =
+    document.getElementById(
+      "achievementList"
+    );
+
+  const state =
+    getAchievementState();
+
+
+  container.innerHTML =
+    achievements.map(a=>{
+
+      const done =
+        !!state[a.id];
+
+
+      return `
+
+        <div
+          class="card ${
+            done
+              ? ""
+              : "itemLocked"
+          }">
+
+          <h3>
+            ${a.name}
+          </h3>
+
+          <p class="muted">
+            ${a.desc}
+          </p>
+
+          <b>
+            보상:
+            ${a.reward.toLocaleString()} COIN
+          </b>
+
+          <p>
+            ${
+              done
+                ? "✅ 달성 완료"
+                : "🔒 미달성"
+            }
+          </p>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   TITLES
+===================================================== */
+
+const titleData = [
+
+  {
+    id:"newbie",
+    name:"🌱 초보자",
+    color:"newbie",
+    unlock:()=>true
+  },
+
+  {
+    id:"bettor",
+    name:"🎲 승부사",
+    color:"bettor",
+    unlock:()=>{
+      return calculateStats().bets >= 10;
+    }
+  },
+
+  {
+    id:"streak",
+    name:"🔥 연승의 신",
+    color:"streak",
+    unlock:()=>{
+      return calculateStats().maxStreak >= 5;
+    }
+  },
+
+  {
+    id:"whale",
+    name:"💰 큰손",
+    color:"whale",
+    unlock:()=>{
+      return calculateStats().maxWin >= 5000;
+    }
+  },
+
+  {
+    id:"legend",
+    name:"👑 LEGEND",
+    color:"legend",
+    unlock:()=>{
+      return calculateStats().bets >= 100;
+    }
+  }
+
+];
+
+
+function equipTitle(id){
+
+  const item =
+    titleData.find(
+      x=>x.id===id
+    );
+
+  if(!item){
+    return;
+  }
+
+
+  if(!item.unlock()){
+
+    showToast(
+      "아직 잠금 해제되지 않았습니다."
+    );
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    TITLE_KEY,
+    id
+  );
+
+
+  renderProfile();
+  updateIdentity();
+
+  showToast(
+    `${item.name} 타이틀 적용!`
+  );
+
+}
+
+
+/* =====================================================
+   HONORS
+===================================================== */
+
+const honorData = [
+
+  {
+    id:"newbie",
+    name:"🌱 새내기",
+    unlock:()=>true
+  },
+
+  {
+    id:"first",
+    name:"🎯 첫걸음",
+    unlock:()=>{
+      return calculateStats().bets >= 1;
+    }
+  },
+
+  {
+    id:"bettor",
+    name:"🎲 승부사",
+    unlock:()=>{
+      return calculateStats().bets >= 10;
+    }
+  },
+
+  {
+    id:"streak",
+    name:"🔥 연승의 신",
+    unlock:()=>{
+      return calculateStats().maxStreak >= 5;
+    }
+  },
+
+  {
+    id:"whale",
+    name:"💰 큰손",
+    unlock:()=>{
+      return calculateStats().maxWin >= 5000;
+    }
+  },
+
+  {
+    id:"legend",
+    name:"👑 COINLAB LEGEND",
+    unlock:()=>{
+      return calculateStats().bets >= 100;
+    }
+  }
+
+];
+
+
+function equipHonor(id){
+
+  const item =
+    honorData.find(
+      x=>x.id===id
+    );
+
+  if(!item){
+    return;
+  }
+
+
+  if(!item.unlock()){
+
+    showToast(
+      "아직 잠금 해제되지 않았습니다."
+    );
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    HONOR_KEY,
+    id
+  );
+
+
+  renderProfile();
+
+  showToast(
+    `${item.name} 칭호 적용!`
+  );
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+function renderProfile(){
+
+  const stats =
+    calculateStats();
+
+
+  const titleId =
+    localStorage.getItem(
+      TITLE_KEY
+    ) || "newbie";
+
+
+  const honorId =
+    localStorage.getItem(
+      HONOR_KEY
+    ) || "newbie";
+
+
+  const title =
+    titleData.find(
+      x=>x.id===titleId
+    ) || titleData[0];
+
+
+  const honor =
+    honorData.find(
+      x=>x.id===honorId
+    ) || honorData[0];
+
+
+  const avatar =
+    document.getElementById(
+      "avatarWrap"
+    );
+
+
+  avatar.className =
+    `avatar-wrap title-${title.color}`;
+
+
+  const nickname =
+    document.getElementById(
+      "profileNickname"
+    );
+
+
+  nickname.textContent =
+    getNickname();
+
+
+  nickname.className =
+    `nickname nicknameColor-${title.color}`;
+
+
+  document.getElementById(
+    "profileHonor"
+  ).textContent =
+    honor.name;
+
+
+  document.getElementById(
+    "profileTitleName"
+  ).textContent =
+    `타이틀: ${title.name}`;
+
+
+  document.getElementById(
+    "profileBalance"
+  ).textContent =
+    `${getBalance().toLocaleString()} COIN`;
+
+
+  const statsData = [
+
+    ["총 배팅 횟수",stats.bets],
+
+    ["승리",stats.wins],
+
+    ["패배",stats.losses],
+
+    ["승률",
+      stats.winRate.toFixed(1)+"%"
+    ],
+
+    ["총 배팅액",
+      stats.totalBet.toLocaleString()
+    ],
+
+    ["총 수익",
+      (
+        stats.totalProfit >= 0
+          ? "+"
+          : ""
+      ) +
+      stats.totalProfit.toLocaleString()
+    ],
+
+    ["평균 배팅액",
+      Math.round(
+        stats.avgBet
+      ).toLocaleString()
+    ],
+
+    ["평균 수익",
+      Math.round(
+        stats.avgProfit
+      ).toLocaleString()
+    ],
+
+    ["최고 잔액",
+      stats.maxBalance.toLocaleString()
+    ],
+
+    ["최저 잔액",
+      stats.minBalance.toLocaleString()
+    ],
+
+    ["최대 승리",
+      stats.maxWin.toLocaleString()
+    ],
+
+    ["최대 손실",
+      stats.maxLoss.toLocaleString()
+    ],
+
+    ["최고 연승",
+      stats.maxStreak
+    ],
+
+    ["현재 연승",
+      stats.currentStreak
+    ],
+
+    ["수익률",
+      stats.returnRate.toFixed(1)+"%"
+    ],
+
+    ["첫 배팅",
+      stats.firstDate
+        ? formatDate(stats.firstDate)
+        : "-"
+    ],
+
+    ["최근 배팅",
+      stats.lastDate
+        ? formatDate(stats.lastDate)
+        : "-"
+    ],
+
+    ["🆘 회생 성공",
+      Number(
+        localStorage.getItem(
+          REVIVE_COUNT_KEY
+        )
+      ) || 0
+    ],
+
+    ["🧠 회생 최고 단계",
+      Number(
+        localStorage.getItem(
+          REVIVE_BEST_KEY
+        )
+      ) || 0
+    ],
+
+    ["🏆 업적",
+      Object.keys(
+        getAchievementState()
+      ).length +
+      " / " +
+      achievements.length
+    ],
+
+    ["🎯 오늘 미션",
+      Object.values(
+        getMissionState().claimed || {}
+      ).filter(Boolean).length +
+      " / " +
+      missionData.length
+    ]
+
+  ];
+
+
+  document.getElementById(
+    "profileStats"
+  ).innerHTML =
+    statsData.map(
+      x=>`
+
+        <div class="stat">
+
+          <div class="statName">
+            ${x[0]}
+          </div>
+
+          <div class="statValue">
+            ${x[1]}
+          </div>
+
+        </div>
+
+      `
+    ).join("");
+
+
+  renderTitles();
+  renderHonors();
+
+}
+
+
+function renderTitles(){
+
+  const container =
+    document.getElementById(
+      "titleList"
+    );
+
+  const equipped =
+    localStorage.getItem(
+      TITLE_KEY
+    ) || "newbie";
+
+
+  container.innerHTML =
+    titleData.map(t=>{
+
+      const unlocked =
+        t.unlock();
+
+      const selected =
+        equipped === t.id;
+
+
+      return `
+
+        <div class="card ${
+          unlocked
+            ? ""
+            : "itemLocked"
+        }">
+
+          <h3>
+            ${t.name}
+          </h3>
+
+          <p class="muted">
+            ${
+              unlocked
+                ? "잠금 해제됨"
+                : "🔒 잠김"
+            }
+          </p>
+
+          <button
+            class="btn ${
+              selected
+                ? "secondary"
+                : ""
+            }"
+            ${
+              !unlocked || selected
+                ? "disabled"
+                : ""
+            }
+            onclick="equipTitle('${t.id}')">
+
+            ${
+              selected
+                ? "사용 중"
+                : "장착"
+            }
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function renderHonors(){
+
+  const container =
+    document.getElementById(
+      "honorList"
+    );
+
+  const equipped =
+    localStorage.getItem(
+      HONOR_KEY
+    ) || "newbie";
+
+
+  container.innerHTML =
+    honorData.map(h=>{
+
+      const unlocked =
+        h.unlock();
+
+      const selected =
+        equipped === h.id;
+
+
+      return `
+
+        <div class="card ${
+          unlocked
+            ? ""
+            : "itemLocked"
+        }">
+
+          <h3>
+            ${h.name}
+          </h3>
+
+          <p class="muted">
+            ${
+              unlocked
+                ? "잠금 해제됨"
+                : "🔒 잠김"
+            }
+          </p>
+
+          <button
+            class="btn ${
+              selected
+                ? "secondary"
+                : ""
+            }"
+            ${
+              !unlocked || selected
+                ? "disabled"
+                : ""
+            }
+            onclick="equipHonor('${h.id}')">
+
+            ${
+              selected
+                ? "사용 중"
+                : "장착"
+            }
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   IDENTITY
+===================================================== */
+
+function updateIdentity(){
+
+  const titleId =
+    localStorage.getItem(
+      TITLE_KEY
+    ) || "newbie";
+
+
+  const title =
+    titleData.find(
+      x=>x.id===titleId
+    ) || titleData[0];
+
+
+  document.getElementById(
+    "profileNickname"
+  ).textContent =
+    getNickname();
+
+
+  document.getElementById(
+    "profileNickname"
+  ).className =
+    `nickname nicknameColor-${title.color}`;
+
+}
+
+
+/* =====================================================
+   RECOVERY
+===================================================== */
+
+let recoveryStage = 0;
+let recoverySequence = "";
+let recoveryWaiting = false;
+
+
+function updateRecoveryUI(){
+
+  const balance =
+    getBalance();
+
+  const status =
+    document.getElementById(
+      "recoveryStatus"
+    );
+
+  const start =
+    document.getElementById(
+      "recoveryStart"
+    );
+
+
+  const last =
+    Number(
+      localStorage.getItem(
+        REVIVE_KEY
+      )
+    );
+
+
+  if(balance > 0){
+
+    status.textContent =
+      "현재 COIN이 남아 있어 회생을 사용할 수 없습니다.";
+
+    start.disabled = true;
+
+    return;
+
+  }
+
+
+  if(
+    Number.isFinite(last) &&
+    last > 0
+  ){
+
+    const remain =
+      RECOVERY_COOLDOWN -
+      (
+        Date.now() - last
+      );
+
+
+    if(remain > 0){
+
+      status.textContent =
+        `재도전까지 ${formatTime(remain)}`;
+
+      start.disabled = true;
+
+      return;
+
+    }
+
+  }
+
+
+  status.textContent =
+    "회생 테스트를 시작할 수 있습니다.";
+
+  start.disabled = false;
+
+}
+
+
+function startRecovery(){
+
+  if(getBalance() > 0){
+
+    showToast(
+      "COIN이 0일 때만 사용할 수 있습니다."
+    );
+
+    return;
+
+  }
+
+
+  const last =
+    Number(
+      localStorage.getItem(
+        REVIVE_KEY
+      )
+    );
+
+
+  if(
+    Number.isFinite(last) &&
+    last > 0 &&
+    Date.now() - last <
+      RECOVERY_COOLDOWN
+  ){
+
+    showToast(
+      "아직 재도전할 수 없습니다."
+    );
+
+    return;
+
+  }
+
+
+  recoveryStage = 1;
+
+  recoverySequence = "";
+
+  recoveryWaiting = false;
+
+
+  document.getElementById(
+    "recoveryMessage"
+  ).textContent = "";
+
+
+  document.getElementById(
+    "recoveryInputBox"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "recoveryStart"
+  ).disabled = true;
+
+
+  runRecoveryStage();
+
+}
+
+
+function runRecoveryStage(){
+
+  const lengths = [
+    0,
+    4,
+    5,
+    6
+  ];
+
+  const durations = [
+    0,
+    1000,
+    700,
+    500
+  ];
+
+
+  const len =
+    lengths[recoveryStage];
+
+
+  recoverySequence = "";
+
+  for(let i=0;i<len;i++){
+
+    recoverySequence +=
+      Math.floor(
+        Math.random()*10
+      );
+
+  }
+
+
+  document.getElementById(
+    "recoveryStage"
+  ).textContent =
+    `STAGE ${recoveryStage} / 3`;
+
+
+  const number =
+    document.getElementById(
+      "recoveryNumber"
+    );
+
+
+  number.textContent =
+    recoverySequence;
+
+
+  recoveryWaiting = true;
+
+
+  setTimeout(()=>{
+
+    number.textContent =
+      "● ● ● ●";
+
+    recoveryWaiting = false;
+
+
+    const inputBox =
+      document.getElementById(
+        "recoveryInputBox"
+      );
+
+    inputBox.style.display =
+      "block";
+
+
+    const input =
+      document.getElementById(
+        "recoveryInput"
+      );
+
+    input.value = "";
+
+    input.focus();
+
+  },durations[recoveryStage]);
+
+}
+
+
+function submitRecovery(){
+
+  if(recoveryWaiting){
+    return;
+  }
+
+
+  const input =
+    document.getElementById(
+      "recoveryInput"
+    );
+
+
+  if(
+    input.value.trim() !==
+    recoverySequence
+  ){
+
+    failRecovery();
+
+    return;
+
+  }
+
+
+  if(recoveryStage < 3){
+
+    recoveryStage++;
+
+    input.value = "";
+
+    document.getElementById(
+      "recoveryInputBox"
+    ).style.display =
+      "none";
+
+    runRecoveryStage();
+
+  }else{
+
+    succeedRecovery();
+
+  }
+
+}
+
+
+function failRecovery(){
+
+  localStorage.setItem(
+    REVIVE_KEY,
+    String(Date.now())
+  );
+
+
+  const best =
+    Number(
+      localStorage.getItem(
+        REVIVE_BEST_KEY
+      )
+    ) || 0;
+
+
+  localStorage.setItem(
+    REVIVE_BEST_KEY,
+    String(
+      Math.max(
+        best,
+        recoveryStage
+      )
+    )
+  );
+
+
+  document.getElementById(
+    "recoveryMessage"
+  ).innerHTML =
+    `<span class="loss">
+      ❌ 실패!
+      5분 후 다시 도전할 수 있습니다.
+    </span>`;
+
+
+  document.getElementById(
+    "recoveryInputBox"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "recoveryNumber"
+  ).textContent = "";
+
+
+  document.getElementById(
+    "recoveryStage"
+  ).textContent = "테스트 실패";
+
+
+  updateRecoveryUI();
+
+}
+
+
+function succeedRecovery(){
+
+  /*
+    성공 순간에만 1회 지급.
+  */
+
+  if(getBalance() !== 0){
+
+    failRecovery();
+
+    return;
+
+  }
+
+
+  setBalance(1000);
+
+
+  const count =
+    Number(
+      localStorage.getItem(
+        REVIVE_COUNT_KEY
+      )
+    ) || 0;
+
+
+  localStorage.setItem(
+    REVIVE_COUNT_KEY,
+    String(count + 1)
+  );
+
+
+  const best =
+    Number(
+      localStorage.getItem(
+        REVIVE_BEST_KEY
+      )
+    ) || 0;
+
+
+  localStorage.setItem(
+    REVIVE_BEST_KEY,
+    String(
+      Math.max(
+        best,
+        3
+      )
+    )
+  );
+
+
+  document.getElementById(
+    "recoveryMessage"
+  ).innerHTML =
+    `<span class="win">
+      🎉 회생 성공! +1,000 COIN
+    </span>`;
+
+
+  document.getElementById(
+    "recoveryInputBox"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "recoveryNumber"
+  ).textContent =
+    "SUCCESS";
+
+
+  document.getElementById(
+    "recoveryStage"
+  ).textContent =
+    "회생 완료";
+
+
+  update();
+
+}
+
+
+/* =====================================================
+   GRAPH
+===================================================== */
+
+function drawGraph(canvasId){
+
+  const canvas =
+    document.getElementById(
+      canvasId
+    );
+
+  if(!canvas){
+    return;
+  }
+
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  const ratio =
+    window.devicePixelRatio || 1;
+
+
+  const width =
+    Math.max(
+      300,
+      rect.width
+    );
+
+
+  const height =
+    canvasId === "largeGraph"
+      ? 500
+      : 280;
+
+
+  canvas.width =
+    width * ratio;
+
+  canvas.height =
+    height * ratio;
+
+  canvas.style.height =
+    height + "px";
+
+
+  ctx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  const history =
+    safeJSON(
+      HISTORY_KEY,
+      []
+    );
+
+
+  const values =
+    history
+      .slice()
+      .reverse()
+      .map(
+        x=>Number(x.balance)
+      );
+
+
+  if(!values.length){
+
+    ctx.fillStyle =
+      getComputedStyle(
+        document.body
+      ).getPropertyValue(
+        "--muted"
+      );
+
+    ctx.font =
+      "16px Arial";
+
+    ctx.fillText(
+      "아직 그래프 데이터가 없습니다.",
+      20,
+      35
+    );
+
+    return;
+
+  }
+
+
+  const computed =
+    getComputedStyle(
+      document.body
+    );
+
+
+  const accent =
+    computed.getPropertyValue(
+      "--accent"
+    );
+
+
+  const border =
+    computed.getPropertyValue(
+      "--border"
+    );
+
+
+  const text =
+    computed.getPropertyValue(
+      "--muted"
+    );
+
+
+  const min =
+    Math.min(
+      START_BALANCE,
+      ...values
+    );
+
+
+  const max =
+    Math.max(
+      START_BALANCE,
+      ...values
+    );
+
+
+  const pad =
+    35;
+
+
+  ctx.strokeStyle =
+    border;
+
+  ctx.lineWidth = 1;
+
+
+  for(let i=0;i<5;i++){
+
+    const y =
+      pad +
+      (
+        height-pad*2
+      ) *
+      i/4;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      pad,
+      y
+    );
+
+    ctx.lineTo(
+      width-pad,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  ctx.strokeStyle =
+    accent;
+
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+
+
+  values.forEach(
+    (value,index)=>{
+
+      const x =
+        pad +
+        (
+          width-pad*2
+        ) *
+        (
+          index /
+          Math.max(
+            1,
+            values.length-1
+          )
+        );
+
+
+      const y =
+        height-pad -
+        (
+          (
+            value-min
+          ) /
+          Math.max(
+            1,
+            max-min
+          )
+        ) *
+        (
+          height-pad*2
+        );
+
+
+      if(index===0){
+        ctx.moveTo(x,y);
+      }else{
+        ctx.lineTo(x,y);
+      }
+
+    }
+  );
+
+
+  ctx.stroke();
+
+
+  ctx.fillStyle =
+    text;
+
+  ctx.font =
+    "12px Arial";
+
+  ctx.fillText(
+    max.toLocaleString(),
+    5,
+    pad
+  );
+
+  ctx.fillText(
+    min.toLocaleString(),
+    5,
+    height-pad
+  );
+
+}
+
+
+function drawGraphs(){
+
+  drawGraph("miniGraph");
+  drawGraph("largeGraph");
+
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+function showPage(id,button){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      p=>p.classList.remove("active")
+    );
+
+
+  const page =
+    document.getElementById(id);
+
+
+  if(page){
+    page.classList.add("active");
+  }
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(
+      b=>b.classList.remove("active")
+    );
+
+
+  if(button){
+    button.classList.add("active");
+  }
+
+
+  if(id === "profile"){
+    renderProfile();
+  }
+
+  if(id === "shop"){
+    renderShop();
+  }
+
+  if(id === "missions"){
+    renderMissions();
+  }
+
+  if(id === "achievements"){
+    renderAchievements();
+  }
+
+  if(id === "graph"){
+    drawGraphs();
+  }
+
+  if(id === "recovery"){
+    updateRecoveryUI();
+  }
+
+}
+
+
+/* =====================================================
+   FORMAT TIME
+===================================================== */
+
+function formatTime(ms){
+
+  ms =
+    Math.max(
+      0,
+      ms
+    );
+
+
+  const total =
+    Math.ceil(
+      ms / 1000
+    );
+
+
+  const h =
+    Math.floor(
+      total / 3600
+    );
+
+  const m =
+    Math.floor(
+      total % 3600 / 60
+    );
+
+  const s =
+    total % 60;
+
+
+  if(h > 0){
+
+    return `${h}시간 ${m}분 ${s}초`;
+
+  }
+
+
+  return `${m}분 ${s}초`;
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
+      2200
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE
+===================================================== */
+
+function updateTopBalance(){
+
+  const balance =
+    getBalance();
+
+
+  document.getElementById(
+    "topBalance"
+  ).textContent =
+    balance.toLocaleString();
+
+
+  document.getElementById(
+    "betBalance"
+  ).textContent =
+    balance.toLocaleString();
+
+
+  const bankruptcy =
+    document.getElementById(
+      "bankruptcy"
+    );
+
+
+  if(balance <= 0){
+
+    bankruptcy.innerHTML =
+      `<div class="loss"
+            style="text-align:center;margin-top:10px;font-weight:900;">
+        💀 잔액 0 COIN
+        <br>
+        🆘 회생 메뉴에서 다시 시작할 수 있습니다.
+      </div>`;
+
+  }else{
+
+    bankruptcy.innerHTML = "";
+
+  }
+
+}
+
+
+function update(){
+
+  updateTopBalance();
+
+  renderHistory();
+
+  renderMissions();
+
+  renderAchievements();
+
+  renderProfile();
+
+  updateAttendance();
+
+  updateRecoveryUI();
+
+  drawGraphs();
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+function ensureDefaults(){
+
+  getBalance();
+
+  getNickname();
+
+  ensureShopDefaults();
+
+
+  if(
+    !localStorage.getItem(
+      THEME_KEY
+    )
+  ){
+
+    localStorage.setItem(
+      THEME_KEY,
+      "default"
+    );
+
+  }
+
+
+  if(
+    !localStorage.getItem(
+      BG_KEY
+    )
+  ){
+
+    localStorage.setItem(
+      BG_KEY,
+      "none"
+    );
+
+  }
+
+
+  if(
+    !localStorage.getItem(
+      UI_KEY
+    )
+  ){
+
+    localStorage.setItem(
+      UI_KEY,
+      "default"
+    );
+
+  }
+
+
+  if(
+    !localStorage.getItem(
+      TITLE_KEY
+    )
+  ){
+
+    localStorage.setItem(
+      TITLE_KEY,
+      "newbie"
+    );
+
+  }
+
+
+  if(
+    !localStorage.getItem(
+      HONOR_KEY
+    )
+  ){
+
+    localStorage.setItem(
+      HONOR_KEY,
+      "newbie"
+    );
+
+  }
+
+}
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+
+    ensureDefaults();
+
+    applyTheme();
+
+    applyBackground();
+
+    applyUI();
+
+    update();
+
+    renderShop();
+
+    updateIdentity();
+
+
+    setInterval(
+      ()=>{
+
+        updateAttendance();
+
+        updateRecoveryUI();
+
+      },
+      1000
+    );
+
+
+    window.addEventListener(
+      "resize",
+      drawGraphs
+    );
+
+  }
+);
+
+</script>
 
 </body>
 </html>
