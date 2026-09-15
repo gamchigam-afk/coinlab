@@ -3,48 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>COINLAB</title>
+<title>COINLAB beta</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Orbitron:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
-  --bg:#f5f7fa;
+  --bg:#f5f6f8;
   --card:#ffffff;
-  --text:#202124;
-  --muted:#737b86;
-  --border:#e1e5ea;
-  --accent:#202124;
-  --accent2:#555;
-  --danger:#d64545;
-  --success:#16803c;
-  --shadow:0 5px 20px rgba(20,30,40,.06);
+  --card2:#fafafa;
+  --text:#17191d;
+  --muted:#737983;
+  --border:#dfe3e8;
+  --accent:#22262d;
+  --accent2:#555c66;
+  --danger:#d93636;
+  --success:#16864b;
+  --shadow:0 8px 25px rgba(0,0,0,.06);
+  --radius:18px;
   --font:'Noto Sans KR',sans-serif;
 }
 
-html{
-  scroll-behavior:smooth;
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
 }
 
 body{
-  margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:var(--font);
   transition:.25s;
 }
 
-button,
-input{
-  font-family:inherit;
+button,input{
+  font:inherit;
 }
 
 button{
@@ -54,291 +52,98 @@ button{
 #backgroundFx{
   position:fixed;
   inset:0;
+  z-index:-2;
   pointer-events:none;
-  z-index:-1;
   overflow:hidden;
 }
 
-/* =========================
-   THEMES
-========================= */
-
-body.theme-default{
-  --bg:#f5f7fa;
-  --card:#fff;
-  --text:#202124;
-  --muted:#737b86;
-  --border:#e1e5ea;
-  --accent:#202124;
-  --accent2:#555;
+#experimentFx{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  pointer-events:none;
+  opacity:0;
 }
 
-body.theme-neon{
-  --bg:#07101b;
-  --card:#0d1723;
-  --text:#ecf8ff;
-  --muted:#8da4b7;
-  --border:#1b9cff;
-  --accent:#00aaff;
-  --accent2:#0077ff;
-}
-
-body.theme-green{
-  --bg:#07120c;
-  --card:#0d1b12;
-  --text:#ecfff1;
-  --muted:#8ba994;
-  --border:#35d46b;
-  --accent:#20c85a;
-  --accent2:#0c8f3c;
-}
-
-body.theme-night{
-  --bg:#070707;
-  --card:#111;
-  --text:#eee;
-  --muted:#888;
-  --border:#444;
-  --accent:#ddd;
-  --accent2:#777;
-}
-
-body.theme-red{
-  --bg:#180808;
-  --card:#210e0e;
-  --text:#fff0f0;
-  --muted:#b18c8c;
-  --border:#ff4848;
-  --accent:#ff3d3d;
-  --accent2:#bd2222;
-}
-
-body.theme-ocean{
-  --bg:#06151b;
-  --card:#0b2029;
-  --text:#eaffff;
-  --muted:#87aab3;
-  --border:#20d7e9;
-  --accent:#14c8df;
-  --accent2:#0c8497;
-}
-
-body.theme-sunset{
-  --bg:#17100a;
-  --card:#24170d;
-  --text:#fff5e9;
-  --muted:#bca38d;
-  --border:#ff8c42;
-  --accent:#ff7b25;
-  --accent2:#d55210;
-}
-
-body.theme-purple{
-  --bg:#100817;
-  --card:#190d25;
-  --text:#fbf0ff;
-  --muted:#aa91b6;
-  --border:#bd5cff;
-  --accent:#a93cff;
-  --accent2:#7220aa;
-}
-
-body.theme-silver{
-  --bg:#17191c;
-  --card:#22252a;
-  --text:#f5f5f5;
-  --muted:#a4a8ae;
-  --border:#bfc5cc;
-  --accent:#d7dce2;
-  --accent2:#858b93;
-}
-
-/* 업적 전용 */
-body.theme-core{
-  --bg:#050505;
-  --card:#0a0a0a;
-  --text:#ffffff;
-  --muted:#a6a6a6;
-  --border:#00ffff;
-  --accent:#00ffff;
-  --accent2:#8a2be2;
-}
-
-body.theme-core .card,
-body.theme-core .topbar{
-  box-shadow:
-    0 0 8px rgba(0,255,255,.18),
-    0 0 25px rgba(138,43,226,.08);
-}
-
-/* =========================
-   BACKGROUND
-========================= */
-
-body.bg-grid #backgroundFx{
-  background-image:
-    linear-gradient(rgba(0,0,0,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,.06) 1px,transparent 1px);
-  background-size:30px 30px;
-}
-
-body.bg-wave #backgroundFx{
-  background:
-    radial-gradient(circle at 20% 20%,rgba(100,120,255,.12),transparent 30%),
-    radial-gradient(circle at 80% 70%,rgba(0,200,255,.12),transparent 30%);
-}
-
-body.bg-scan #backgroundFx{
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,.04) 0,
-      rgba(0,0,0,.04) 1px,
-      transparent 1px,
-      transparent 5px
-    );
-}
-
-.galaxy-star{
-  position:absolute;
-  width:3px;
-  height:3px;
-  border-radius:50%;
-  background:#fff;
-  opacity:.5;
-  animation:galaxyFloat linear infinite;
-}
-
-@keyframes galaxyFloat{
-  0%{transform:translateY(0);opacity:.25}
-  50%{opacity:.8}
-  100%{transform:translateY(-40px);opacity:.25}
-}
-
-/* =========================
-   UI EFFECTS
-========================= */
-
-.ui-smooth .card,
-.ui-smooth button{
-  transition:.25s;
-}
-
-.ui-neon .card,
-.ui-neon button{
-  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 20%,transparent);
-}
-
-.ui-pop .card{
-  border-width:2px;
-}
-
-.ui-pop button:hover{
-  transform:translateY(-2px);
-}
-
-.ui-minimal .card{
-  box-shadow:none;
-}
-
-.ui-glass .card{
-  background:color-mix(in srgb,var(--card) 80%,transparent);
-  backdrop-filter:blur(12px);
-}
-
-.ui-terminal .card,
-.ui-terminal button{
-  font-family:'JetBrains Mono',monospace;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.topbar{
+header{
   position:sticky;
   top:0;
   z-index:50;
-
-  min-height:64px;
-
-  display:flex;
-  align-items:center;
-  gap:20px;
-
-  padding:10px 22px;
-
-  background:var(--card);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
 }
 
-.logoBox{
-  min-width:max-content;
+.header-inner{
+  max-width:1180px;
+  margin:auto;
+  padding:15px 18px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
 
 .logo{
-  font-size:21px;
-  font-weight:800;
+  font-size:25px;
+  font-weight:900;
   letter-spacing:-1px;
+  line-height:1;
 }
 
 .beta{
   display:block;
-  font-size:9px;
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:2px;
   color:var(--muted);
-  margin-top:-2px;
-  letter-spacing:1px;
-}
-
-.tabs{
-  display:flex;
-  gap:3px;
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
-.tab{
-  border:0;
-  border-bottom:3px solid transparent;
-  background:transparent;
-  color:var(--muted);
-  padding:12px 11px;
-  white-space:nowrap;
-  font-size:14px;
-}
-
-.tab:hover{
-  color:var(--text);
-}
-
-.tab.active{
-  color:var(--text);
-  border-bottom-color:var(--accent);
-  font-weight:800;
+  margin-top:5px;
+  text-align:center;
 }
 
 .balance{
-  margin-left:auto;
-  white-space:nowrap;
-  background:color-mix(in srgb,var(--accent) 8%,var(--card));
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:9px 14px;
+  font-size:14px;
   font-weight:800;
+  white-space:nowrap;
 }
 
-/* =========================
-   LAYOUT
-========================= */
+.balance b{
+  font-size:19px;
+}
+
+nav{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  overflow-x:auto;
+  gap:6px;
+  padding:0 12px 10px;
+  scrollbar-width:none;
+}
+
+nav::-webkit-scrollbar{display:none}
+
+nav button{
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  border-radius:10px;
+  padding:9px 11px;
+  white-space:nowrap;
+  font-size:13px;
+  font-weight:700;
+}
+
+nav button.active{
+  color:var(--text);
+  background:var(--card2);
+  border-color:var(--border);
+}
 
 main{
   max-width:1180px;
   margin:auto;
-  padding:30px 20px 80px;
+  padding:25px 16px 80px;
 }
 
 .page{
@@ -349,65 +154,52 @@ main{
   display:block;
 }
 
-.hero{
-  margin-bottom:22px;
-}
-
-.hero h1{
-  margin:0 0 5px;
-  font-size:30px;
-}
-
-.hero p{
-  margin:0;
-  color:var(--muted);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:360px 1fr;
-  gap:20px;
-}
-
 .card{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:17px;
-  padding:22px;
+  border-radius:var(--radius);
+  padding:20px;
   box-shadow:var(--shadow);
+  margin-bottom:16px;
+  transition:.2s;
 }
 
-.card h2{
-  margin:0 0 18px;
-  font-size:19px;
+.card h2,.card h3{
+  margin:0 0 14px;
 }
 
-.asset{
-  font-size:34px;
-  font-weight:800;
-  margin-bottom:22px;
-}
-
-.asset small{
-  font-size:14px;
+.muted{
   color:var(--muted);
 }
 
-label{
-  display:block;
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:7px;
+.center{text-align:center}
+
+.big-balance{
+  font-size:43px;
+  font-weight:900;
+  letter-spacing:-2px;
+  margin:8px 0;
 }
 
-input,
-select{
+.bet-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:760px){
+  .bet-layout{
+    grid-template-columns:1fr;
+  }
+}
+
+input{
   width:100%;
-  padding:12px;
   border:1px solid var(--border);
-  background:var(--card);
+  background:var(--card2);
   color:var(--text);
-  border-radius:10px;
+  border-radius:12px;
+  padding:13px;
   outline:none;
 }
 
@@ -417,4742 +209,3627 @@ input:focus{
 
 .btn{
   border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  padding:11px 15px;
-  border-radius:10px;
-  font-weight:700;
+  background:var(--accent);
+  color:white;
+  border-radius:12px;
+  padding:12px 15px;
+  font-weight:800;
+  transition:.18s;
 }
 
 .btn:hover{
-  border-color:var(--accent);
+  transform:translateY(-1px);
 }
 
-.btn.primary{
-  background:var(--accent);
-  color:var(--card);
-  border-color:var(--accent);
+.btn.secondary{
+  background:var(--card);
+  color:var(--text);
 }
 
 .btn.danger{
+  background:var(--danger);
+}
+
+.btn.success{
+  background:var(--success);
+}
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.bet-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.result{
+  min-height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:21px;
+  font-weight:900;
+  border-radius:14px;
+  background:var(--card2);
+  border:1px solid var(--border);
+}
+
+.result.win{
+  color:var(--success);
+}
+
+.result.lose{
   color:var(--danger);
 }
 
-.quick{
-  display:flex;
-  gap:6px;
-  margin-top:8px;
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 
-.quick button{
-  flex:1;
+@media(max-width:800px){
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
-.betBtn{
-  width:100%;
-  margin-top:12px;
-}
-
-.message{
-  min-height:24px;
-  margin-top:13px;
-  font-size:14px;
-  font-weight:700;
-}
-
-.win{color:var(--success)}
-.lose{color:var(--danger)}
-.neutral{color:var(--muted)}
-
-.bankrupt{
-  display:none;
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
-  background:#fff0f0;
-  border:1px solid #ffd0d0;
-  color:#a22;
-}
-
-/* =========================
-   CHART
-========================= */
-
-.chart-wrap{
-  height:300px;
-}
-
-canvas{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.chart-note{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.history{
-  margin-top:20px;
-  overflow:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,
-td{
-  padding:10px 7px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  white-space:nowrap;
-  font-size:13px;
-}
-
-th{
-  color:var(--muted);
-}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:25px;
-}
-
-/* =========================
-   ATTENDANCE / MISSION
-========================= */
-
-.centerCard{
-  max-width:760px;
-  margin:auto;
-}
-
-.bigReward{
-  font-size:40px;
-  font-weight:900;
-  margin:20px 0;
-}
-
-.timer{
-  color:var(--muted);
-  margin-bottom:15px;
-}
-
-.mission{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
+.stat{
+  padding:14px;
   border:1px solid var(--border);
   border-radius:13px;
-  padding:15px;
-  margin-bottom:10px;
+  background:var(--card2);
 }
 
-.missionInfo{
-  flex:1;
-}
-
-.missionTitle{
-  font-weight:800;
-}
-
-.missionDesc{
+.stat small{
+  display:block;
   color:var(--muted);
-  font-size:13px;
+  margin-bottom:5px;
+}
+
+.stat b{
+  font-size:18px;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--card2);
+}
+
+.row-main{
+  min-width:0;
+}
+
+.row-title{
+  font-weight:900;
+}
+
+.row-desc{
+  color:var(--muted);
+  font-size:12px;
   margin-top:4px;
 }
 
-/* =========================
-   ACHIEVEMENTS
-========================= */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:10px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+.tag.core{
+  color:#765600;
+  border-color:#d9b94b;
+  background:#fff8d9;
+}
+
+.tag.owned{
+  color:var(--success);
+  border-color:#8dd0ae;
+  background:#eefbf4;
+}
+
+.price{
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.shop-category{
+  margin-bottom:25px;
+}
+
+.shop-category>h2{
+  margin-bottom:10px;
+}
+
+.shop-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.shop-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.shop-actions .btn{
+  padding:8px 10px;
+  font-size:12px;
+}
 
 .achievement{
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:16px;
-  margin-bottom:10px;
-  display:flex;
-  gap:15px;
-  align-items:center;
+  position:relative;
 }
 
 .achievement.locked{
   opacity:.55;
 }
 
-.achievementIcon{
-  font-size:28px;
-  width:45px;
-  text-align:center;
+.achievement.unlocked{
+  border-color:#bca84e;
 }
 
-.achievementInfo{
-  flex:1;
-}
-
-.achievementName{
-  font-weight:800;
-}
-
-.achievementDesc{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.rewardLine{
-  margin-top:7px;
+.achievement-reward{
+  margin-top:9px;
+  padding-top:9px;
+  border-top:1px dashed var(--border);
   font-size:12px;
-  color:var(--accent);
 }
 
-/* =========================
-   PROFILE
-========================= */
-
-.profileTop{
-  text-align:center;
-  padding:25px;
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
 }
 
 .avatar-wrap{
-  width:120px;
-  height:120px;
-  margin:5px auto 18px;
   position:relative;
-}
-
-.avatar-ring{
-  position:absolute;
-  inset:-5px;
-  border:4px solid var(--accent);
-  border-radius:50%;
-  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 40%,transparent);
+  width:110px;
+  height:110px;
+  flex:none;
 }
 
 .profile-avatar{
-  position:absolute;
-  inset:7px;
-  border-radius:50%;
+  width:100%;
+  height:100%;
   display:flex;
-  justify-content:center;
   align-items:center;
-  font-size:50px;
-  background:var(--bg);
+  justify-content:center;
+  border-radius:50%;
+  background:var(--card2);
+  border:5px solid var(--border);
+  font-size:45px;
+  position:relative;
+  z-index:2;
+}
+
+.avatar-wrap:before{
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border-radius:50%;
+  border:2px solid var(--accent);
+  z-index:1;
 }
 
 .nickname{
-  font-size:25px;
+  font-size:27px;
   font-weight:900;
 }
 
 .honor{
+  margin-top:4px;
   font-size:12px;
-  color:var(--accent);
   font-weight:800;
-  margin-top:3px;
-}
-
-.profileDecor{
-  margin-top:10px;
-  font-size:20px;
-}
-
-.profileStats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.stat{
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:12px;
-}
-
-.statName{
-  font-size:12px;
   color:var(--muted);
 }
 
-.statValue{
-  font-weight:900;
-  margin-top:5px;
-}
-
-.secretHole{
-  display:none;
-  margin-top:35px;
-  padding:20px;
-  text-align:center;
-  border:2px dashed var(--accent);
-  border-radius:14px;
-  cursor:pointer;
-  animation:pulse 1.7s infinite;
-}
-
-@keyframes pulse{
-  50%{box-shadow:0 0 20px color-mix(in srgb,var(--accent) 35%,transparent)}
-}
-
-/* =========================
-   SHOP
-========================= */
-
-.shopTools{
-  display:flex;
-  gap:8px;
-  margin-bottom:20px;
-}
-
-.shopTools input{
-  flex:1;
-}
-
-.shopCategory{
-  margin-bottom:28px;
-}
-
-.shopCategoryTitle{
-  font-size:21px;
-  font-weight:900;
-  margin-bottom:12px;
-}
-
-.shopGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.shopItem{
-  position:relative;
-  border:1px solid var(--border);
-  background:var(--card);
-  border-radius:14px;
-  padding:15px;
-}
-
-.shopItem.favorite::before{
-  content:"⭐";
+.profile-decoration{
   position:absolute;
-  right:10px;
-  top:8px;
-}
-
-.shopItem.core{
-  border-color:var(--accent);
-  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent);
-}
-
-.shopName{
-  font-weight:900;
-}
-
-.shopDesc{
-  color:var(--muted);
-  font-size:12px;
-  margin:5px 0 10px;
-  min-height:32px;
-}
-
-.shopPrice{
-  font-weight:800;
-  margin-bottom:9px;
-}
-
-.shopActions{
-  display:flex;
-  gap:6px;
-}
-
-.shopActions button{
-  flex:1;
-}
-
-.badge{
-  display:inline-block;
-  font-size:10px;
-  padding:3px 6px;
-  border-radius:6px;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  margin-left:4px;
-}
-
-/* =========================
-   GRAPH
-========================= */
-
-.largeChart{
-  height:480px;
-}
-
-/* =========================
-   RECOVERY
-========================= */
-
-.recoveryBox{
-  text-align:center;
-}
-
-.memoryNumber{
-  font-size:42px;
-  font-family:'JetBrains Mono',monospace;
-  font-weight:900;
-  letter-spacing:8px;
-  margin:25px 0;
-}
-
-.recoveryProgress{
-  color:var(--muted);
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modalBox{
-  width:min(700px,100%);
-  max-height:85vh;
-  overflow:auto;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:22px;
-}
-
-.modalBox h2{
-  margin-top:0;
-}
-
-.modalButtons{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
-}
-
-.modalButtons button{
-  flex:1;
-}
-
-/* =========================
-   FRAME TYPES
-========================= */
-
-.frame-default .avatar-ring{
-  border-style:solid;
-}
-
-.frame-chrome .avatar-ring{
-  border-style:double;
-  border-width:7px;
-}
-
-.frame-warning .avatar-ring{
-  border-style:dashed;
-}
-
-.frame-void .avatar-ring{
-  border-width:5px;
-  box-shadow:0 0 15px #a93cff;
-}
-
-.frame-holo .avatar-ring{
-  border-style:double;
-  box-shadow:0 0 20px cyan;
-}
-
-.frame-ice .avatar-ring{
-  border-width:6px;
-  box-shadow:0 0 20px #8eeaff;
-}
-
-.frame-core .avatar-ring{
-  border-width:6px;
-  border-style:double;
-  animation:coreFrame 2s infinite;
-}
-
-@keyframes coreFrame{
-  50%{
-    box-shadow:
-      0 0 12px cyan,
-      0 0 28px #8a2be2;
-  }
-}
-
-/* =========================
-   ACHIEVEMENT FRAMES
-========================= */
-
-.frame-ach-first .avatar-ring{
-  border-color:#6bff7d;
-}
-
-.frame-ach-getting .avatar-ring{
-  border-color:#58b8ff;
-}
-
-.frame-ach-bettor .avatar-ring{
-  border-color:#ff9f43;
-}
-
-.frame-ach-regular .avatar-ring{
-  border-color:#ffd43b;
-}
-
-.frame-ach-streak .avatar-ring{
-  border-color:#ff4d4d;
-  box-shadow:0 0 20px #ff4d4d;
-}
-
-.frame-ach-bigwin .avatar-ring{
-  border-color:#00d084;
-}
-
-.frame-ach-rich .avatar-ring{
-  border-color:#ffd700;
-}
-
-.frame-ach-bottom .avatar-ring{
-  border-color:#555;
-  border-style:dashed;
-}
-
-.frame-ach-boundary .avatar-ring{
-  border-color:#00ffff;
-  box-shadow:0 0 20px cyan;
-}
-
-.frame-ach-zero500k .avatar-ring{
-  border-color:#ff1744;
-  box-shadow:0 0 25px #ff1744;
-}
-
-.frame-ach-devsigh .avatar-ring{
-  border-color:#888;
-}
-
-.frame-ach-hacker .avatar-ring{
-  border-color:#8a2be2;
-  box-shadow:0 0 25px #8a2be2;
-}
-
-/* =========================
-   DECORATION
-========================= */
-
-.decoration{
-  position:absolute;
-  right:-5px;
-  bottom:0;
+  right:-10px;
+  bottom:-6px;
+  z-index:4;
   font-size:25px;
 }
 
-/* =========================
-   EXPERIMENTAL VISUALS
-========================= */
+.frame-default:before{border-color:var(--border)}
+.frame-chrome:before{border-color:#7e8792;box-shadow:0 0 10px #8d969f}
+.frame-warning:before{border-color:#d6a000;box-shadow:0 0 10px #e7b900}
+.frame-void:before{border-color:#7e55bd;box-shadow:0 0 16px #7e55bd}
+.frame-holo:before{border-color:#20b9c9;box-shadow:0 0 15px #20b9c9}
+.frame-ice:before{border-color:#80b7e8;box-shadow:0 0 15px #80b7e8}
+.frame-core:before{border-color:#d6b84e;box-shadow:0 0 18px #d6b84e}
 
-.experiment-404 .card{
-  position:relative;
-}
-
-.experiment-404 .card::after{
-  content:"404";
-  position:absolute;
-  right:10px;
-  top:8px;
-  font-size:9px;
-  opacity:.18;
-}
-
-.experiment-glitch .logo{
-  animation:glitch .8s infinite alternate;
-}
-
-@keyframes glitch{
-  from{transform:translateX(0)}
-  to{transform:translateX(1px)}
-}
-
-.experiment-noise #backgroundFx::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  opacity:.04;
+.hole{
+  margin-top:30px;
+  padding:22px;
+  border:2px dashed #8c8c8c;
+  border-radius:18px;
+  text-align:center;
+  cursor:pointer;
   background:repeating-linear-gradient(
-    90deg,
-    #fff 0 1px,
-    transparent 1px 4px
+    135deg,
+    var(--card2),
+    var(--card2) 8px,
+    var(--card) 8px,
+    var(--card) 16px
   );
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:900px){
-
-  .topbar{
-    align-items:flex-start;
-    flex-wrap:wrap;
-  }
-
-  .tabs{
-    width:100%;
-    order:3;
-  }
-
-  .balance{
-    margin-left:auto;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .profileStats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
+.hole:hover{
+  transform:scale(1.01);
 }
 
-@media(max-width:600px){
-
-  main{
-    padding:20px 12px 60px;
-  }
-
-  .topbar{
-    padding:10px 12px;
-  }
-
-  .logo{
-    font-size:18px;
-  }
-
-  .balance{
-    font-size:13px;
-  }
-
-  .tab{
-    font-size:12px;
-    padding:10px 7px;
-  }
-
-  .hero h1{
-    font-size:25px;
-  }
-
-  .card{
-    padding:17px;
-  }
-
-  .shopGrid{
-    grid-template-columns:1fr;
-  }
-
-  .profileStats{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .mission{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .mission button{
-    width:100%;
-  }
-
-  .achievement{
-    align-items:flex-start;
-  }
-
-  .chart-wrap{
-    height:250px;
-  }
-
-  .largeChart{
-    height:350px;
-  }
-
-  .quick{
-    flex-wrap:wrap;
-  }
-
-  .quick button{
-    min-width:45%;
-  }
+.hidden-note{
+  color:var(--muted);
+  font-size:11px;
 }
 
-@media(max-width:400px){
+.progress{
+  height:8px;
+  background:var(--border);
+  border-radius:99px;
+  overflow:hidden;
+}
 
-  .profileStats{
-    grid-template-columns:1fr;
+.progress>div{
+  height:100%;
+  background:var(--accent);
+}
+
+canvas{
+  width:100%;
+  height:280px;
+  display:block;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--card2);
+}
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  width:min(430px,100%);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(20px);
+  z-index:2000;
+  background:#20242a;
+  color:white;
+  border-radius:12px;
+  padding:12px 17px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  font-size:13px;
+  font-weight:700;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.mission.done{
+  opacity:.55;
+}
+
+.mission-reward{
+  font-weight:900;
+}
+
+.streak{
+  color:#d47b00;
+}
+
+.history-item.win{
+  border-left:4px solid var(--success);
+}
+
+.history-item.lose{
+  border-left:4px solid var(--danger);
+}
+
+/* themes */
+.theme-default{
+  --bg:#f5f6f8;
+  --card:#fff;
+  --card2:#fafafa;
+  --text:#17191d;
+  --muted:#737983;
+  --border:#dfe3e8;
+  --accent:#22262d;
+}
+
+.theme-neon{
+  --bg:#07101c;
+  --card:#0c1725;
+  --card2:#101e2f;
+  --text:#eaf8ff;
+  --muted:#8aa8bb;
+  --border:#1c4058;
+  --accent:#19bfff;
+}
+
+.theme-green{
+  --bg:#07120d;
+  --card:#0c1c13;
+  --card2:#10251a;
+  --text:#e9fff0;
+  --muted:#86aa92;
+  --border:#235237;
+  --accent:#28c76f;
+}
+
+.theme-night{
+  --bg:#090b0f;
+  --card:#11141a;
+  --card2:#171b22;
+  --text:#f1f3f5;
+  --muted:#858d98;
+  --border:#303640;
+  --accent:#d8dce2;
+}
+
+.theme-red{
+  --bg:#170808;
+  --card:#211010;
+  --card2:#2b1414;
+  --text:#fff1f1;
+  --muted:#b58a8a;
+  --border:#633030;
+  --accent:#ff4848;
+}
+
+.theme-ocean{
+  --bg:#06121a;
+  --card:#0b1d27;
+  --card2:#102631;
+  --text:#e9fbff;
+  --muted:#83aab4;
+  --border:#1c5362;
+  --accent:#20bdd1;
+}
+
+.theme-sunset{
+  --bg:#19100a;
+  --card:#24160e;
+  --card2:#301c11;
+  --text:#fff4e8;
+  --muted:#b69a84;
+  --border:#69412a;
+  --accent:#ff934d;
+}
+
+.theme-purple{
+  --bg:#100a18;
+  --card:#191025;
+  --card2:#211431;
+  --text:#f8efff;
+  --muted:#aa8fbd;
+  --border:#553674;
+  --accent:#b86cff;
+}
+
+.theme-silver{
+  --bg:#15171a;
+  --card:#202328;
+  --card2:#292d32;
+  --text:#f4f6f8;
+  --muted:#a0a6ae;
+  --border:#555c64;
+  --accent:#cbd1d8;
+}
+
+/* achievement core theme */
+.theme-core{
+  --bg:#0a0a08;
+  --card:#15140e;
+  --card2:#1c1a11;
+  --text:#fff9dc;
+  --muted:#b6a978;
+  --border:#6e5c22;
+  --accent:#e0bd45;
+}
+
+/* backgrounds */
+.bg-grid #backgroundFx{
+  background-image:
+    linear-gradient(rgba(100,120,140,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(100,120,140,.08) 1px,transparent 1px);
+  background-size:35px 35px;
+}
+
+.bg-wave #backgroundFx{
+  background:
+    repeating-radial-gradient(
+      ellipse at 50% 100%,
+      transparent 0 25px,
+      rgba(120,130,150,.08) 26px 28px
+    );
+}
+
+.bg-scan #backgroundFx{
+  background:repeating-linear-gradient(
+    0deg,
+    transparent 0 5px,
+    rgba(100,120,150,.045) 6px 7px
+  );
+}
+
+.bg-blackhole #backgroundFx{
+  background:
+    radial-gradient(circle at 50% 50%,
+    rgba(0,0,0,.85) 0 7%,
+    rgba(80,70,120,.2) 13%,
+    transparent 30%);
+}
+
+.galaxy-star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation:galaxyFloat linear infinite;
+}
+
+@keyframes galaxyFloat{
+  from{transform:translateY(0);opacity:.15}
+  50%{opacity:.8}
+  to{transform:translateY(-80px);opacity:.1}
+}
+
+/* UI effects */
+.ui-smooth *{
+  transition:all .25s ease;
+}
+
+.ui-neon .card,
+.ui-neon .btn,
+.ui-neon input{
+  box-shadow:0 0 10px rgba(100,200,255,.12);
+  border-color:color-mix(in srgb,var(--accent) 60%,var(--border));
+}
+
+.ui-pop .card,
+.ui-pop .btn{
+  border-width:2px;
+}
+
+.ui-pop .card:hover{
+  transform:translateY(-2px);
+}
+
+.ui-minimal .card{
+  box-shadow:none;
+}
+
+.ui-glass .card{
+  background:color-mix(in srgb,var(--card) 75%,transparent);
+  backdrop-filter:blur(15px);
+}
+
+.ui-terminal *{
+  font-family:'JetBrains Mono',monospace !important;
+}
+
+.experiment-404 .card{
+  animation:glitchCard 2.8s infinite;
+}
+
+@keyframes glitchCard{
+  0%,92%,100%{transform:none}
+  94%{transform:translateX(2px)}
+  96%{transform:translateX(-2px)}
+}
+
+.experiment-noise #experimentFx{
+  opacity:.08;
+  background-image:
+    repeating-radial-gradient(
+      circle at 0 0,
+      #fff 0 1px,
+      transparent 1px 3px
+    );
+  animation:noiseMove .12s steps(2) infinite;
+}
+
+@keyframes noiseMove{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(5px,-3px)}
+  100%{transform:translate(-4px,4px)}
+}
+
+.experiment-error .error-mark{
+  display:block;
+}
+
+.error-mark{
+  display:none;
+  position:fixed;
+  top:85px;
+  right:15px;
+  z-index:100;
+  font-size:10px;
+  color:var(--danger);
+  font-weight:900;
+}
+
+/* fonts */
+.font-default{--font:'Noto Sans KR',sans-serif}
+.font-noto{--font:'Noto Sans KR',sans-serif}
+.font-pretendard{--font:Arial,sans-serif}
+.font-mono{--font:'JetBrains Mono',monospace}
+.font-orbitron{--font:'Orbitron',sans-serif}
+.font-pixel{--font:'Press Start 2P',cursive}
+.font-core{--font:'Orbitron','JetBrains Mono',sans-serif}
+
+/* decoration */
+.decoration-core{
+  filter:drop-shadow(0 0 5px #d7bb4d);
+}
+
+.decoration-satellite:after{
+  content:"🛰️";
+}
+
+.decoration-holo:after{
+  content:"💠";
+}
+
+.decoration-warning:after{
+  content:"⚠️";
+}
+
+.decoration-portal:after{
+  content:"🌀";
+}
+
+@media(max-width:550px){
+  .header-inner{
+    align-items:flex-start;
+  }
+
+  .big-balance{
+    font-size:34px;
   }
 
   .nickname{
-    font-size:21px;
-  }
-
-  .asset{
-    font-size:29px;
+    font-size:22px;
   }
 }
 </style>
 </head>
 
-<body class="theme-default bg-none ui-smooth">
+<body class="theme-default bg-none ui-default font-default">
 
 <div id="backgroundFx"></div>
+<div id="experimentFx"></div>
+<div class="error-mark">ERR_404</div>
 
-<header class="topbar">
-
-  <div class="logoBox">
-    <div class="logo">COINLAB</div>
-    <span class="beta">beta</span>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo">COINLAB</div>
+      <div class="beta">beta</div>
+    </div>
+    <div class="balance">💰 <b id="headerBalance">10,000</b> COIN</div>
   </div>
 
-  <nav class="tabs">
-
-    <button class="tab active" data-page="betPage">
-      배팅
-    </button>
-
-    <button class="tab" data-page="attendancePage">
-      출석 보상
-    </button>
-
-    <button class="tab" data-page="missionPage">
-      일일 미션
-    </button>
-
-    <button class="tab" data-page="achievementPage">
-      업적
-    </button>
-
-    <button class="tab" data-page="profilePage">
-      👤 프로필
-    </button>
-
-    <button class="tab" data-page="shopPage">
-      상점
-    </button>
-
-    <button class="tab" data-page="graphPage">
-      📈 그래프
-    </button>
-
-    <button class="tab" data-page="recoveryPage">
-      🆘 회생
-    </button>
-
+  <nav id="nav">
+    <button data-page="bet" class="active">배팅</button>
+    <button data-page="attendance">출석 보상</button>
+    <button data-page="missions">일일 미션</button>
+    <button data-page="achievements">업적</button>
+    <button data-page="profile">👤 프로필</button>
+    <button data-page="shop">상점</button>
+    <button data-page="graph">📈 그래프</button>
+    <button data-page="recovery">🆘 회생</button>
   </nav>
-
-  <div class="balance">
-    🪙 <span id="topBalance">10,000</span>
-  </div>
-
 </header>
 
 <main>
 
-<!-- =========================
-     BETTING
-========================= -->
-
-<section id="betPage" class="page active">
-
-  <div class="hero">
-    <h1>가상 배팅</h1>
-    <p>가상 COIN으로 즐기는 50:50 배팅</p>
+<!-- BET -->
+<section id="page-bet" class="page active">
+  <div class="card center">
+    <div class="muted">현재 보유 COIN</div>
+    <div class="big-balance" id="betBalance">10,000</div>
+    <div class="muted">50 : 50 · 가상 COIN 전용</div>
   </div>
 
-  <div class="grid">
-
+  <div class="bet-layout">
     <div class="card">
-
-      <h2>현재 자산</h2>
-
-      <div class="asset">
-        <span id="balance">10,000</span>
-        <small>COIN</small>
+      <h2>🎲 배팅</h2>
+      <div class="muted" style="margin-bottom:10px">
+        배팅 금액을 입력하고 승부를 시작하세요.
       </div>
 
-      <label>배팅 금액</label>
+      <input id="betAmount" type="number" min="1" placeholder="배팅 금액">
 
-      <input
-        id="amount"
-        type="number"
-        min="1"
-        step="1"
-        placeholder="금액을 입력하세요"
-      >
-
-      <div class="quick">
-
-        <button class="btn" onclick="setAmount(100)">
-          100
-        </button>
-
-        <button class="btn" onclick="setAmount(500)">
-          500
-        </button>
-
-        <button class="btn" onclick="setAmount(1000)">
-          1,000
-        </button>
-
-        <button class="btn" onclick="setAllIn()">
-          ALL IN
-        </button>
-
+      <div class="bet-buttons">
+        <button class="btn secondary" onclick="setBetPercent(.1)">10%</button>
+        <button class="btn secondary" onclick="setBetPercent(.5)">50%</button>
+        <button class="btn secondary" onclick="setBetPercent(1)">ALL IN</button>
+        <button class="btn" onclick="placeBet()">승부 시작</button>
       </div>
-
-      <button
-        id="betBtn"
-        class="btn primary betBtn"
-        onclick="placeBet()"
-      >
-        배팅하기
-      </button>
-
-      <div id="message" class="message neutral">
-        성공 확률 50% · 성공 시 배팅금만큼 순이익
-      </div>
-
-      <div id="bankrupt" class="bankrupt">
-        💀 자산이 0 COIN이 되었습니다.
-        <br>
-        🆘 회생 메뉴를 이용할 수 있습니다.
-      </div>
-
     </div>
 
     <div class="card">
-
-      <h2>자산 변화</h2>
-
-      <div class="chart-wrap">
-        <canvas id="miniChart"></canvas>
+      <h2>결과</h2>
+      <div id="result" class="result">
+        아직 승부하지 않았습니다.
       </div>
-
-      <div class="chart-note">
-        배팅 결과가 시간순으로 기록됩니다.
-      </div>
-
     </div>
-
-  </div>
-
-  <section class="card history">
-
-    <h2>배팅 기록</h2>
-
-    <table>
-
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>시간</th>
-          <th>결과</th>
-          <th>배팅</th>
-          <th>변화</th>
-          <th>자산</th>
-        </tr>
-      </thead>
-
-      <tbody id="historyBody"></tbody>
-
-    </table>
-
-    <div id="emptyHistory" class="empty">
-      아직 배팅 기록이 없습니다.
-    </div>
-
-  </section>
-
-</section>
-
-
-<!-- =========================
-     ATTENDANCE
-========================= -->
-
-<section id="attendancePage" class="page">
-
-  <div class="hero">
-    <h1>🎁 출석 보상</h1>
-    <p>매일 한 번 받을 수 있습니다.</p>
-  </div>
-
-  <div class="card centerCard">
-
-    <h2>오늘의 출석</h2>
-
-    <div class="bigReward" id="attendanceReward">
-      +1,000 COIN
-    </div>
-
-    <div class="timer" id="attendanceTimer">
-      출석 가능
-    </div>
-
-    <button
-      id="attendanceBtn"
-      class="btn primary"
-      onclick="claimAttendance()"
-    >
-      출석 받기
-    </button>
-
-    <p id="attendanceStreak">
-      현재 출석 연속 기록: 0일
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     MISSIONS
-========================= -->
-
-<section id="missionPage" class="page">
-
-  <div class="hero">
-    <h1>🎯 일일 미션</h1>
-    <p>오늘의 미션을 완료하고 COIN을 획득하세요.</p>
-  </div>
-
-  <div class="card centerCard">
-
-    <div id="missionList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     ACHIEVEMENTS
-========================= -->
-
-<section id="achievementPage" class="page">
-
-  <div class="hero">
-    <h1>🏆 업적</h1>
-    <p>
-      업적을 달성하면 COIN + 칭호 + 프로필 프레임을 획득합니다.
-      <br>
-      업적 보상인 COINLAB CORE 테마는 상점에서 구매할 수 없습니다.
-    </p>
-  </div>
-
-  <div class="card centerCard">
-
-    <div id="achievementList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     PROFILE
-========================= -->
-
-<section id="profilePage" class="page">
-
-  <div class="card profileTop">
-
-    <div id="avatarWrap" class="avatar-wrap frame-default">
-
-      <div class="avatar-ring"></div>
-
-      <div class="profile-avatar">
-        👤
-      </div>
-
-      <div id="profileDecoration" class="decoration"></div>
-
-    </div>
-
-    <div id="profileNickname" class="nickname">
-      플레이어
-    </div>
-
-    <div id="profileHonor" class="honor">
-      🌱 새내기
-    </div>
-
-    <br>
-
-    <button class="btn" onclick="openNicknameEditor()">
-      ✏️ 이름 수정
-    </button>
-
   </div>
 
   <div class="card">
+    <h3>📊 최근 잔액 그래프</h3>
+    <canvas id="miniGraph"></canvas>
+  </div>
 
+  <div class="card">
+    <h3>📜 최근 기록</h3>
+    <div id="recentHistory" class="list"></div>
+  </div>
+</section>
+
+<!-- ATTENDANCE -->
+<section id="page-attendance" class="page">
+  <div class="card center">
+    <h2>📅 출석 보상</h2>
+    <div id="attendanceStreak" class="streak"></div>
+    <div id="attendanceTimer" class="muted"></div>
+    <button id="attendanceBtn" class="btn" onclick="claimAttendance()">
+      출석하기
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>보상 안내</h3>
+    <div class="list">
+      <div class="row"><span>1일차</span><b>+1,000 COIN</b></div>
+      <div class="row"><span>2일차</span><b>+1,100 COIN</b></div>
+      <div class="row"><span>3일차</span><b>+1,200 COIN</b></div>
+      <div class="row"><span>4일차</span><b>+1,300 COIN</b></div>
+      <div class="row"><span>5일차</span><b>+1,400 COIN</b></div>
+      <div class="row"><span>6일차</span><b>+1,500 COIN</b></div>
+      <div class="row"><span>7일차+</span><b>+1,600 COIN</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSIONS -->
+<section id="page-missions" class="page">
+  <div class="card">
+    <h2>🎯 일일 미션</h2>
+    <div class="muted">매일 새로운 미션이 지급됩니다.</div>
+  </div>
+  <div id="missionList" class="list"></div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="page-achievements" class="page">
+  <div class="card">
+    <h2>🏆 업적</h2>
+    <div id="achievementCount" class="muted"></div>
+  </div>
+  <div id="achievementList" class="list"></div>
+</section>
+
+<!-- PROFILE -->
+<section id="page-profile" class="page">
+  <div class="card">
+    <div class="profile-top">
+      <div id="avatarWrap" class="avatar-wrap frame-default">
+        <div class="profile-avatar">👤</div>
+        <div id="profileDecoration" class="profile-decoration"></div>
+      </div>
+
+      <div style="flex:1">
+        <div class="nickname" id="profileNickname">플레이어</div>
+        <div class="honor" id="profileHonor">🌱 새내기</div>
+        <button class="btn secondary" style="margin-top:10px" onclick="openNicknameEditor()">
+          ✏️ 이름 수정
+        </button>
+      </div>
+    </div>
+
+    <div id="secretHoleArea"></div>
+  </div>
+
+  <div class="card">
     <h2>📊 상세 통계</h2>
-
-    <div id="profileStats" class="profileStats"></div>
-
-  </div>
-
-  <div
-    id="secretHole"
-    class="secretHole"
-    onclick="enterSecretHole()"
-  >
-    🕳️ 이상한 구멍이 보인다...
-    <br>
-    <small>들어가시겠습니까?</small>
-  </div>
-
-</section>
-
-
-<!-- =========================
-     SHOP
-========================= -->
-
-<section id="shopPage" class="page">
-
-  <div class="hero">
-    <h1>🛒 상점</h1>
-    <p>COIN으로 다양한 프로필 요소를 구매하세요.</p>
+    <div id="profileStats" class="stats-grid"></div>
   </div>
 
   <div class="card">
-
-    <div class="shopTools">
-
-      <input
-        id="shopSearch"
-        placeholder="🔍 아이템 검색"
-        oninput="renderShop()"
-      >
-
-      <button
-        class="btn"
-        onclick="toggleFavorites()"
-        id="favoriteFilterBtn"
-      >
-        ⭐ 전체
-      </button>
-
-    </div>
-
-    <div id="shopContainer"></div>
-
+    <h3>🎖️ 현재 장착</h3>
+    <div id="equippedInfo" class="list"></div>
   </div>
-
 </section>
 
+<!-- SHOP -->
+<section id="page-shop" class="page">
+  <div class="card">
+    <h2>🛒 COINLAB 상점</h2>
+    <div class="muted">
+      모든 아이템은 가상 COIN으로 구매합니다.
+      업적 보상은 상점에서 판매하지 않습니다.
+    </div>
+  </div>
 
-<!-- =========================
-     GRAPH
-========================= -->
+  <div id="shopContainer"></div>
+</section>
 
-<section id="graphPage" class="page">
+<!-- GRAPH -->
+<section id="page-graph" class="page">
+  <div class="card">
+    <h2>📈 잔액 그래프</h2>
+    <canvas id="mainGraph"></canvas>
+  </div>
+</section>
 
-  <div class="hero">
-    <h1>📈 그래프</h1>
-    <p>지금까지의 COIN 변화를 확인합니다.</p>
+<!-- RECOVERY -->
+<section id="page-recovery" class="page">
+  <div class="card center">
+    <h2>🆘 회생</h2>
+    <div id="recoveryStatus"></div>
   </div>
 
   <div class="card">
-
-    <div class="largeChart">
-      <canvas id="largeChart"></canvas>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     RECOVERY
-========================= -->
-
-<section id="recoveryPage" class="page">
-
-  <div class="hero">
-    <h1>🆘 회생</h1>
-    <p>COIN이 완전히 바닥났을 때 사용할 수 있습니다.</p>
-  </div>
-
-  <div class="card centerCard recoveryBox">
-
-    <h2>🧠 기억력 테스트</h2>
-
-    <p id="recoveryStatus">
-      잔액이 0 COIN일 때만 이용할 수 있습니다.
+    <h3>회생 시스템</h3>
+    <p class="muted">
+      잔액이 정확히 0 COIN일 때만 사용할 수 있습니다.
+      3단계 기억력 테스트를 통과하면 1,000 COIN을 회생합니다.
     </p>
 
-    <div
-      id="memoryNumber"
-      class="memoryNumber"
-    >
-      준비
+    <div id="recoveryGame" class="center">
+      <button class="btn" onclick="startRecovery()">회생 테스트 시작</button>
     </div>
-
-    <input
-      id="memoryInput"
-      placeholder="숫자를 입력하세요"
-      inputmode="numeric"
-      style="display:none"
-    >
-
-    <br>
-
-    <button
-      id="recoveryStartBtn"
-      class="btn primary"
-      onclick="startRecovery()"
-    >
-      회생 테스트 시작
-    </button>
-
-    <div
-      id="recoveryProgress"
-      class="recoveryProgress"
-    >
-      최고 단계: 0
-    </div>
-
   </div>
 
+  <div class="card">
+    <h3>🧠 기록</h3>
+    <div id="recoveryStats"></div>
+  </div>
 </section>
 
 </main>
 
-
-<!-- =========================
-     NICKNAME MODAL
-========================= -->
-
-<div id="nicknameModal" class="modal">
-
-  <div class="modalBox">
-
-    <h2>✏️ 닉네임 수정</h2>
-
-    <input
-      id="nicknameInput"
-      maxlength="16"
-      placeholder="1~16자"
-    >
-
-    <div class="modalButtons">
-
-      <button
-        class="btn"
-        onclick="closeModal('nicknameModal')"
-      >
-        취소
-      </button>
-
-      <button
-        class="btn primary"
-        onclick="saveNickname()"
-      >
-        저장
-      </button>
-
+<!-- NICKNAME MODAL -->
+<div id="nicknameModal" class="modal-bg">
+  <div class="modal">
+    <h2>✏️ 이름 수정</h2>
+    <input id="nicknameInput" maxlength="16" placeholder="1~16자">
+    <div class="modal-buttons">
+      <button class="btn secondary" onclick="closeNicknameEditor()">취소</button>
+      <button class="btn" onclick="saveNickname()">저장</button>
     </div>
-
   </div>
-
 </div>
 
+<div id="toast" class="toast"></div>
 
 <script>
-
 /* =========================================================
-   CONSTANTS
+   STORAGE
 ========================================================= */
 
-const START_BALANCE = 10000;
-const REWARD_AMOUNT = 1000;
-const REWARD_COOLDOWN = 24 * 60 * 60 * 1000;
-const RECOVERY_COOLDOWN = 5 * 60 * 1000;
+const BALANCE_KEY="coinlab_balance";
+const HISTORY_KEY="coinlab_history";
+const REWARD_KEY="coinlab_reward_time";
+const STREAK_KEY="coinlab_streak";
+const LAST_STREAK_KEY="coinlab_last_streak";
 
-const BALANCE_KEY = "coinlab_balance";
-const HISTORY_KEY = "coinlab_history";
-const POINTS_KEY = "coinlab_points";
+const THEME_KEY="coinlab_theme";
+const OWNED_THEMES_KEY="coinlab_owned_themes";
 
-const REWARD_KEY = "coinlab_reward_time";
-const STREAK_KEY = "coinlab_streak";
-const LAST_STREAK_KEY = "coinlab_last_streak";
+const OWNED_BG_KEY="coinlab_owned_backgrounds";
+const BG_KEY="coinlab_background";
 
-const THEME_KEY = "coinlab_theme";
-const OWNED_THEMES_KEY = "coinlab_owned_themes";
+const OWNED_UI_KEY="coinlab_owned_ui";
+const UI_KEY="coinlab_ui";
 
-const OWNED_BG_KEY = "coinlab_owned_backgrounds";
-const BG_KEY = "coinlab_background";
+const TITLE_KEY="coinlab_title";
+const HONOR_KEY="coinlab_honor";
 
-const OWNED_UI_KEY = "coinlab_owned_ui";
-const UI_KEY = "coinlab_ui";
+const MISSION_KEY="coinlab_daily_missions";
+const ACHIEVEMENT_KEY="coinlab_achievements";
 
-const TITLE_KEY = "coinlab_title";
-const HONOR_KEY = "coinlab_honor";
+const REVIVE_KEY="coinlab_revive_time";
+const REVIVE_COUNT_KEY="coinlab_revive_count";
+const REVIVE_BEST_KEY="coinlab_revive_best";
 
-const MISSION_KEY = "coinlab_daily_missions";
-const ACHIEVEMENT_KEY = "coinlab_achievements";
+const NICKNAME_KEY="coinlab_nickname";
 
-const REVIVE_KEY = "coinlab_revive_time";
-const REVIVE_COUNT_KEY = "coinlab_revive_count";
-const REVIVE_BEST_KEY = "coinlab_revive_best";
+const SHOP_SPENT_KEY="coinlab_shop_spent";
+const OWNED_ITEMS_KEY="coinlab_owned_items";
+const EQUIPPED_KEY="coinlab_equipped_shop";
 
-const NICKNAME_KEY = "coinlab_nickname";
+const SOUND_KEY="coinlab_sound";
+const EXPERIMENT_KEY="coinlab_experiment";
+const FONT_KEY="coinlab_font";
+const FRAME_KEY="coinlab_frame";
+const DECORATION_KEY="coinlab_decoration";
 
-const OWNED_KEY = "coinlab_owned_items";
-const EQUIPPED_KEY = "coinlab_equipped_shop";
-const FAVORITE_KEY = "coinlab_favorites";
-const SHOP_SPENT_KEY = "coinlab_shop_spent";
-
-const FONT_KEY = "coinlab_font";
-const SOUND_KEY = "coinlab_sound";
-const FRAME_KEY = "coinlab_frame";
-const DECORATION_KEY = "coinlab_decoration";
-const EXPERIMENT_KEY = "coinlab_experiment";
-
-const CORE_THEME_KEY = "coinlab_core_theme";
-
-const $ = id => document.getElementById(id);
-
-const fmt = n =>
-  Math.floor(Number(n) || 0).toLocaleString("ko-KR");
-
+const START_BALANCE=10000;
+const REWARD_AMOUNT=1000;
+const REWARD_COOLDOWN=24*60*60*1000;
+const RECOVERY_COOLDOWN=5*60*1000;
 
 /* =========================================================
-   STORAGE HELPERS
+   SAFE STORAGE
 ========================================================= */
 
-function readJSON(key, fallback){
-
+function getJSON(key,fallback){
   try{
-
-    const raw = localStorage.getItem(key);
-
-    if(raw === null) return fallback;
-
-    return JSON.parse(raw);
-
-  }catch{
-
+    const raw=localStorage.getItem(key);
+    if(raw===null)return fallback;
+    const parsed=JSON.parse(raw);
+    return parsed;
+  }catch(e){
     return fallback;
-
   }
-
 }
 
-function writeJSON(key,value){
-
-  localStorage.setItem(
-    key,
-    JSON.stringify(value)
-  );
-
+function setJSON(key,value){
+  localStorage.setItem(key,JSON.stringify(value));
 }
 
-
-/* =========================================================
-   BALANCE
-========================================================= */
-
+/* IMPORTANT:
+   0 must remain 0. Never use localStorage value || START_BALANCE.
+*/
 function getBalance(){
+  const raw=localStorage.getItem(BALANCE_KEY);
 
-  const raw = localStorage.getItem(BALANCE_KEY);
-
-  if(raw === null){
-
-    localStorage.setItem(
-      BALANCE_KEY,
-      String(START_BALANCE)
-    );
-
+  if(raw===null){
+    localStorage.setItem(BALANCE_KEY,String(START_BALANCE));
     return START_BALANCE;
-
   }
 
-  const n = Number(raw);
+  const n=Number(raw);
 
-  if(!Number.isFinite(n) || n < 0){
-
-    localStorage.setItem(
-      BALANCE_KEY,
-      String(START_BALANCE)
-    );
-
+  if(!Number.isFinite(n)||n<0){
+    localStorage.setItem(BALANCE_KEY,String(START_BALANCE));
     return START_BALANCE;
-
   }
 
   return Math.floor(n);
-
 }
 
 function setBalance(value){
-
-  const n = Math.max(
-    0,
-    Math.floor(Number(value) || 0)
-  );
-
-  localStorage.setItem(
-    BALANCE_KEY,
-    String(n)
-  );
-
+  const n=Math.max(0,Math.floor(Number(value)||0));
+  localStorage.setItem(BALANCE_KEY,String(n));
+  updateBalanceUI();
   return n;
-
 }
 
-let balance = getBalance();
+function addBalance(value){
+  return setBalance(getBalance()+Number(value));
+}
 
+function updateBalanceUI(){
+  const b=getBalance();
+  const text=b.toLocaleString();
+
+  document.getElementById("headerBalance").textContent=text;
+  document.getElementById("betBalance").textContent=text;
+}
+
+function getHistory(){
+  return getJSON(HISTORY_KEY,[]);
+}
+
+function saveHistory(history){
+  setJSON(HISTORY_KEY,history);
+}
+
+function getOwnedItems(){
+  return getJSON(OWNED_ITEMS_KEY,[]);
+}
+
+function saveOwnedItems(arr){
+  setJSON(OWNED_ITEMS_KEY,arr);
+}
+
+function getEquipped(){
+  return getJSON(EQUIPPED_KEY,{});
+}
+
+function saveEquipped(obj){
+  setJSON(EQUIPPED_KEY,obj);
+}
 
 /* =========================================================
-   HISTORY
+   HELPERS
 ========================================================= */
 
-let history = readJSON(
-  HISTORY_KEY,
-  []
-);
-
-let points = readJSON(
-  POINTS_KEY,
-  [{label:"시작",value:balance}]
-);
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-function totalBets(){
-
-  return history.length;
-
+function money(n){
+  return Number(n||0).toLocaleString();
 }
 
-function wins(){
-
-  return history.filter(x => x.success).length;
-
+function getToday(){
+  return new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Seoul"
+  }).format(new Date());
 }
 
-function losses(){
-
-  return history.filter(x => !x.success).length;
-
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
 }
 
-function totalBetAmount(){
-
-  return history.reduce(
-    (a,x) => a + x.amount,
-    0
-  );
-
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;
+  el.classList.add("show");
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>{
+    el.classList.remove("show");
+  },2400);
 }
-
-function totalProfit(){
-
-  return history.reduce(
-    (a,x) => a + x.change,
-    0
-  );
-
-}
-
-function averageBet(){
-
-  return totalBets()
-    ? totalBetAmount()/totalBets()
-    : 0;
-
-}
-
-function averageProfit(){
-
-  return totalBets()
-    ? totalProfit()/totalBets()
-    : 0;
-
-}
-
-function maxWin(){
-
-  const arr =
-    history
-      .filter(x=>x.change>0)
-      .map(x=>x.change);
-
-  return arr.length ? Math.max(...arr) : 0;
-
-}
-
-function maxLoss(){
-
-  const arr =
-    history
-      .filter(x=>x.change<0)
-      .map(x=>Math.abs(x.change));
-
-  return arr.length ? Math.max(...arr) : 0;
-
-}
-
-function maxBalance(){
-
-  return Math.max(
-    balance,
-    ...points.map(x=>x.value)
-  );
-
-}
-
-function minBalance(){
-
-  return Math.min(
-    balance,
-    ...points.map(x=>x.value)
-  );
-
-}
-
-function currentStreak(){
-
-  let streak = 0;
-
-  for(const x of history){
-
-    if(x.success) streak++;
-    else break;
-
-  }
-
-  return streak;
-
-}
-
-function maxStreak(){
-
-  let max = 0;
-  let current = 0;
-
-  for(const x of [...history].reverse()){
-
-    if(x.success){
-
-      current++;
-      max = Math.max(max,current);
-
-    }else{
-
-      current = 0;
-
-    }
-
-  }
-
-  return max;
-
-}
-
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-document.querySelectorAll(".tab")
-.forEach(btn => {
-
+document.querySelectorAll("#nav button").forEach(btn=>{
   btn.addEventListener("click",()=>{
+    const page=btn.dataset.page;
 
-    document.querySelectorAll(".tab")
-      .forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".page").forEach(p=>{
+      p.classList.remove("active");
+    });
+
+    document.getElementById("page-"+page).classList.add("active");
+
+    document.querySelectorAll("#nav button").forEach(b=>{
+      b.classList.remove("active");
+    });
 
     btn.classList.add("active");
 
-    document.querySelectorAll(".page")
-      .forEach(x=>x.classList.remove("active"));
-
-    $(btn.dataset.page)
-      .classList.add("active");
-
-    if(btn.dataset.page==="graphPage"){
-
-      setTimeout(drawLargeChart,50);
-
-    }
-
-    if(btn.dataset.page==="profilePage"){
-
-      renderProfile();
-
-    }
-
-    if(btn.dataset.page==="shopPage"){
-
-      renderShop();
-
-    }
-
+    refreshPage(page);
   });
-
 });
 
+function refreshPage(page){
+  updateBalanceUI();
 
-function openPage(id){
-
-  document.querySelectorAll(".tab")
-    .forEach(x=>{
-      x.classList.toggle(
-        "active",
-        x.dataset.page===id
-      );
-    });
-
-  document.querySelectorAll(".page")
-    .forEach(x=>{
-      x.classList.toggle(
-        "active",
-        x.id===id
-      );
-    });
-
+  if(page==="bet")renderRecentHistory();
+  if(page==="attendance")renderAttendance();
+  if(page==="missions")renderMissions();
+  if(page==="achievements")renderAchievements();
+  if(page==="profile")renderProfile();
+  if(page==="shop")renderShop();
+  if(page==="graph")drawGraph("mainGraph");
+  if(page==="recovery")renderRecovery();
 }
-
 
 /* =========================================================
    BETTING
 ========================================================= */
 
-function setAmount(n){
+function setBetPercent(percent){
+  const balance=getBalance();
 
-  $("amount").value =
-    Math.min(n,balance);
+  if(balance<=0){
+    toast("잔액이 0 COIN입니다.");
+    return;
+  }
 
-}
-
-function setAllIn(){
-
-  $("amount").value = balance;
-
+  document.getElementById("betAmount").value=
+    Math.max(1,Math.floor(balance*percent));
 }
 
 function placeBet(){
+  const balance=getBalance();
+  const input=Number(document.getElementById("betAmount").value);
 
-  const amount =
-    Number($("amount").value);
-
-  const msg = $("message");
-
-  if(!Number.isInteger(amount) || amount<=0){
-
-    msg.className="message lose";
-    msg.textContent =
-      "⚠️ 1 COIN 이상의 정수 금액을 입력하세요.";
-
+  if(balance<=0){
+    toast("잔액이 0 COIN입니다. 🆘 회생을 이용하세요.");
     return;
-
   }
 
-  if(amount>balance){
-
-    msg.className="message lose";
-    msg.textContent =
-      "🚫 현재 자산보다 큰 금액은 배팅할 수 없습니다.";
-
+  if(!Number.isFinite(input)||input<=0){
+    toast("배팅 금액을 입력하세요.");
     return;
-
   }
 
-  const before = balance;
+  const bet=Math.floor(input);
 
-  const success =
-    Math.random() < 0.5;
+  if(bet>balance){
+    toast("현재 잔액보다 많이 배팅할 수 없습니다.");
+    return;
+  }
 
-  let change;
+  const before=balance;
+  const win=Math.random()<0.5;
 
-  if(success){
+  let after;
+  let profit;
 
-    change = amount;
-
-    balance = setBalance(
-      balance + amount
-    );
-
-    msg.className="message win";
-
-    msg.textContent =
-      `🎉 성공! +${fmt(amount)} COIN`;
-
-    playSound("win");
-
+  if(win){
+    after=before+bet;
+    profit=bet;
   }else{
+    after=before-bet;
+    profit=-bet;
+  }
 
-    change = -amount;
+  setBalance(after);
 
-    balance = setBalance(
-      balance - amount
-    );
+  const history=getHistory();
 
-    msg.className="message lose";
+  history.push({
+    time:new Date().toISOString(),
+    bet,
+    result:win?"win":"lose",
+    profit,
+    balance:after
+  });
 
-    msg.textContent =
-      `💀 실패! -${fmt(amount)} COIN`;
+  saveHistory(history);
 
+  updateStreak(win);
+  checkAchievements({
+    type:"bet",
+    bet,
+    win,
+    before,
+    after,
+    profit
+  });
+
+  const result=document.getElementById("result");
+
+  if(win){
+    result.className="result win";
+    result.innerHTML=
+      `🎉 승리!<br>+${money(bet)} COIN`;
+    playSound("win");
+  }else{
+    result.className="result lose";
+    result.innerHTML=
+      `💥 패배<br>-${money(bet)} COIN`;
     playSound("lose");
-
   }
 
-  const now = new Date();
+  renderRecentHistory();
+  drawGraph("miniGraph");
+  updateBalanceUI();
+  renderProfile();
 
-  const time =
-    now.toLocaleTimeString(
-      "ko-KR",
-      {
-        hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit"
-      }
-    );
-
-  history.unshift({
-    time,
-    success,
-    amount,
-    change,
-    balance
-  });
-
-  points.push({
-    label:time,
-    value:balance
-  });
-
-  if(points.length>50){
-
-    points.shift();
-
+  if(after===0){
+    checkAchievements({
+      type:"balanceZero",
+      before,
+      after,
+      bet,
+      win
+    });
   }
-
-  writeJSON(
-    HISTORY_KEY,
-    history
-  );
-
-  writeJSON(
-    POINTS_KEY,
-    points
-  );
-
-  $("amount").value="";
-
-  if(balance===0){
-
-    $("bankrupt").style.display="block";
-
-  }
-
-  if(
-    before===500000 &&
-    amount===500000 &&
-    !success &&
-    balance===0
-  ){
-
-    unlockAchievement("zero500k");
-
-  }
-
-  checkAchievements();
-
-  updateAll();
-
 }
 
+function updateStreak(win){
+  const current=Number(localStorage.getItem(STREAK_KEY)||0);
 
-/* =========================================================
-   HISTORY
-========================================================= */
+  if(win){
+    localStorage.setItem(STREAK_KEY,String(current+1));
 
-function renderHistory(){
+    const best=Number(localStorage.getItem(LAST_STREAK_KEY)||0);
 
-  const body =
-    $("historyBody");
-
-  $("emptyHistory").style.display =
-    history.length ? "none" : "block";
-
-  body.innerHTML =
-    history.map((r,i)=>`
-
-      <tr>
-
-        <td>${history.length-i}</td>
-
-        <td>${r.time}</td>
-
-        <td>
-          ${r.success ? "성공 🎉" : "실패 💀"}
-        </td>
-
-        <td>${fmt(r.amount)}</td>
-
-        <td class="${r.change>=0?'win':'lose'}">
-          ${r.change>=0?"+":""}${fmt(r.change)}
-        </td>
-
-        <td>${fmt(r.balance)}</td>
-
-      </tr>
-
-    `).join("");
-
-}
-
-
-/* =========================================================
-   CHART
-========================================================= */
-
-function drawChart(canvasId){
-
-  const canvas = $(canvasId);
-
-  if(!canvas) return;
-
-  const box = canvas.parentElement;
-
-  const dpr =
-    window.devicePixelRatio || 1;
-
-  const w = box.clientWidth;
-
-  const h = box.clientHeight;
-
-  if(w<=0 || h<=0) return;
-
-  canvas.width = w*dpr;
-  canvas.height = h*dpr;
-
-  const ctx =
-    canvas.getContext("2d");
-
-  ctx.setTransform(
-    dpr,0,0,dpr,0,0
-  );
-
-  ctx.clearRect(
-    0,0,w,h
-  );
-
-  const vals =
-    points.map(x=>x.value);
-
-  let min =
-    Math.min(...vals);
-
-  let max =
-    Math.max(...vals);
-
-  if(min===max){
-
-    min-=1000;
-    max+=1000;
-
+    if(current+1>best){
+      localStorage.setItem(LAST_STREAK_KEY,String(current+1));
+    }
+  }else{
+    localStorage.setItem(STREAK_KEY,"0");
   }
-
-  const range = max-min;
-
-  min =
-    Math.max(
-      0,
-      min-range*.12
-    );
-
-  max += range*.12;
-
-  const pad={
-    l:50,
-    r:15,
-    t:20,
-    b:30
-  };
-
-  const cw =
-    w-pad.l-pad.r;
-
-  const ch =
-    h-pad.t-pad.b;
-
-  ctx.font =
-    "11px sans-serif";
-
-  ctx.textAlign="right";
-
-  ctx.strokeStyle =
-    getComputedStyle(document.body)
-      .getPropertyValue("--border");
-
-  ctx.fillStyle =
-    getComputedStyle(document.body)
-      .getPropertyValue("--muted");
-
-  for(let i=0;i<4;i++){
-
-    const y =
-      pad.t+ch*i/3;
-
-    const val =
-      max-(max-min)*i/3;
-
-    ctx.beginPath();
-
-    ctx.moveTo(pad.l,y);
-
-    ctx.lineTo(
-      w-pad.r,
-      y
-    );
-
-    ctx.stroke();
-
-    ctx.fillText(
-      fmt(val),
-      pad.l-8,
-      y+4
-    );
-
-  }
-
-  if(points.length<2){
-
-    ctx.textAlign="center";
-
-    ctx.fillText(
-      "배팅을 시작하면 그래프가 표시됩니다.",
-      w/2,
-      h/2
-    );
-
-    return;
-
-  }
-
-  const accent =
-    getComputedStyle(document.body)
-      .getPropertyValue("--accent");
-
-  ctx.strokeStyle=accent;
-
-  ctx.lineWidth=2.5;
-
-  ctx.beginPath();
-
-  points.forEach((p,i)=>{
-
-    const x =
-      pad.l+
-      cw*i/(points.length-1);
-
-    const y =
-      pad.t+
-      ch-
-      (p.value-min)/
-      (max-min)*ch;
-
-    if(i===0)
-      ctx.moveTo(x,y);
-    else
-      ctx.lineTo(x,y);
-
-  });
-
-  ctx.stroke();
-
 }
-
-function drawMiniChart(){
-
-  drawChart("miniChart");
-
-}
-
-function drawLargeChart(){
-
-  drawChart("largeChart");
-
-}
-
 
 /* =========================================================
    ATTENDANCE
 ========================================================= */
 
-function getToday(){
+function renderAttendance(){
+  const last=Number(localStorage.getItem(REWARD_KEY)||0);
+  const streak=Number(localStorage.getItem(STREAK_KEY+"_attendance")||0);
 
-  return new Intl.DateTimeFormat(
-    "en-CA",
-    {
-      timeZone:"Asia/Seoul"
-    }
-  ).format(new Date());
+  document.getElementById("attendanceStreak").textContent=
+    `현재 출석 연속 ${streak}일`;
 
+  const btn=document.getElementById("attendanceBtn");
+
+  if(last && Date.now()-last<REWARD_COOLDOWN){
+    btn.disabled=true;
+    updateAttendanceTimer();
+  }else{
+    btn.disabled=false;
+    document.getElementById("attendanceTimer").textContent=
+      "지금 출석할 수 있습니다.";
+  }
 }
 
 function claimAttendance(){
+  const last=Number(localStorage.getItem(REWARD_KEY)||0);
 
-  const now =
-    Date.now();
-
-  const last =
-    Number(
-      localStorage.getItem(
-        REWARD_KEY
-      ) || 0
-    );
-
-  if(now-last < REWARD_COOLDOWN){
-
+  if(last && Date.now()-last<REWARD_COOLDOWN){
+    toast("아직 출석 시간이 지나지 않았습니다.");
     return;
-
   }
 
-  const previous =
-    Number(
-      localStorage.getItem(
-        STREAK_KEY
-      ) || 0
-    );
+  let streak=Number(localStorage.getItem(STREAK_KEY+"_attendance")||0);
 
-  const lastDate =
-    localStorage.getItem(
-      LAST_STREAK_KEY
-    );
+  const previous=last;
 
-  let streak = previous;
-
-  if(lastDate){
-
-    const diff =
-      Math.floor(
-        (new Date(getToday()) -
-         new Date(lastDate))
-        /86400000
-      );
-
-    if(diff===1){
-
-      streak++;
-
-    }else if(diff>1){
-
-      streak=1;
-
-    }
-
+  if(previous && Date.now()-previous<=REWARD_COOLDOWN*2){
+    streak++;
   }else{
-
     streak=1;
-
   }
 
-  if(streak<1) streak=1;
+  const reward=1000+Math.min(streak-1,6)*100;
 
-  const reward =
-    1000+
-    Math.min(streak-1,6)*100;
+  addBalance(reward);
 
-  balance=setBalance(
-    balance+reward
-  );
+  localStorage.setItem(REWARD_KEY,String(Date.now()));
+  localStorage.setItem(STREAK_KEY+"_attendance",String(streak));
 
-  localStorage.setItem(
-    REWARD_KEY,
-    String(now)
-  );
+  toast(`출석 완료! +${money(reward)} COIN 🎉`);
 
-  localStorage.setItem(
-    STREAK_KEY,
-    String(streak)
-  );
-
-  localStorage.setItem(
-    LAST_STREAK_KEY,
-    getToday()
-  );
-
-  alert(
-    `🎁 출석 보상!\n+${fmt(reward)} COIN`
-  );
-
-  updateAll();
-
+  renderAttendance();
 }
 
-function updateAttendance(){
+function updateAttendanceTimer(){
+  const last=Number(localStorage.getItem(REWARD_KEY)||0);
 
-  const last =
-    Number(
-      localStorage.getItem(
-        REWARD_KEY
-      ) || 0
-    );
+  if(!last)return;
 
-  const diff =
-    Date.now()-last;
+  const remain=Math.max(0,REWARD_COOLDOWN-(Date.now()-last));
 
-  const btn =
-    $("attendanceBtn");
-
-  if(diff>=REWARD_COOLDOWN){
-
-    btn.disabled=false;
-
-    btn.textContent=
-      "출석 받기";
-
-    $("attendanceTimer")
-      .textContent=
-      "지금 받을 수 있습니다!";
-
-  }else{
-
-    btn.disabled=true;
-
-    const remain =
-      REWARD_COOLDOWN-diff;
-
-    const h =
-      Math.floor(remain/3600000);
-
-    const m =
-      Math.floor(
-        (remain%3600000)/60000
-      );
-
-    const s =
-      Math.floor(
-        (remain%60000)/1000
-      );
-
-    btn.textContent="대기 중";
-
-    $("attendanceTimer")
-      .textContent=
-      `${h}시간 ${m}분 ${s}초 후 다시 받을 수 있습니다.`;
-
+  if(remain<=0){
+    renderAttendance();
+    return;
   }
 
-  const streak =
-    Number(
-      localStorage.getItem(
-        STREAK_KEY
-      ) || 0
-    );
+  const h=Math.floor(remain/3600000);
+  const m=Math.floor(remain%3600000/60000);
+  const s=Math.floor(remain%60000/1000);
 
-  $("attendanceStreak")
-    .textContent=
-    `현재 출석 연속 기록: ${streak}일`;
-
+  document.getElementById("attendanceTimer").textContent=
+    `다음 출석까지 ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
 
+setInterval(()=>{
+  const page=document.getElementById("page-attendance");
+
+  if(page.classList.contains("active")){
+    updateAttendanceTimer();
+  }
+},1000);
 
 /* =========================================================
-   MISSIONS
+   DAILY MISSIONS
 ========================================================= */
 
-const MISSION_DATA = [
-
+const MISSION_DEFS=[
   {
-    id:"three",
-    title:"🎲 오늘 3번 배팅",
-    desc:"오늘 배팅을 3회 진행하세요.",
+    id:"bets3",
+    name:"🎲 오늘 3번 배팅",
     reward:500
   },
-
   {
-    id:"win",
-    title:"🎉 오늘 1승",
-    desc:"오늘 배팅에서 한 번 승리하세요.",
+    id:"win1",
+    name:"🎉 오늘 1번 승리",
     reward:700
   },
-
   {
-    id:"profit",
-    title:"💰 오늘 +2,000 COIN",
-    desc:"오늘 순수익 +2,000 COIN을 달성하세요.",
+    id:"profit2k",
+    name:"💰 오늘 +2,000 COIN 수익",
     reward:1000
   }
-
 ];
 
 function getMissionState(){
+  const today=getToday();
+  let state=getJSON(MISSION_KEY,null);
 
-  const saved =
-    readJSON(
-      MISSION_KEY,
-      null
-    );
-
-  if(
-    !saved ||
-    saved.date!==getToday()
-  ){
-
-    const state={
-      date:getToday(),
+  if(!state || state.date!==today){
+    state={
+      date:today,
+      bets:0,
+      wins:0,
+      profit:0,
       claimed:{}
     };
-
-    writeJSON(
-      MISSION_KEY,
-      state
-    );
-
-    return state;
-
+    setJSON(MISSION_KEY,state);
   }
 
-  return saved;
-
-}
-
-function getTodayHistory(){
-
-  const today =
-    getToday();
-
-  return history.filter(x=>{
-
-    const d =
-      x.timeDate ||
-      "";
-
-    return d===today;
-
-  });
-
+  return state;
 }
 
 function renderMissions(){
+  const state=getMissionState();
 
-  const state =
-    getMissionState();
+  const values={
+    bets3:Math.min(state.bets,3),
+    win1:Math.min(state.wins,1),
+    profit2k:Math.min(Math.max(state.profit,0),2000)
+  };
 
-  const bets =
-    history.filter(x=>{
+  document.getElementById("missionList").innerHTML=
+    MISSION_DEFS.map(m=>{
+      let current=values[m.id];
+      let target=m.id==="bets3"?3:m.id==="win1"?1:2000;
 
-      const now =
-        new Date();
+      const done=
+        m.id==="bets3"?state.bets>=3:
+        m.id==="win1"?state.wins>=1:
+        state.profit>=2000;
 
-      const time =
-        new Date(
-          now.toDateString()+" "+x.time
-        );
-
-      return (
-        time.toDateString() ===
-        now.toDateString()
-      );
-
-    });
-
-  const count =
-    bets.length;
-
-  const win =
-    bets.some(x=>x.success);
-
-  const profit =
-    bets.reduce(
-      (a,x)=>a+x.change,
-      0
-    );
-
-  $("missionList").innerHTML =
-    MISSION_DATA.map((m,i)=>{
-
-      let complete=false;
-
-      if(m.id==="three")
-        complete=count>=3;
-
-      if(m.id==="win")
-        complete=win;
-
-      if(m.id==="profit")
-        complete=profit>=2000;
-
-      const claimed =
-        state.claimed[m.id]===true;
+      const claimed=state.claimed[m.id]===true;
 
       return `
-
-        <div class="mission">
-
-          <div class="missionInfo">
-
-            <div class="missionTitle">
-              ${m.title}
+      <div class="card mission ${claimed?'done':''}">
+        <div class="row">
+          <div class="row-main">
+            <div class="row-title">${m.name}</div>
+            <div class="row-desc">
+              ${Math.min(current,target).toLocaleString()} / ${target.toLocaleString()}
             </div>
-
-            <div class="missionDesc">
-              ${m.desc}
-              <br>
-              보상: +${fmt(m.reward)} COIN
-            </div>
-
           </div>
 
-          <button
-            class="btn ${complete&&!claimed?'primary':''}"
-            ${!complete||claimed?'disabled':''}
-            onclick="claimMission('${m.id}')"
-          >
+          <div>
             ${
               claimed
-              ? "완료"
-              : complete
-              ? "받기"
-              : "진행 중"
+              ? `<span class="tag owned">완료</span>`
+              : done
+              ? `<button class="btn success" onclick="claimMission('${m.id}')">+${money(m.reward)}</button>`
+              : `<span class="mission-reward">+${money(m.reward)}</span>`
             }
-          </button>
-
+          </div>
         </div>
 
-      `;
-
+        <div class="progress" style="margin-top:10px">
+          <div style="width:${Math.min(100,current/target*100)}%"></div>
+        </div>
+      </div>`;
     }).join("");
-
 }
 
 function claimMission(id){
+  const state=getMissionState();
 
-  const state =
-    getMissionState();
+  if(state.claimed[id]){
+    toast("이미 보상을 받았습니다.");
+    return;
+  }
 
-  if(state.claimed[id]) return;
+  const mission=MISSION_DEFS.find(x=>x.id===id);
+  if(!mission)return;
 
-  const mission =
-    MISSION_DATA.find(
-      x=>x.id===id
-    );
+  const done=
+    id==="bets3"?state.bets>=3:
+    id==="win1"?state.wins>=1:
+    state.profit>=2000;
 
-  if(!mission) return;
-
-  const bets =
-    history.filter(x=>{
-
-      const now =
-        new Date();
-
-      const d =
-        new Date(
-          now.toDateString()+" "+x.time
-        );
-
-      return d.toDateString()===
-        now.toDateString();
-
-    });
-
-  const count=bets.length;
-
-  const win=
-    bets.some(x=>x.success);
-
-  const profit=
-    bets.reduce(
-      (a,x)=>a+x.change,
-      0
-    );
-
-  let complete=false;
-
-  if(id==="three") complete=count>=3;
-  if(id==="win") complete=win;
-  if(id==="profit") complete=profit>=2000;
-
-  if(!complete) return;
+  if(!done){
+    toast("아직 미션을 완료하지 않았습니다.");
+    return;
+  }
 
   state.claimed[id]=true;
+  setJSON(MISSION_KEY,state);
 
-  writeJSON(
-    MISSION_KEY,
-    state
-  );
+  addBalance(mission.reward);
+  toast(`미션 보상 +${money(mission.reward)} COIN 🎉`);
 
-  balance=setBalance(
-    balance+mission.reward
-  );
-
-  alert(
-    `🎯 미션 완료!\n+${fmt(mission.reward)} COIN`
-  );
-
-  updateAll();
-
+  renderMissions();
 }
-
 
 /* =========================================================
    ACHIEVEMENTS
 ========================================================= */
 
-const ACHIEVEMENTS = [
-
+const ACHIEVEMENTS=[
   {
     id:"first",
     icon:"🎯",
     name:"첫걸음",
-    desc:"첫 배팅을 진행하세요.",
+    desc:"첫 번째 배팅을 해보세요.",
     reward:500,
     honor:"🌱 첫걸음",
-    frame:"frame-ach-first"
+    title:"ach-first",
+    titleName:"FIRST",
+    hidden:false
   },
-
   {
     id:"getting",
     icon:"🎲",
     name:"슬슬 감 잡는 중",
-    desc:"총 10회 배팅하세요.",
+    desc:"총 10번 배팅하세요.",
     reward:1000,
-    honor:"🎲 감 잡은 자",
-    frame:"frame-ach-getting"
+    honor:"🎲 감 잡는 중",
+    title:"ach-getting",
+    titleName:"GETTING",
+    hidden:false
   },
-
   {
     id:"bettor",
     icon:"🔥",
     name:"승부사",
-    desc:"총 50회 배팅하세요.",
+    desc:"총 50번 배팅하세요.",
     reward:2500,
     honor:"🔥 승부사",
-    frame:"frame-ach-bettor"
+    title:"ach-bettor",
+    titleName:"BETTOR",
+    hidden:false
   },
-
   {
     id:"regular",
     icon:"👑",
     name:"COINLAB 단골",
-    desc:"총 100회 배팅하세요.",
+    desc:"총 100번 배팅하세요.",
     reward:5000,
     honor:"👑 COINLAB 단골",
-    frame:"frame-ach-regular"
+    title:"ach-regular",
+    titleName:"REGULAR",
+    hidden:false
   },
-
   {
-    id:"streak",
+    id:"streak5",
     icon:"⚡",
     name:"연승 시작",
     desc:"5연승을 달성하세요.",
     reward:1500,
-    honor:"⚡ 연승자",
-    frame:"frame-ach-streak"
+    honor:"⚡ 연승 시작",
+    title:"ach-streak",
+    titleName:"STREAK",
+    hidden:false
   },
-
   {
     id:"bigwin",
     icon:"💰",
     name:"한 방",
-    desc:"한 번에 5,000 COIN 이상의 순이익을 얻으세요.",
+    desc:"한 번의 배팅에서 5,000 COIN 이상 수익을 내세요.",
     reward:3000,
     honor:"💰 한 방",
-    frame:"frame-ach-bigwin"
+    title:"ach-bigwin",
+    titleName:"BIG WIN",
+    hidden:false
   },
-
   {
     id:"rich",
     icon:"💎",
     name:"부자",
-    desc:"잔액 25,000 COIN을 달성하세요.",
+    desc:"최고 잔액 25,000 COIN을 달성하세요.",
     reward:5000,
     honor:"💎 부자",
-    frame:"frame-ach-rich"
+    title:"ach-rich",
+    titleName:"RICH",
+    hidden:false
   },
 
+  /* hidden */
   {
     id:"bottom",
-    icon:"🕳️",
+    icon:"❓",
     name:"바닥까지 가봤다",
-    desc:"상점에서 총 30,000 COIN 이상 사용하고 0 COIN을 만드세요.",
+    desc:"상점에서 총 30,000 COIN을 소비하고 잔액을 0으로 만드세요.",
     reward:3000,
-    honor:"🕳️ 바닥 경험자",
-    frame:"frame-ach-bottom",
+    honor:"🕳️ 바닥까지",
+    title:"ach-bottom",
+    titleName:"BOTTOM",
     hidden:true
   },
-
   {
     id:"boundary",
-    icon:"🌐",
+    icon:"❓",
     name:"경계 너머",
     desc:"모든 상점 카테고리의 CORE 아이템을 장착한 뒤 비밀 통로에 들어가세요.",
-    reward:5000,
-    honor:"🌐 경계 너머",
-    frame:"frame-ach-boundary",
+    reward:10000,
+    honor:"🌀 경계 너머",
+    title:"ach-boundary",
+    titleName:"BEYOND",
     hidden:true
   },
-
   {
     id:"zero500k",
-    icon:"💀",
+    icon:"❓",
     name:"개@#&*",
-    desc:"500,000 COIN을 한 번에 전부 잃으세요.",
-    reward:5000,
+    desc:"500,000 COIN에서 한 번의 배팅으로 0 COIN이 되세요.",
+    reward:15000,
     honor:"💀 개@#&*",
-    frame:"frame-ach-zero500k",
+    title:"ach-zero500k",
+    titleName:"ZERO",
     hidden:true
   },
-
   {
     id:"devsigh",
-    icon:"😮‍💨",
+    icon:"❓",
     name:"그걸 왜 샀어?",
-    desc:"'개발자의 한숨 한 봉지'를 구매하세요.",
+    desc:"개발자의 한숨 한 봉지를 구매하세요.",
     reward:5000,
-    honor:"😮‍💨 개발자에게 미안한 자",
-    frame:"frame-ach-devsigh",
+    honor:"😮‍💨 개발자의 한숨",
+    title:"ach-devsigh",
+    titleName:"WHY",
     hidden:true
   },
-
   {
     id:"hacker",
-    icon:"👀",
+    icon:"❓",
     name:"혹시 핵?",
     desc:"50연승을 달성하세요.",
-    reward:10000,
-    honor:"👀 혹시 핵?",
-    frame:"frame-ach-hacker",
+    reward:20000,
+    honor:"💻 혹시 핵?",
+    title:"ach-hacker",
+    titleName:"50 WIN",
     hidden:true
   }
-
 ];
 
-
 function getAchievementState(){
-
-  return readJSON(
-    ACHIEVEMENT_KEY,
-    {}
-  );
-
+  return getJSON(ACHIEVEMENT_KEY,{});
 }
-
-function unlockAchievement(id){
-
-  const state =
-    getAchievementState();
-
-  if(state[id]) return;
-
-  const a =
-    ACHIEVEMENTS.find(
-      x=>x.id===id
-    );
-
-  if(!a) return;
-
-  state[id]={
-    unlocked:true,
-    date:new Date().toISOString()
-  };
-
-  writeJSON(
-    ACHIEVEMENT_KEY,
-    state
-  );
-
-  balance=setBalance(
-    balance+a.reward
-  );
-
-  /*
-    업적 보상:
-    1. COIN
-    2. 전용 칭호
-    3. 전용 프로필 프레임
-    4. COINLAB CORE 테마
-  */
-
-  const owned =
-    readJSON(
-      OWNED_KEY,
-      []
-    );
-
-  if(!owned.includes("achievement-core-theme")){
-
-    owned.push(
-      "achievement-core-theme"
-    );
-
-    writeJSON(
-      OWNED_KEY,
-      owned
-    );
-
-  }
-
-  localStorage.setItem(
-    CORE_THEME_KEY,
-    "owned"
-  );
-
-  alert(
-    `🏆 업적 달성!\n\n`+
-    `${a.icon} ${a.name}\n\n`+
-    `💰 +${fmt(a.reward)} COIN\n`+
-    `🏷️ 칭호: ${a.honor}\n`+
-    `🪪 프로필 프레임 획득\n`+
-    `🎨 COINLAB CORE 테마 해금!`
-  );
-
-  updateAll();
-
-}
-
-
-function checkAchievements(){
-
-  const count =
-    totalBets();
-
-  if(count>=1)
-    unlockAchievement("first");
-
-  if(count>=10)
-    unlockAchievement("getting");
-
-  if(count>=50)
-    unlockAchievement("bettor");
-
-  if(count>=100)
-    unlockAchievement("regular");
-
-  if(maxStreak()>=5)
-    unlockAchievement("streak");
-
-  if(maxWin()>=5000)
-    unlockAchievement("bigwin");
-
-  if(maxBalance()>=25000)
-    unlockAchievement("rich");
-
-  if(
-    getShopSpent()>=30000 &&
-    balance===0
-  ){
-
-    unlockAchievement("bottom");
-
-  }
-
-  if(maxStreak()>=50)
-    unlockAchievement("hacker");
-
-}
-
 
 function renderAchievements(){
+  const state=getAchievementState();
+  const unlocked=ACHIEVEMENTS.filter(a=>state[a.id]).length;
 
-  const state =
-    getAchievementState();
+  document.getElementById("achievementCount").textContent=
+    `${unlocked} / ${ACHIEVEMENTS.length} 달성`;
 
-  $("achievementList").innerHTML =
+  document.getElementById("achievementList").innerHTML=
     ACHIEVEMENTS.map(a=>{
+      const done=state[a.id];
 
-      const unlocked =
-        !!state[a.id];
-
-      const name =
-        a.hidden && !unlocked
-        ? "???"
-        : `${a.icon} ${a.name}`;
-
-      const desc =
-        a.hidden && !unlocked
-        ? "숨겨진 업적입니다."
-        : a.desc;
+      const visibleName=done||!a.hidden?a.name:"???";
+      const visibleDesc=done||!a.hidden?a.desc:"숨겨진 업적입니다.";
 
       return `
-
-        <div class="achievement ${unlocked?'':'locked'}">
-
-          <div class="achievementIcon">
-            ${unlocked ? a.icon : "🔒"}
-          </div>
-
-          <div class="achievementInfo">
-
-            <div class="achievementName">
-              ${name}
+      <div class="card achievement ${done?'unlocked':'locked'}">
+        <div class="row">
+          <div class="row-main">
+            <div class="row-title">
+              ${done?a.icon:"🔒"} ${visibleName}
             </div>
-
-            <div class="achievementDesc">
-              ${desc}
-            </div>
-
-            ${
-              unlocked
-              ?
-              `
-              <div class="rewardLine">
-                💰 +${fmt(a.reward)}
-                · 🏷️ ${a.honor}
-                · 🪪 전용 프레임
-                · 🎨 COINLAB CORE
-              </div>
-              `
-              :
-              `
-              <div class="rewardLine">
-                🔒 보상 잠김
-              </div>
-              `
-            }
-
+            <div class="row-desc">${visibleDesc}</div>
           </div>
 
           <div>
             ${
-              unlocked
-              ? "✅ 달성"
-              : "🔒"
+              done
+              ? `<span class="tag owned">달성</span>`
+              : `<span class="tag">미달성</span>`
             }
           </div>
-
         </div>
 
+        ${
+          done
+          ? `
+          <div class="achievement-reward">
+            🏷️ 칭호: <b>${a.honor}</b><br>
+            🪪 타이틀: <b>${a.titleName}</b><br>
+            💰 보상: <b>+${money(a.reward)} COIN</b>
+          </div>
+          `
+          : ""
+        }
+      </div>
       `;
-
     }).join("");
-
 }
 
+function unlockAchievement(id){
+  const state=getAchievementState();
+
+  if(state[id])return false;
+
+  const a=ACHIEVEMENTS.find(x=>x.id===id);
+
+  if(!a)return false;
+
+  state[id]={
+    unlockedAt:Date.now()
+  };
+
+  setJSON(ACHIEVEMENT_KEY,state);
+
+  addBalance(a.reward);
+
+  /* 업적 보상은 상점에 넣지 않고 별도 저장 */
+  const achievementRewards=getJSON("coinlab_achievement_rewards",[]);
+
+  if(!achievementRewards.includes(id)){
+    achievementRewards.push(id);
+    setJSON("coinlab_achievement_rewards",achievementRewards);
+  }
+
+  toast(`🏆 업적 달성: ${a.name} · +${money(a.reward)} COIN`);
+
+  return true;
+}
+
+function checkAchievements(ctx={}){
+  const history=getHistory();
+  const state=getAchievementState();
+
+  const bets=history.length;
+  const wins=history.filter(x=>x.result==="win").length;
+
+  if(bets>=1)unlockAchievement("first");
+  if(bets>=10)unlockAchievement("getting");
+  if(bets>=50)unlockAchievement("bettor");
+  if(bets>=100)unlockAchievement("regular");
+
+  const bestStreak=Number(localStorage.getItem(LAST_STREAK_KEY)||0);
+
+  if(bestStreak>=5)unlockAchievement("streak5");
+  if(bestStreak>=50)unlockAchievement("hacker");
+
+  if(history.some(x=>x.profit>=5000)){
+    unlockAchievement("bigwin");
+  }
+
+  const highest=Math.max(
+    START_BALANCE,
+    ...history.map(x=>Number(x.balance)||0)
+  );
+
+  if(highest>=25000){
+    unlockAchievement("rich");
+  }
+
+  const spent=Number(localStorage.getItem(SHOP_SPENT_KEY)||0);
+
+  if(spent>=30000 && getBalance()===0){
+    unlockAchievement("bottom");
+  }
+
+  if(
+    ctx.type==="bet" &&
+    ctx.before===500000 &&
+    ctx.bet===500000 &&
+    ctx.win===false &&
+    ctx.after===0
+  ){
+    unlockAchievement("zero500k");
+  }
+
+  if(ctx.type==="devsigh"){
+    unlockAchievement("devsigh");
+  }
+
+  if(ctx.type==="coreHole"){
+    unlockAchievement("boundary");
+  }
+}
 
 /* =========================================================
    SHOP DATA
 ========================================================= */
 
-const SHOP_CATEGORIES = [
-
+const SHOP_CATEGORIES=[
   {
     id:"theme",
-    title:"🎨 테마",
+    name:"🎨 테마",
     items:[
-
       {
         id:"theme-default",
         name:"🤍 기본",
+        desc:"기본 화이트 테마",
         price:0,
-        desc:"기본 흰색 테마.",
         type:"theme",
         value:"default"
       },
-
       {
         id:"theme-neon",
         name:"🌌 네온 블루",
+        desc:"차가운 네온 블루 테마",
         price:5000,
-        desc:"푸른 네온 스타일.",
         type:"theme",
         value:"neon"
       },
-
       {
         id:"theme-green",
         name:"🌿 그린 터미널",
+        desc:"터미널 스타일의 초록 테마",
         price:7500,
-        desc:"터미널 느낌의 녹색 테마.",
         type:"theme",
         value:"green"
       },
-
       {
         id:"theme-night",
         name:"🌙 다크 나이트",
+        desc:"어두운 야간 테마",
         price:10000,
-        desc:"차분한 다크 테마.",
         type:"theme",
         value:"night"
       },
-
       {
         id:"theme-red",
         name:"🔥 레드 알림",
+        desc:"강렬한 경고 계열 테마",
         price:15000,
-        desc:"강렬한 붉은 테마.",
         type:"theme",
         value:"red"
       },
-
       {
         id:"theme-ocean",
         name:"🌊 오션",
+        desc:"청록 계열의 차분한 테마",
         price:20000,
-        desc:"청록색 바다 느낌.",
         type:"theme",
         value:"ocean"
       },
-
       {
         id:"theme-sunset",
         name:"🌅 선셋",
+        desc:"주황빛 테마",
         price:25000,
-        desc:"주황빛 선셋 테마.",
         type:"theme",
         value:"sunset"
       },
-
       {
         id:"theme-purple",
         name:"🟣 퍼플 보이드",
+        desc:"보라색 우주 테마",
         price:30000,
-        desc:"보라색 우주 느낌.",
         type:"theme",
         value:"purple"
       },
-
       {
         id:"theme-silver",
         name:"⚪ 실버",
+        desc:"메탈릭 실버 테마",
         price:40000,
-        desc:"메탈릭 실버 테마.",
         type:"theme",
         value:"silver"
       }
-
+      /* IMPORTANT:
+         테마 카테고리에는 CORE가 없음.
+         업적 해제 시 CORE 테마를 별도로 지급한다.
+      */
     ]
   },
-
 
   {
     id:"background",
-    title:"🌌 배경 효과",
+    name:"🌌 배경 효과",
     items:[
-
       {
         id:"bg-none",
         name:"⬜ 없음",
+        desc:"배경 효과 없음",
         price:0,
-        desc:"깔끔한 기본 배경.",
         type:"background",
         value:"none"
       },
-
       {
         id:"bg-galaxy",
         name:"🌌 은하수",
+        desc:"뒤에서 별이 천천히 움직입니다.",
         price:5000,
-        desc:"작은 별이 천천히 움직입니다.",
         type:"background",
         value:"galaxy"
       },
-
       {
         id:"bg-grid",
         name:"▦ 테크 그리드",
+        desc:"배경에 기술 격자가 표시됩니다.",
         price:7500,
-        desc:"배경에 기술적인 격자무늬를 표시합니다.",
         type:"background",
         value:"grid"
       },
-
       {
         id:"bg-wave",
         name:"〰️ 웨이브",
+        desc:"잔잔한 파동 패턴",
         price:10000,
-        desc:"은은한 빛의 파동 효과.",
         type:"background",
         value:"wave"
       },
-
       {
         id:"bg-blackhole",
         name:"🕳️ 블랙홀",
+        desc:"중앙에 미세한 중력장 효과",
         price:15000,
-        desc:"어두운 중심부를 가진 배경 효과.",
         type:"background",
         value:"blackhole"
       },
-
       {
         id:"bg-scan",
-        name:"📺 스캔라인",
+        name:"▤ 스캔라인",
+        desc:"CRT 스캔라인 효과",
         price:20000,
-        desc:"모니터 스캔라인 효과.",
         type:"background",
         value:"scan"
       },
-
       {
         id:"bg-core",
-        name:"⭐ CORE 입자",
+        name:"✦ CORE 입자",
+        desc:"CORE 전용 입자 배경",
         price:50000,
-        desc:"CORE 스타일의 움직이는 입자.",
         type:"background",
         value:"core",
         core:true
       }
-
     ]
   },
-
 
   {
     id:"ui",
-    title:"✨ UI 효과",
+    name:"✨ UI 효과",
     items:[
-
       {
         id:"ui-default",
         name:"🖥️ 기본",
+        desc:"기본 UI",
         price:0,
-        desc:"기본 UI.",
         type:"ui",
-        value:"smooth"
+        value:"default"
       },
-
       {
         id:"ui-smooth",
         name:"🌊 Smooth",
+        desc:"부드러운 UI 전환",
         price:5000,
-        desc:"부드러운 전환 효과.",
         type:"ui",
         value:"smooth"
       },
-
       {
         id:"ui-neon",
         name:"💡 Neon",
+        desc:"카드와 버튼에 은은한 광택",
         price:10000,
-        desc:"카드와 버튼에 네온 테두리.",
         type:"ui",
         value:"neon"
       },
-
       {
         id:"ui-pop",
         name:"✨ Pop",
+        desc:"두꺼운 테두리와 살짝 튀는 UI",
         price:7500,
-        desc:"강조된 테두리와 호버 효과.",
         type:"ui",
         value:"pop"
       },
-
       {
         id:"ui-minimal",
         name:"▫️ Minimal",
+        desc:"그림자를 최소화",
         price:5000,
-        desc:"그림자를 제거한 미니멀 UI.",
         type:"ui",
         value:"minimal"
       },
-
       {
         id:"ui-glass",
         name:"🪟 Glass",
+        desc:"반투명 유리 느낌",
         price:15000,
-        desc:"반투명 유리 느낌.",
         type:"ui",
         value:"glass"
       },
-
       {
         id:"ui-terminal",
-        name:"💻 Terminal",
+        name:"▣ Terminal",
+        desc:"터미널 스타일 UI",
         price:25000,
-        desc:"터미널 스타일 UI.",
         type:"ui",
         value:"terminal"
       },
-
       {
         id:"ui-core",
-        name:"⚡ CORE Pulse",
+        name:"✦ CORE Pulse",
+        desc:"CORE 전용 UI 효과",
         price:50000,
-        desc:"CORE 네온 테두리 효과.",
         type:"ui",
-        value:"neon",
+        value:"core",
         core:true
       }
-
     ]
   },
-
 
   {
     id:"decoration",
-    title:"🖼️ 장식물",
+    name:"🖼️ 장식물",
     items:[
-
       {
         id:"dec-none",
-        name:"⬜ 없음",
+        name:"없음",
+        desc:"프로필 장식 없음",
         price:0,
-        desc:"장식물을 표시하지 않습니다.",
         type:"decoration",
-        value:""
+        value:"none"
       },
-
-      {
-        id:"dec-fragment",
-        name:"🔺 코어 파편",
-        price:10000,
-        desc:"프로필에 작은 코어 파편을 표시합니다.",
-        type:"decoration",
-        value:"🔺"
-      },
-
       {
         id:"dec-satellite",
         name:"🛰️ 위성",
+        desc:"프로필에 작은 위성 장식",
         price:15000,
-        desc:"프로필 옆에 위성을 표시합니다.",
         type:"decoration",
-        value:"🛰️"
+        value:"satellite"
       },
-
       {
         id:"dec-holo",
         name:"💠 홀로그램 큐브",
+        desc:"프로필에 홀로그램 장식",
         price:25000,
-        desc:"프로필에 홀로그램 큐브를 표시합니다.",
         type:"decoration",
-        value:"💠"
+        value:"holo"
       },
-
       {
         id:"dec-warning",
         name:"⚠️ 경고 마크",
+        desc:"프로필에 경고 장식",
         price:30000,
-        desc:"경고 표시를 추가합니다.",
         type:"decoration",
-        value:"⚠️"
+        value:"warning"
       },
-
       {
-        id:"dec-secret",
+        id:"dec-portal",
         name:"🌀 비밀 통로 표식",
+        desc:"프로필에 포털 표식",
         price:40000,
-        desc:"비밀 통로를 상징하는 장식.",
         type:"decoration",
-        value:"🌀"
+        value:"portal"
       },
-
       {
         id:"dec-core",
-        name:"💎 CORE 경계 표식",
+        name:"✦ CORE 경계 표식",
+        desc:"CORE 전용 장식물",
         price:60000,
-        desc:"CORE 경계 표식.",
         type:"decoration",
-        value:"💎",
+        value:"core",
         core:true
       }
-
     ]
   },
-
-
-  {
-    id:"font",
-    title:"🔤 폰트",
-    items:[
-
-      {
-        id:"font-default",
-        name:"기본",
-        price:0,
-        desc:"COINLAB 기본 폰트.",
-        type:"font",
-        value:"Noto"
-      },
-
-      {
-        id:"font-noto",
-        name:"Noto Sans",
-        price:3000,
-        desc:"깔끔한 산세리프 폰트.",
-        type:"font",
-        value:"Noto"
-      },
-
-      {
-        id:"font-pretendard",
-        name:"Pretendard",
-        price:5000,
-        desc:"현대적인 UI 폰트.",
-        type:"font",
-        value:"Pretendard"
-      },
-
-      {
-        id:"font-mono",
-        name:"JetBrains Mono",
-        price:7500,
-        desc:"개발자 느낌의 고정폭 폰트.",
-        type:"font",
-        value:"Mono"
-      },
-
-      {
-        id:"font-orbitron",
-        name:"Orbitron",
-        price:12000,
-        desc:"미래적인 HUD 스타일.",
-        type:"font",
-        value:"Orbitron"
-      },
-
-      {
-        id:"font-pixel",
-        name:"Press Start 2P",
-        price:20000,
-        desc:"레트로 픽셀 폰트.",
-        type:"font",
-        value:"Pixel"
-      },
-
-      {
-        id:"font-core",
-        name:"COINLAB CORE",
-        price:50000,
-        desc:"CORE 전용 폰트 스타일.",
-        type:"font",
-        value:"Core",
-        core:true
-      }
-
-    ]
-  },
-
 
   {
     id:"honor",
-    title:"🏷️ 칭호",
+    name:"🏷️ 칭호",
     items:[
-
       {
-        id:"honor-newbie",
+        id:"honor-new",
         name:"🌱 새내기",
+        desc:"기본 칭호",
         price:0,
-        desc:"기본 칭호.",
         type:"honor",
         value:"🌱 새내기"
       },
-
       {
         id:"honor-test",
         name:"🧪 실험체",
+        desc:"실험실의 피실험자",
         price:4000,
-        desc:"프로필 아래에 표시됩니다.",
         type:"honor",
         value:"🧪 실험체"
       },
-
       {
         id:"honor-observer",
         name:"🛰️ 관측자",
+        desc:"모든 것을 지켜보는 자",
         price:8000,
-        desc:"관측자 칭호.",
         type:"honor",
         value:"🛰️ 관측자"
       },
-
       {
-        id:"honor-access",
+        id:"honor-approved",
         name:"🔐 접근 승인",
+        desc:"시스템 접근이 승인되었습니다.",
         price:15000,
-        desc:"접근 승인을 받은 사용자.",
         type:"honor",
         value:"🔐 접근 승인"
       },
-
+      {
+        id:"honor-signal",
+        name:"📡 통신 연결",
+        desc:"신호 연결 상태",
+        price:20000,
+        type:"honor",
+        value:"📡 통신 연결"
+      },
       {
         id:"honor-data",
         name:"💿 데이터 수집가",
+        desc:"데이터를 모으는 자",
         price:30000,
-        desc:"데이터 수집가 칭호.",
         type:"honor",
         value:"💿 데이터 수집가"
       },
-
       {
         id:"honor-system",
         name:"⚙️ 시스템 사용자",
+        desc:"시스템 인증 사용자",
         price:40000,
-        desc:"시스템 사용자 칭호.",
         type:"honor",
         value:"⚙️ 시스템 사용자"
       },
-
       {
         id:"honor-core",
-        name:"⚡ CORE 인증 사용자",
+        name:"✦ CORE 인증 사용자",
+        desc:"CORE 인증 칭호",
         price:60000,
-        desc:"CORE 인증 사용자.",
         type:"honor",
-        value:"⚡ CORE 인증 사용자",
+        value:"✦ CORE 인증 사용자",
         core:true
       }
-
     ]
   },
-
 
   {
     id:"frame",
-    title:"🪪 프로필 프레임",
+    name:"🪪 프로필 프레임",
     items:[
-
       {
         id:"frame-default",
         name:"기본 프레임",
+        desc:"기본 프로필 프레임",
         price:0,
-        desc:"기본 프로필 프레임.",
         type:"frame",
-        value:"frame-default"
+        value:"default"
       },
-
       {
         id:"frame-chrome",
         name:"🔷 크롬 프레임",
+        desc:"메탈릭한 프로필 프레임",
         price:5000,
-        desc:"두꺼운 크롬 스타일.",
         type:"frame",
-        value:"frame-chrome"
+        value:"chrome"
       },
-
       {
         id:"frame-warning",
         name:"⚠️ 경고 프레임",
+        desc:"노란 경고 프레임",
         price:10000,
-        desc:"점선 경고 프레임.",
         type:"frame",
-        value:"frame-warning"
+        value:"warning"
       },
-
       {
         id:"frame-void",
         name:"🟣 보이드 프레임",
+        desc:"보라색 발광 프레임",
         price:20000,
-        desc:"보라색 빛을 냅니다.",
         type:"frame",
-        value:"frame-void"
+        value:"void"
       },
-
       {
         id:"frame-holo",
         name:"💠 홀로 프레임",
+        desc:"청록색 홀로그램 프레임",
         price:30000,
-        desc:"홀로그램 느낌의 프레임.",
         type:"frame",
-        value:"frame-holo"
+        value:"holo"
       },
-
       {
         id:"frame-ice",
         name:"🧊 아이스 프레임",
+        desc:"차가운 파란 프레임",
         price:40000,
-        desc:"차가운 빛의 프레임.",
         type:"frame",
-        value:"frame-ice"
+        value:"ice"
       },
-
       {
         id:"frame-core",
-        name:"⚡ CORE FRAME",
+        name:"✦ CORE FRAME",
+        desc:"CORE 전용 프로필 프레임",
         price:70000,
-        desc:"CORE 프로필 프레임.",
         type:"frame",
-        value:"frame-core",
+        value:"core",
         core:true
       }
-
     ]
   },
 
-
   {
     id:"sound",
-    title:"🔊 사운드",
+    name:"🔊 사운드",
     items:[
-
       {
         id:"sound-off",
         name:"🔇 기본 무음",
+        desc:"효과음 없음",
         price:0,
-        desc:"효과음을 사용하지 않습니다.",
         type:"sound",
         value:"off"
       },
-
       {
-        id:"sound-beep",
-        name:"📡 삑- 시스템",
+        id:"sound-system",
+        name:"🔔 삑- 시스템",
+        desc:"간단한 시스템 비프음",
         price:5000,
-        desc:"짧은 시스템 비프음.",
         type:"sound",
-        value:"beep"
+        value:"system"
       },
-
       {
         id:"sound-low",
         name:"〰️ 저주파",
+        desc:"낮은 음역의 시스템음",
         price:10000,
-        desc:"낮은 주파수 효과음.",
         type:"sound",
         value:"low"
       },
-
       {
         id:"sound-click",
         name:"🖱️ 클릭",
+        desc:"짧은 클릭음",
         price:15000,
-        desc:"버튼 클릭 느낌의 효과음.",
         type:"sound",
         value:"click"
       },
-
       {
         id:"sound-arcade",
         name:"🕹️ 아케이드",
+        desc:"짧은 아케이드 스타일 효과음",
         price:25000,
-        desc:"간단한 아케이드 효과음.",
         type:"sound",
         value:"arcade"
       },
-
       {
         id:"sound-core",
-        name:"⚡ CORE SIGNAL",
+        name:"✦ CORE SIGNAL",
+        desc:"CORE 전용 신호음",
         price:50000,
-        desc:"CORE 전용 신호음.",
         type:"sound",
         value:"core",
         core:true
       }
+    ]
+  },
 
+  {
+    id:"experiment",
+    name:"🧪 실험실",
+    items:[
+      {
+        id:"exp-404",
+        name:"404 카드",
+        desc:"카드가 미세하게 흔들리는 오류 효과",
+        price:7500,
+        type:"experiment",
+        value:"404"
+      },
+      {
+        id:"exp-error",
+        name:"오류 표식",
+        desc:"화면 우측에 ERR_404 표시",
+        price:12500,
+        type:"experiment",
+        value:"error"
+      },
+      {
+        id:"exp-noise",
+        name:"데이터 노이즈",
+        desc:"화면에 미세한 데이터 노이즈",
+        price:20000,
+        type:"experiment",
+        value:"noise"
+      },
+      {
+        id:"dev-sigh",
+        name:"😮‍💨 개발자의 한숨 한 봉지",
+        desc:"정체불명의 개발자 한숨. 구매 시 업적 해제.",
+        price:100000,
+        type:"experiment",
+        value:"sigh"
+      },
+      {
+        id:"exp-core",
+        name:"✦ CORE 실험체",
+        desc:"CORE 실험용 효과",
+        price:60000,
+        type:"experiment",
+        value:"core",
+        core:true
+      }
+    ]
+  },
+
+  {
+    id:"font",
+    name:"🔤 폰트",
+    items:[
+      {
+        id:"font-default",
+        name:"기본",
+        desc:"기본 Noto Sans KR",
+        price:0,
+        type:"font",
+        value:"default"
+      },
+      {
+        id:"font-noto",
+        name:"Noto Sans",
+        desc:"깔끔한 산세리프 폰트",
+        price:3000,
+        type:"font",
+        value:"noto"
+      },
+      {
+        id:"font-pretendard",
+        name:"Pretendard",
+        desc:"모던한 UI 스타일",
+        price:5000,
+        type:"font",
+        value:"pretendard"
+      },
+      {
+        id:"font-mono",
+        name:"JetBrains Mono",
+        desc:"개발자용 모노스페이스",
+        price:7500,
+        type:"font",
+        value:"mono"
+      },
+      {
+        id:"font-orbitron",
+        name:"Orbitron",
+        desc:"미래적인 SF 스타일",
+        price:12000,
+        type:"font",
+        value:"orbitron"
+      },
+      {
+        id:"font-pixel",
+        name:"Press Start 2P",
+        desc:"픽셀 게임 스타일",
+        price:20000,
+        type:"font",
+        value:"pixel"
+      },
+      {
+        id:"font-core",
+        name:"✦ COINLAB CORE",
+        desc:"CORE 전용 폰트",
+        price:50000,
+        type:"font",
+        value:"core",
+        core:true
+      }
     ]
   }
-
 ];
 
-
 /* =========================================================
-   SHOP HELPERS
+   SHOP
 ========================================================= */
 
-function allShopItems(){
-
-  return SHOP_CATEGORIES.flatMap(
-    c=>c.items
-  );
-
+function getCoreItem(category){
+  return category.items.find(x=>x.core);
 }
 
-function getItem(id){
-
-  return allShopItems().find(
-    x=>x.id===id
-  );
-
+function isOwned(id){
+  return getOwnedItems().includes(id);
 }
-
-function getOwned(){
-
-  return readJSON(
-    OWNED_KEY,
-    [
-      "theme-default",
-      "bg-none",
-      "ui-default",
-      "dec-none",
-      "font-default",
-      "honor-newbie",
-      "frame-default",
-      "sound-off"
-    ]
-  );
-
-}
-
-function saveOwned(arr){
-
-  writeJSON(
-    OWNED_KEY,
-    [...new Set(arr)]
-  );
-
-}
-
-function getEquipped(){
-
-  return readJSON(
-    EQUIPPED_KEY,
-    {}
-  );
-
-}
-
-function saveEquipped(obj){
-
-  writeJSON(
-    EQUIPPED_KEY,
-    obj
-  );
-
-}
-
-function getFavorites(){
-
-  return readJSON(
-    FAVORITE_KEY,
-    []
-  );
-
-}
-
-function toggleFavorite(id){
-
-  const arr =
-    getFavorites();
-
-  const index =
-    arr.indexOf(id);
-
-  if(index>=0)
-    arr.splice(index,1);
-  else
-    arr.push(id);
-
-  writeJSON(
-    FAVORITE_KEY,
-    arr
-  );
-
-  renderShop();
-
-}
-
-let favoritesOnly=false;
-
-function toggleFavorites(){
-
-  favoritesOnly=!favoritesOnly;
-
-  $("favoriteFilterBtn")
-    .textContent =
-      favoritesOnly
-      ? "⭐ 즐겨찾기"
-      : "⭐ 전체";
-
-  renderShop();
-
-}
-
-function getShopSpent(){
-
-  return Number(
-    localStorage.getItem(
-      SHOP_SPENT_KEY
-    ) || 0
-  );
-
-}
-
-
-/* =========================================================
-   SHOP PURCHASE
-========================================================= */
 
 function buyItem(id){
+  const item=findShopItem(id);
 
-  const item =
-    getItem(id);
+  if(!item)return;
 
-  if(!item) return;
-
-  const owned =
-    getOwned();
-
-  if(owned.includes(id)){
-
-    equipItem(id);
-
+  if(isOwned(id)){
+    toast("이미 보유한 아이템입니다.");
     return;
-
   }
 
-  if(balance < item.price){
-
-    alert("💸 COIN이 부족합니다.");
-
+  if(item.price<=0){
+    addOwnedItem(item);
     return;
-
   }
 
-  if(item.price>0){
+  const balance=getBalance();
 
-    balance=setBalance(
-      balance-item.price
-    );
-
-    localStorage.setItem(
-      SHOP_SPENT_KEY,
-      String(
-        getShopSpent()+item.price
-      )
-    );
-
+  if(balance<item.price){
+    toast("COIN이 부족합니다.");
+    return;
   }
 
-  owned.push(id);
+  setBalance(balance-item.price);
 
-  saveOwned(owned);
+  const spent=Number(localStorage.getItem(SHOP_SPENT_KEY)||0);
+  localStorage.setItem(
+    SHOP_SPENT_KEY,
+    String(spent+item.price)
+  );
 
-  equipItem(id);
+  addOwnedItem(item);
 
-  if(id==="dev-sigh-bag"){
-
-    unlockAchievement("devsigh");
-
+  if(item.id==="dev-sigh"){
+    checkAchievements({type:"devsigh"});
   }
 
-  checkAchievements();
+  checkAchievements({type:"shopPurchase"});
 
-  updateAll();
+  renderShop();
+  renderProfile();
+}
 
+function addOwnedItem(item){
+  const owned=getOwnedItems();
+
+  if(!owned.includes(item.id)){
+    owned.push(item.id);
+    saveOwnedItems(owned);
+  }
+
+  toast(`${item.name} 구매 완료!`);
+}
+
+function findShopItem(id){
+  for(const cat of SHOP_CATEGORIES){
+    const found=cat.items.find(x=>x.id===id);
+    if(found)return found;
+  }
+
+  return null;
+}
+
+function findCategoryByItem(id){
+  return SHOP_CATEGORIES.find(cat=>
+    cat.items.some(x=>x.id===id)
+  );
 }
 
 function equipItem(id){
+  const item=findShopItem(id);
 
-  const item =
-    getItem(id);
+  if(!item)return;
 
-  if(!item) return;
+  if(!isOwned(id)){
+    toast("먼저 구매해야 합니다.");
+    return;
+  }
 
-  const owned =
-    getOwned();
+  const cat=findCategoryByItem(id);
 
-  if(!owned.includes(id)) return;
+  if(!cat)return;
 
-  const equipped =
-    getEquipped();
-
-  equipped[item.type]=id;
-
+  const equipped=getEquipped();
+  equipped[cat.id]=id;
   saveEquipped(equipped);
 
   applyItem(item);
 
-  if(
-    isAllCoreEquipped()
-  ){
+  toast(`${item.name} 장착 완료!`);
 
-    renderProfile();
-
+  if(isAllCoreEquipped()){
+    toast("모든 CORE가 연결되었습니다. 프로필 아래를 확인하세요. 🌀");
   }
 
   renderShop();
-
+  renderProfile();
 }
-
-function applyItem(item){
-
-  if(item.type==="theme"){
-
-    applyTheme(item.value);
-
-  }
-
-  if(item.type==="background"){
-
-    applyBackground(item.value);
-
-  }
-
-  if(item.type==="ui"){
-
-    applyUI(item.value);
-
-  }
-
-  if(item.type==="font"){
-
-    applyFont(item.value);
-
-  }
-
-  if(item.type==="honor"){
-
-    localStorage.setItem(
-      HONOR_KEY,
-      item.value
-    );
-
-  }
-
-  if(item.type==="frame"){
-
-    localStorage.setItem(
-      FRAME_KEY,
-      item.value
-    );
-
-  }
-
-  if(item.type==="decoration"){
-
-    localStorage.setItem(
-      DECORATION_KEY,
-      item.value
-    );
-
-  }
-
-  if(item.type==="sound"){
-
-    localStorage.setItem(
-      SOUND_KEY,
-      item.value
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   SHOP RENDER
-========================================================= */
 
 function renderShop(){
+  const equipped=getEquipped();
 
-  const query =
-    ($("shopSearch")?.value || "")
-      .trim()
-      .toLowerCase();
+  document.getElementById("shopContainer").innerHTML=
+    SHOP_CATEGORIES.map(cat=>`
+      <div class="shop-category">
+        <h2>${cat.name}</h2>
 
-  const owned =
-    getOwned();
-
-  const favs =
-    getFavorites();
-
-  let html="";
-
-  SHOP_CATEGORIES.forEach(cat=>{
-
-    const filtered =
-      cat.items.filter(item=>{
-
-        const text =
-          (
-            item.name+
-            item.desc
-          ).toLowerCase();
-
-        if(
-          query &&
-          !text.includes(query)
-        )
-          return false;
-
-        if(
-          favoritesOnly &&
-          !favs.includes(item.id)
-        )
-          return false;
-
-        return true;
-
-      });
-
-    if(!filtered.length) return;
-
-    html += `
-
-      <div class="shopCategory">
-
-        <div class="shopCategoryTitle">
-          ${cat.title}
-        </div>
-
-        <div class="shopGrid">
-
-          ${filtered.map(item=>{
-
-            const isOwned =
-              owned.includes(item.id);
-
-            const equipped =
-              getEquipped()[item.type]
-              ===item.id;
-
-            const favorite =
-              favs.includes(item.id);
+        <div class="list">
+          ${cat.items.map(item=>{
+            const owned=isOwned(item.id);
+            const active=equipped[cat.id]===item.id;
 
             return `
+            <div class="card">
+              <div class="shop-item">
+                <div class="row-main">
+                  <div class="row-title">
+                    ${item.name}
+                    ${item.core?` <span class="tag core">CORE</span>`:""}
+                    ${owned?` <span class="tag owned">보유</span>`:""}
+                    ${active?` <span class="tag">장착중</span>`:""}
+                  </div>
 
-              <div
-                class="shopItem
-                  ${favorite?'favorite':''}
-                  ${item.core?'core':''}"
-              >
+                  <div class="row-desc">
+                    ${item.desc}
+                  </div>
+                </div>
 
-                <div class="shopName">
-
-                  ${item.name}
-
+                <div class="shop-actions">
                   ${
-                    item.core
-                    ? `<span class="badge">CORE</span>`
-                    : ""
+                    owned
+                    ? `<button class="btn secondary" onclick="equipItem('${item.id}')">
+                        ${active?"장착중":"장착"}
+                       </button>`
+                    : item.price===0
+                    ? `<button class="btn" onclick="buyItem('${item.id}')">무료</button>`
+                    : `<button class="btn" onclick="buyItem('${item.id}')">
+                        ${money(item.price)} COIN
+                       </button>`
                   }
-
                 </div>
-
-                <div class="shopDesc">
-                  ${item.desc}
-                </div>
-
-                <div class="shopPrice">
-
-                  ${
-                    item.price===0
-                    ? "FREE"
-                    : "🪙 "+fmt(item.price)
-                  }
-
-                </div>
-
-                <div class="shopActions">
-
-                  <button
-                    class="btn"
-                    onclick="toggleFavorite('${item.id}')"
-                  >
-                    ${favorite?"★":"☆"}
-                  </button>
-
-                  ${
-                    equipped
-                    ?
-                    `
-                    <button
-                      class="btn primary"
-                      disabled
-                    >
-                      장착 중
-                    </button>
-                    `
-                    :
-                    isOwned
-                    ?
-                    `
-                    <button
-                      class="btn primary"
-                      onclick="equipItem('${item.id}')"
-                    >
-                      장착
-                    </button>
-                    `
-                    :
-                    `
-                    <button
-                      class="btn primary"
-                      onclick="buyItem('${item.id}')"
-                    >
-                      ${
-                        item.price===0
-                        ? "받기"
-                        : "구매"
-                      }
-                    </button>
-                    `
-                  }
-
-                </div>
-
               </div>
-
+            </div>
             `;
-
           }).join("")}
-
         </div>
-
       </div>
-
-    `;
-
-  });
-
-  $("shopContainer").innerHTML =
-    html ||
-    `<div class="empty">검색 결과가 없습니다.</div>`;
-
+    `).join("");
 }
 
+/* =========================================================
+   ITEM APPLICATION
+========================================================= */
+
+function applyItem(item){
+  switch(item.type){
+    case "theme":
+      applyTheme(item.value);
+      break;
+
+    case "background":
+      applyBackground(item.value);
+      break;
+
+    case "ui":
+      applyUI(item.value);
+      break;
+
+    case "decoration":
+      applyDecoration(item.value);
+      break;
+
+    case "honor":
+      applyHonor(item.value);
+      break;
+
+    case "frame":
+      applyFrame(item.value);
+      break;
+
+    case "sound":
+      applySoundProfile(item.value);
+      break;
+
+    case "experiment":
+      applyExperiment(item.value);
+      break;
+
+    case "font":
+      applyFont(item.value);
+      break;
+  }
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(theme){
+  document.body.className=
+    document.body.className
+      .split(" ")
+      .filter(x=>!x.startsWith("theme-"))
+      .join(" ");
+
+  document.body.classList.add("theme-"+theme);
+
+  localStorage.setItem(THEME_KEY,theme);
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+function applyBackground(bg){
+  document.body.classList.remove(
+    "bg-none",
+    "bg-galaxy",
+    "bg-grid",
+    "bg-wave",
+    "bg-blackhole",
+    "bg-scan"
+  );
+
+  document.body.classList.add("bg-"+bg);
+  localStorage.setItem(BG_KEY,bg);
+
+  const fx=document.getElementById("backgroundFx");
+  fx.innerHTML="";
+
+  if(bg==="galaxy" || bg==="core"){
+    const count=bg==="core"?75:55;
+
+    for(let i=0;i<count;i++){
+      const star=document.createElement("div");
+      star.className="galaxy-star";
+
+      star.style.left=Math.random()*100+"%";
+      star.style.top=Math.random()*100+"%";
+      star.style.opacity=(.15+Math.random()*.6).toFixed(2);
+      star.style.animationDuration=(5+Math.random()*8)+"s";
+      star.style.animationDelay=(-Math.random()*8)+"s";
+
+      if(bg==="core"){
+        star.style.width="3px";
+        star.style.height="3px";
+      }
+
+      fx.appendChild(star);
+    }
+  }
+}
+
+/* =========================================================
+   UI
+========================================================= */
+
+function applyUI(ui){
+  document.body.classList.remove(
+    "ui-default",
+    "ui-smooth",
+    "ui-neon",
+    "ui-pop",
+    "ui-minimal",
+    "ui-glass",
+    "ui-terminal"
+  );
+
+  if(ui==="core"){
+    document.body.classList.add("ui-neon");
+  }else{
+    document.body.classList.add("ui-"+ui);
+  }
+
+  localStorage.setItem(UI_KEY,ui);
+}
+
+/* =========================================================
+   FONT
+========================================================= */
+
+function applyFont(font){
+  document.body.classList.remove(
+    "font-default",
+    "font-noto",
+    "font-pretendard",
+    "font-mono",
+    "font-orbitron",
+    "font-pixel",
+    "font-core"
+  );
+
+  document.body.classList.add("font-"+font);
+
+  localStorage.setItem(FONT_KEY,font);
+}
+
+/* =========================================================
+   DECORATION
+========================================================= */
+
+function applyDecoration(value){
+  localStorage.setItem(DECORATION_KEY,value);
+
+  const el=document.getElementById("profileDecoration");
+
+  if(value==="satellite"){
+    el.textContent="🛰️";
+  }else if(value==="holo"){
+    el.textContent="💠";
+  }else if(value==="warning"){
+    el.textContent="⚠️";
+  }else if(value==="portal"){
+    el.textContent="🌀";
+  }else if(value==="core"){
+    el.textContent="✦";
+  }else{
+    el.textContent="";
+  }
+}
+
+/* =========================================================
+   HONOR
+========================================================= */
+
+function applyHonor(value){
+  localStorage.setItem(HONOR_KEY,value);
+  document.getElementById("profileHonor").textContent=value;
+}
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+function applyFrame(value){
+  const el=document.getElementById("avatarWrap");
+
+  el.className="avatar-wrap frame-"+value;
+
+  localStorage.setItem(FRAME_KEY,value);
+}
+
+/* =========================================================
+   SOUND
+========================================================= */
+
+function applySoundProfile(value){
+  localStorage.setItem(SOUND_KEY,value);
+}
+
+function playSound(type="click"){
+  const profile=localStorage.getItem(SOUND_KEY)||"off";
+
+  if(profile==="off")return;
+
+  try{
+    const AudioContext=
+      window.AudioContext||window.webkitAudioContext;
+
+    if(!AudioContext)return;
+
+    const ctx=new AudioContext();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    let freq=440;
+
+    if(profile==="system")freq=520;
+    if(profile==="low")freq=160;
+    if(profile==="click")freq=700;
+    if(profile==="arcade")freq=type==="win"?880:240;
+    if(profile==="core")freq=type==="win"?1000:180;
+
+    osc.frequency.value=freq;
+
+    if(type==="win"){
+      osc.type="sine";
+    }else if(type==="lose"){
+      osc.type="triangle";
+    }else{
+      osc.type="square";
+    }
+
+    gain.gain.setValueAtTime(.0001,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      .06,
+      ctx.currentTime+.01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      ctx.currentTime+.12
+    );
+
+    osc.start();
+    osc.stop(ctx.currentTime+.13);
+
+    setTimeout(()=>ctx.close(),300);
+  }catch(e){}
+}
+
+/* =========================================================
+   EXPERIMENT
+========================================================= */
+
+function applyExperiment(value){
+  document.body.classList.remove(
+    "experiment-404",
+    "experiment-error",
+    "experiment-noise"
+  );
+
+  if(value==="404"){
+    document.body.classList.add("experiment-404");
+  }
+
+  if(value==="error"){
+    document.body.classList.add("experiment-error");
+  }
+
+  if(value==="noise"){
+    document.body.classList.add("experiment-noise");
+  }
+
+  if(value==="sigh"){
+    /* cosmetic only */
+  }
+
+  if(value==="core"){
+    document.body.classList.add("experiment-404");
+  }
+
+  localStorage.setItem(EXPERIMENT_KEY,value);
+}
 
 /* =========================================================
    CORE SYSTEM
 ========================================================= */
 
 function isAllCoreEquipped(){
+  const equipped=getEquipped();
 
-  const equipped =
-    getEquipped();
+  return SHOP_CATEGORIES.every(cat=>{
+    const core=getCoreItem(cat);
 
-  for(const cat of SHOP_CATEGORIES){
+    return core && equipped[cat.id]===core.id;
+  });
+}
 
-    const core =
-      cat.items.find(
-        x=>x.core
-      );
+function renderSecretHole(){
+  const area=document.getElementById("secretHoleArea");
 
-    if(!core) continue;
-
-    if(
-      equipped[cat.id] !== core.id &&
-      equipped[core.type] !== core.id
-    ){
-
-      return false;
-
-    }
-
+  if(!isAllCoreEquipped()){
+    area.innerHTML="";
+    return;
   }
 
-  return true;
+  const owned=getOwnedItems().includes("secret-core-hole");
 
+  area.innerHTML=`
+    <div class="hole" onclick="enterSecretHole()">
+      <div style="font-size:30px">🕳️</div>
+      <b>개구멍</b>
+      <div class="hidden-note">
+        ${owned
+          ?"이미 넘어간 적이 있는 통로입니다."
+          :"정상적인 시스템에는 존재하지 않는 공간입니다."}
+      </div>
+    </div>
+  `;
 }
 
 function enterSecretHole(){
+  const owned=getOwnedItems();
 
-  if(!isAllCoreEquipped()){
-
-    alert(
-      "🕳️ 아직 안쪽으로 들어갈 수 없다..."
-    );
-
-    return;
-
-  }
-
-  const owned =
-    getOwned();
-
-  if(
-    !owned.includes(
-      "secret-core-hole"
-    )
-  ){
-
-    owned.push(
-      "secret-core-hole"
-    );
-
-    saveOwned(owned);
-
+  if(!owned.includes("secret-core-hole")){
+    owned.push("secret-core-hole");
+    saveOwnedItems(owned);
   }
 
   localStorage.setItem(
     DECORATION_KEY,
-    "🕳️"
+    "portal"
   );
 
-  unlockAchievement(
-    "boundary"
-  );
+  applyDecoration("portal");
 
-  alert(
-    "🌐 경계를 통과했습니다.\n\n"+
-    "숨겨진 장식물\n"+
-    "🕳️ CORE 경계 통로\n"+
-    "획득!"
-  );
+  checkAchievements({type:"coreHole"});
+
+  toast("🌀 경계를 넘어섰습니다.");
 
   renderProfile();
-
 }
 
+function giveAchievementCoreTheme(){
+  const owned=getOwnedItems();
 
-/* =========================================================
-   THEME
-========================================================= */
-
-function applyTheme(value){
-
-  document.body.className =
-    document.body.className
-      .replace(/\btheme-\S+/g,"");
-
-  document.body.classList.add(
-    `theme-${value}`
-  );
-
-  localStorage.setItem(
-    THEME_KEY,
-    value
-  );
-
-  drawMiniChart();
-  drawLargeChart();
-
-}
-
-function applyBackground(value){
-
-  document.body.className =
-    document.body.className
-      .replace(/\bbg-\S+/g,"");
-
-  document.body.classList.add(
-    `bg-${value}`
-  );
-
-  $("backgroundFx").innerHTML="";
-
-  if(value==="galaxy" || value==="core"){
-
-    for(let i=0;i<65;i++){
-
-      const star =
-        document.createElement("div");
-
-      star.className="galaxy-star";
-
-      star.style.left =
-        Math.random()*100+"%";
-
-      star.style.top =
-        Math.random()*100+"%";
-
-      star.style.animationDuration =
-        (3+Math.random()*6)+"s";
-
-      star.style.animationDelay =
-        (-Math.random()*6)+"s";
-
-      $("backgroundFx")
-        .appendChild(star);
-
-    }
-
+  if(!owned.includes("achievement-core-theme")){
+    owned.push("achievement-core-theme");
+    saveOwnedItems(owned);
   }
+}
 
-  if(value==="blackhole"){
+/* 업적을 하나라도 달성할 때 CORE 테마 지급 */
+function checkAchievementCoreTheme(){
+  const state=getAchievementState();
 
-    const hole =
-      document.createElement("div");
-
-    hole.style.position="absolute";
-    hole.style.width="420px";
-    hole.style.height="420px";
-    hole.style.borderRadius="50%";
-    hole.style.left="50%";
-    hole.style.top="50%";
-    hole.style.transform="translate(-50%,-50%)";
-    hole.style.background=
-      "radial-gradient(circle,#000 0 25%,rgba(80,0,120,.2) 45%,transparent 70%)";
-    hole.style.boxShadow=
-      "0 0 100px rgba(120,0,255,.15)";
-
-    $("backgroundFx")
-      .appendChild(hole);
-
+  if(Object.keys(state).length>0){
+    giveAchievementCoreTheme();
   }
-
 }
-
-function applyUI(value){
-
-  document.body.className =
-    document.body.className
-      .replace(/\bui-\S+/g,"");
-
-  document.body.classList.add(
-    `ui-${value}`
-  );
-
-  localStorage.setItem(
-    UI_KEY,
-    value
-  );
-
-}
-
-
-/* =========================================================
-   FONT
-========================================================= */
-
-function applyFont(value){
-
-  let font =
-    "'Noto Sans KR',sans-serif";
-
-  if(value==="Pretendard")
-    font="'Pretendard','Noto Sans KR',sans-serif";
-
-  if(value==="Mono")
-    font="'JetBrains Mono',monospace";
-
-  if(value==="Orbitron")
-    font="'Orbitron','Noto Sans KR',sans-serif";
-
-  if(value==="Pixel")
-    font="'Press Start 2P','Noto Sans KR',sans-serif";
-
-  if(value==="Core")
-    font="'Orbitron','JetBrains Mono',sans-serif";
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font",
-      font
-    );
-
-  document.body.style.fontFamily =
-    font;
-
-  localStorage.setItem(
-    FONT_KEY,
-    value
-  );
-
-}
-
-
-/* =========================================================
-   SOUND
-========================================================= */
-
-let audioContext=null;
-
-function playSound(type){
-
-  const sound =
-    localStorage.getItem(
-      SOUND_KEY
-    ) || "off";
-
-  if(sound==="off") return;
-
-  try{
-
-    audioContext =
-      audioContext ||
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
-
-    const osc =
-      audioContext.createOscillator();
-
-    const gain =
-      audioContext.createGain();
-
-    osc.connect(gain);
-    gain.connect(
-      audioContext.destination
-    );
-
-    let freq=500;
-
-    if(sound==="beep")
-      freq=600;
-
-    if(sound==="low")
-      freq=130;
-
-    if(sound==="click")
-      freq=800;
-
-    if(sound==="arcade")
-      freq=type==="win"?900:250;
-
-    if(sound==="core")
-      freq=type==="win"?1200:180;
-
-    osc.frequency.value=freq;
-
-    gain.gain.setValueAtTime(
-      .04,
-      audioContext.currentTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      audioContext.currentTime+.12
-    );
-
-    osc.start();
-
-    osc.stop(
-      audioContext.currentTime+.12
-    );
-
-  }catch{}
-
-}
-
 
 /* =========================================================
    PROFILE
 ========================================================= */
 
 function makeDefaultNickname(){
-
-  return "플레이어 "+
-    Math.floor(
-      1000+
-      Math.random()*9000
-    );
-
+  return "플레이어 "+Math.floor(1000+Math.random()*9000);
 }
 
 function getNickname(){
+  let name=localStorage.getItem(NICKNAME_KEY);
 
-  let n =
-    localStorage.getItem(
-      NICKNAME_KEY
-    );
-
-  if(!n){
-
-    n=makeDefaultNickname();
-
-    localStorage.setItem(
-      NICKNAME_KEY,
-      n
-    );
-
+  if(!name){
+    name=makeDefaultNickname();
+    localStorage.setItem(NICKNAME_KEY,name);
   }
 
-  return n;
-
+  return name;
 }
 
-function openNicknameEditor(){
-
-  $("nicknameInput").value =
-    getNickname();
-
-  $("nicknameModal")
-    .classList.add("show");
-
+function getCurrentHonor(){
+  return localStorage.getItem(HONOR_KEY)||"🌱 새내기";
 }
 
-function closeModal(id){
-
-  $(id)
-    .classList.remove("show");
-
+function getCurrentFrame(){
+  return localStorage.getItem(FRAME_KEY)||"default";
 }
 
-function saveNickname(){
-
-  const value =
-    $("nicknameInput")
-      .value
-      .trim();
-
-  if(
-    value.length<1 ||
-    value.length>16
-  ){
-
-    alert(
-      "닉네임은 1~16자로 입력하세요."
-    );
-
-    return;
-
-  }
-
-  localStorage.setItem(
-    NICKNAME_KEY,
-    value
-  );
-
-  closeModal(
-    "nicknameModal"
-  );
-
-  renderProfile();
-
+function getCurrentDecoration(){
+  return localStorage.getItem(DECORATION_KEY)||"none";
 }
 
 function renderProfile(){
+  const nickname=getNickname();
 
-  const nickname =
-    getNickname();
+  document.getElementById("profileNickname").textContent=nickname;
+  document.getElementById("profileHonor").textContent=getCurrentHonor();
 
-  $("profileNickname")
-    .textContent=nickname;
+  applyFrame(getCurrentFrame());
+  applyDecoration(getCurrentDecoration());
 
-  const honor =
-    localStorage.getItem(
-      HONOR_KEY
-    ) ||
-    "🌱 새내기";
-
-  $("profileHonor")
-    .textContent=honor;
-
-  const frame =
-    localStorage.getItem(
-      FRAME_KEY
-    ) ||
-    "frame-default";
-
-  const avatar =
-    $("avatarWrap");
-
-  avatar.className =
-    "avatar-wrap "+frame;
-
-  const decoration =
-    localStorage.getItem(
-      DECORATION_KEY
-    ) || "";
-
-  $("profileDecoration")
-    .textContent=decoration;
-
-  const total =
-    totalBets();
-
-  const winRate =
-    total
-    ? (wins()/total*100).toFixed(1)
-    : "0.0";
-
-  const profitRate =
-    10000
-    ? (totalProfit()/10000*100).toFixed(1)
-    : "0.0";
-
-  const state =
-    getAchievementState();
-
-  const achievements =
-    Object.keys(state).length;
-
-  const mission =
-    getMissionState();
-
-  const missionCount =
-    Object.values(
-      mission.claimed || {}
-    ).filter(Boolean).length;
-
-  const reviveCount =
-    Number(
-      localStorage.getItem(
-        REVIVE_COUNT_KEY
-      ) || 0
-    );
-
-  const reviveBest =
-    Number(
-      localStorage.getItem(
-        REVIVE_BEST_KEY
-      ) || 0
-    );
-
-  const first =
-    history.length
-    ? history[history.length-1].time
-    : "-";
-
-  const recent =
-    history.length
-    ? history[0].time
-    : "-";
-
-  const stats=[
-
-    ["총 배팅 횟수",fmt(total)],
-    ["승리",fmt(wins())],
-    ["패배",fmt(losses())],
-    ["승률",winRate+"%"],
-    ["총 배팅액",fmt(totalBetAmount())],
-    ["총 수익",fmt(totalProfit())],
-    ["평균 배팅액",fmt(averageBet())],
-    ["평균 수익",fmt(averageProfit())],
-    ["최고 잔액",fmt(maxBalance())],
-    ["최저 잔액",fmt(minBalance())],
-    ["최대 승리",fmt(maxWin())],
-    ["최대 손실",fmt(maxLoss())],
-    ["최고 연승",maxStreak()+"연승"],
-    ["현재 연승",currentStreak()+"연승"],
-    ["수익률",profitRate+"%"],
-    ["첫 배팅",first],
-    ["최근 배팅",recent],
-    ["🆘 회생 성공",fmt(reviveCount)],
-    ["🧠 회생 최고 단계",fmt(reviveBest)],
-    ["🏆 업적 달성",`${achievements}/${ACHIEVEMENTS.length}`],
-    ["🎯 오늘 미션",fmt(missionCount)],
-    ["🛒 상점 사용",fmt(getShopSpent())+" COIN"]
-
-  ];
-
-  $("profileStats").innerHTML =
-    stats.map(x=>`
-
-      <div class="stat">
-
-        <div class="statName">
-          ${x[0]}
-        </div>
-
-        <div class="statValue">
-          ${x[1]}
-        </div>
-
-      </div>
-
-    `).join("");
-
-  $("secretHole").style.display =
-    isAllCoreEquipped()
-    ? "block"
-    : "none";
-
+  renderProfileStats();
+  renderEquipped();
+  renderSecretHole();
 }
 
+function renderEquipped(){
+  const equipped=getEquipped();
+
+  document.getElementById("equippedInfo").innerHTML=
+    SHOP_CATEGORIES.map(cat=>{
+      const id=equipped[cat.id];
+
+      const item=id?findShopItem(id):null;
+
+      return `
+        <div class="row">
+          <span>${cat.name}</span>
+          <b>${item?item.name:"기본"}</b>
+        </div>
+      `;
+    }).join("");
+}
+
+function renderProfileStats(){
+  const history=getHistory();
+
+  const bets=history.length;
+  const wins=history.filter(x=>x.result==="win").length;
+  const losses=bets-wins;
+
+  const totalBet=history.reduce(
+    (s,x)=>s+x.bet,0
+  );
+
+  const totalProfit=history.reduce(
+    (s,x)=>s+x.profit,0
+  );
+
+  const avgBet=bets?totalBet/bets:0;
+  const avgProfit=bets?totalProfit/bets:0;
+
+  const balances=[
+    START_BALANCE,
+    ...history.map(x=>Number(x.balance)||0)
+  ];
+
+  const highest=Math.max(...balances);
+  const lowest=Math.min(...balances);
+
+  const maxWin=Math.max(
+    0,
+    ...history.map(x=>x.profit>0?x.profit:0)
+  );
+
+  const maxLoss=Math.min(
+    0,
+    ...history.map(x=>x.profit<0?x.profit:0)
+  );
+
+  const bestStreak=Number(
+    localStorage.getItem(LAST_STREAK_KEY)||0
+  );
+
+  const currentStreak=Number(
+    localStorage.getItem(STREAK_KEY)||0
+  );
+
+  const first=history[0]?.time;
+  const latest=history[history.length-1]?.time;
+
+  const recoveryCount=Number(
+    localStorage.getItem(REVIVE_COUNT_KEY)||0
+  );
+
+  const recoveryBest=Number(
+    localStorage.getItem(REVIVE_BEST_KEY)||0
+  );
+
+  const achCount=Object.keys(
+    getAchievementState()
+  ).length;
+
+  const missionState=getMissionState();
+
+  const missionDone=Object.values(
+    missionState.claimed||{}
+  ).filter(Boolean).length;
+
+  const rate=bets?wins/bets*100:0;
+
+  const returnRate=START_BALANCE
+    ? totalProfit/START_BALANCE*100
+    : 0;
+
+  const stats=[
+    ["총 배팅 횟수",money(bets)],
+    ["승리",money(wins)],
+    ["패배",money(losses)],
+    ["승률",rate.toFixed(1)+"%"],
+    ["총 배팅액",money(totalBet)+" COIN"],
+    ["총 수익",money(totalProfit)+" COIN"],
+    ["평균 배팅액",money(Math.round(avgBet))+" COIN"],
+    ["평균 수익",money(Math.round(avgProfit))+" COIN"],
+    ["최고 잔액",money(highest)+" COIN"],
+    ["최저 잔액",money(lowest)+" COIN"],
+    ["최대 승리",money(maxWin)+" COIN"],
+    ["최대 손실",money(maxLoss)+" COIN"],
+    ["최고 연승",money(bestStreak)],
+    ["현재 연승",money(currentStreak)],
+    ["수익률",returnRate.toFixed(1)+"%"],
+    ["첫 배팅 날짜",first?new Date(first).toLocaleString():"-"],
+    ["최근 배팅 날짜",latest?new Date(latest).toLocaleString():"-"],
+    ["🆘 회생 성공 횟수",money(recoveryCount)],
+    ["🧠 회생 최고 단계",money(recoveryBest)],
+    ["🏆 업적 달성 수",`${achCount}/${ACHIEVEMENTS.length}`],
+    ["🎯 오늘 미션 완료",`${missionDone}/${MISSION_DEFS.length}`]
+  ];
+
+  document.getElementById("profileStats").innerHTML=
+    stats.map(([a,b])=>`
+      <div class="stat">
+        <small>${a}</small>
+        <b>${b}</b>
+      </div>
+    `).join("");
+}
+
+function openNicknameEditor(){
+  document.getElementById("nicknameInput").value=getNickname();
+  document.getElementById("nicknameModal").classList.add("show");
+  document.getElementById("nicknameInput").focus();
+}
+
+function closeNicknameEditor(){
+  document.getElementById("nicknameModal").classList.remove("show");
+}
+
+function saveNickname(){
+  const input=document.getElementById("nicknameInput");
+  const name=input.value.trim();
+
+  if(name.length<1 || name.length>16){
+    toast("닉네임은 1~16자로 입력하세요.");
+    return;
+  }
+
+  localStorage.setItem(NICKNAME_KEY,name);
+
+  closeNicknameEditor();
+  renderProfile();
+
+  toast("닉네임이 변경되었습니다.");
+}
+
+/* =========================================================
+   GRAPH
+========================================================= */
+
+function drawGraph(id){
+  const canvas=document.getElementById(id);
+
+  if(!canvas)return;
+
+  const rect=canvas.getBoundingClientRect();
+  const dpr=window.devicePixelRatio||1;
+
+  canvas.width=rect.width*dpr;
+  canvas.height=280*dpr;
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.scale(dpr,dpr);
+
+  const w=rect.width;
+  const h=280;
+
+  ctx.clearRect(0,0,w,h);
+
+  const history=getHistory();
+
+  const points=[
+    START_BALANCE,
+    ...history.map(x=>Number(x.balance)||0)
+  ];
+
+  if(points.length<2){
+    ctx.fillStyle=getComputedStyle(document.body)
+      .getPropertyValue("--muted");
+
+    ctx.textAlign="center";
+    ctx.font="14px sans-serif";
+    ctx.fillText("배팅을 시작하면 그래프가 표시됩니다.",w/2,h/2);
+    return;
+  }
+
+  const max=Math.max(...points);
+  const min=Math.min(...points);
+
+  const range=Math.max(1,max-min);
+
+  const pad=30;
+
+  ctx.strokeStyle=getComputedStyle(document.body)
+    .getPropertyValue("--border");
+
+  ctx.lineWidth=1;
+
+  for(let i=0;i<5;i++){
+    const y=pad+(h-pad*2)*i/4;
+
+    ctx.beginPath();
+    ctx.moveTo(pad,y);
+    ctx.lineTo(w-pad,y);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle=getComputedStyle(document.body)
+    .getPropertyValue("--accent");
+
+  ctx.lineWidth=3;
+  ctx.beginPath();
+
+  points.forEach((value,i)=>{
+    const x=
+      pad+
+      (w-pad*2)*
+      (i/(points.length-1));
+
+    const y=
+      h-pad-
+      ((value-min)/range)*(h-pad*2);
+
+    if(i===0)ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  });
+
+  ctx.stroke();
+
+  ctx.fillStyle=getComputedStyle(document.body)
+    .getPropertyValue("--accent");
+
+  points.forEach((value,i)=>{
+    const x=
+      pad+
+      (w-pad*2)*
+      (i/(points.length-1));
+
+    const y=
+      h-pad-
+      ((value-min)/range)*(h-pad*2);
+
+    ctx.beginPath();
+    ctx.arc(x,y,3,0,Math.PI*2);
+    ctx.fill();
+  });
+}
+
+window.addEventListener("resize",()=>{
+  drawGraph("miniGraph");
+  drawGraph("mainGraph");
+});
+
+/* =========================================================
+   RECENT HISTORY
+========================================================= */
+
+function renderRecentHistory(){
+  const history=getHistory().slice(-10).reverse();
+
+  const el=document.getElementById("recentHistory");
+
+  if(history.length===0){
+    el.innerHTML=
+      `<div class="muted center">아직 배팅 기록이 없습니다.</div>`;
+    return;
+  }
+
+  el.innerHTML=history.map(x=>`
+    <div class="row history-item ${x.result}">
+      <div class="row-main">
+        <div class="row-title">
+          ${x.result==="win"?"🎉 승리":"💥 패배"}
+        </div>
+        <div class="row-desc">
+          ${new Date(x.time).toLocaleString()}
+          · 배팅 ${money(x.bet)}
+        </div>
+      </div>
+
+      <div>
+        <b>
+          ${x.profit>0?"+":""}${money(x.profit)}
+        </b>
+      </div>
+    </div>
+  `).join("");
+}
 
 /* =========================================================
    RECOVERY
 ========================================================= */
 
-let recoveryStage=0;
-let recoveryAnswer="";
-let recoveryTimer=null;
+function renderRecovery(){
+  const balance=getBalance();
+  const last=Number(localStorage.getItem(REVIVE_KEY)||0);
 
-function updateRecovery(){
+  const count=Number(
+    localStorage.getItem(REVIVE_COUNT_KEY)||0
+  );
 
-  const cooldown =
-    Number(
-      localStorage.getItem(
-        REVIVE_KEY
-      ) || 0
-    );
+  const best=Number(
+    localStorage.getItem(REVIVE_BEST_KEY)||0
+  );
 
-  const remaining =
-    cooldown+
-    RECOVERY_COOLDOWN-
-    Date.now();
-
-  const best =
-    Number(
-      localStorage.getItem(
-        REVIVE_BEST_KEY
-      ) || 0
-    );
-
-  $("recoveryProgress")
-    .textContent=
-      `최고 단계: ${best}`;
+  let text="";
 
   if(balance!==0){
-
-    $("recoveryStatus")
-      .textContent=
-      "잔액이 0 COIN일 때만 이용할 수 있습니다.";
-
-    $("recoveryStartBtn")
-      .disabled=true;
-
-    return;
-
-  }
-
-  if(remaining>0){
-
-    const m =
-      Math.floor(
-        remaining/60000
-      );
-
-    const s =
-      Math.floor(
-        (remaining%60000)/1000
-      );
-
-    $("recoveryStatus")
-      .textContent=
-      `다시 시도하려면 ${m}분 ${s}초 기다려야 합니다.`;
-
-    $("recoveryStartBtn")
-      .disabled=true;
-
+    text=`
+      <div style="font-size:20px;font-weight:900">
+        현재 ${money(balance)} COIN
+      </div>
+      <div class="muted">잔액이 0 COIN일 때만 회생할 수 있습니다.</div>
+    `;
   }else{
+    const remain=Math.max(
+      0,
+      RECOVERY_COOLDOWN-(Date.now()-last)
+    );
 
-    $("recoveryStatus")
-      .textContent=
-      "3단계 기억력 테스트를 통과하면 +1,000 COIN.";
+    if(last && remain>0){
+      const m=Math.floor(remain/60000);
+      const s=Math.floor(remain%60000/1000);
 
-    $("recoveryStartBtn")
-      .disabled=false;
-
+      text=`
+        <div style="font-size:20px;font-weight:900">
+          회생 대기 중
+        </div>
+        <div class="muted">
+          ${m}분 ${s}초 후 다시 시도할 수 있습니다.
+        </div>
+      `;
+    }else{
+      text=`
+        <div style="font-size:20px;font-weight:900">
+          🆘 회생 가능
+        </div>
+        <div class="muted">
+          기억력 테스트를 통과하면 +1,000 COIN
+        </div>
+      `;
+    }
   }
 
+  document.getElementById("recoveryStatus").innerHTML=text;
+
+  document.getElementById("recoveryStats").innerHTML=`
+    <div class="stats-grid">
+      <div class="stat">
+        <small>회생 성공</small>
+        <b>${money(count)}</b>
+      </div>
+
+      <div class="stat">
+        <small>최고 단계</small>
+        <b>${money(best)}</b>
+      </div>
+    </div>
+  `;
 }
 
 function startRecovery(){
-
-  if(balance!==0){
-
-    alert(
-      "🆘 회생은 잔액이 0일 때만 사용할 수 있습니다."
-    );
-
+  if(getBalance()!==0){
+    toast("잔액이 0 COIN이어야 합니다.");
     return;
-
   }
 
-  const cooldown =
-    Number(
-      localStorage.getItem(
-        REVIVE_KEY
-      ) || 0
-    );
+  const last=Number(localStorage.getItem(REVIVE_KEY)||0);
 
-  if(
-    Date.now()-
-    cooldown <
-    RECOVERY_COOLDOWN
-  ){
-
-    updateRecovery();
-
+  if(last && Date.now()-last<RECOVERY_COOLDOWN){
+    toast("아직 회생 쿨타임입니다.");
     return;
-
   }
 
-  recoveryStage=1;
-
-  nextRecoveryStage();
-
+  runRecoveryStage(1);
 }
 
-function nextRecoveryStage(){
+function runRecoveryStage(stage){
+  const configs={
+    1:{digits:4,time:1000},
+    2:{digits:5,time:700},
+    3:{digits:6,time:500}
+  };
 
-  if(recoveryStage>3){
+  const config=configs[stage];
 
-    balance=setBalance(
-      1000
-    );
+  let code="";
 
-    localStorage.setItem(
-      REVIVE_COUNT_KEY,
-      String(
-        Number(
-          localStorage.getItem(
-            REVIVE_COUNT_KEY
-          ) || 0
-        )+1
-      )
-    );
-
-    $("memoryNumber")
-      .textContent="SUCCESS";
-
-    $("memoryInput").style.display="none";
-
-    alert(
-      "🆘 회생 성공!\n+1,000 COIN"
-    );
-
-    updateAll();
-
-    return;
-
+  for(let i=0;i<config.digits;i++){
+    code+=Math.floor(Math.random()*10);
   }
 
-  const lengths=[
-    0,
-    4,
-    5,
-    6
-  ];
+  const game=document.getElementById("recoveryGame");
 
-  const times=[
-    0,
-    1000,
-    700,
-    500
-  ];
+  game.innerHTML=`
+    <div style="font-size:14px;font-weight:800">
+      STAGE ${stage}/3
+    </div>
 
-  const length =
-    lengths[recoveryStage];
+    <div id="memoryCode"
+      style="font-size:36px;font-weight:900;margin:18px 0">
+      ${code}
+    </div>
 
-  recoveryAnswer="";
-
-  for(let i=0;i<length;i++){
-
-    recoveryAnswer +=
-      Math.floor(
-        Math.random()*10
-      );
-
-  }
-
-  $("memoryInput").style.display=
-    "none";
-
-  $("memoryInput").value="";
-
-  $("memoryNumber")
-    .textContent=
-      recoveryAnswer;
-
-  const best =
-    Number(
-      localStorage.getItem(
-        REVIVE_BEST_KEY
-      ) || 0
-    );
-
-  if(recoveryStage>best){
-
-    localStorage.setItem(
-      REVIVE_BEST_KEY,
-      String(recoveryStage)
-    );
-
-  }
+    <div class="muted">
+      잠시 후 숫자가 사라집니다.
+    </div>
+  `;
 
   setTimeout(()=>{
+    game.innerHTML=`
+      <div style="font-weight:900;margin-bottom:10px">
+        방금 본 숫자를 입력하세요.
+      </div>
 
-    $("memoryNumber")
-      .textContent="???";
+      <input id="memoryInput"
+        type="text"
+        inputmode="numeric"
+        maxlength="${config.digits}"
+        placeholder="${config.digits}자리">
 
-    $("memoryInput").style.display=
-      "block";
-
-    $("memoryInput").focus();
-
-  },times[recoveryStage]);
-
-  $("recoveryStartBtn")
-    .textContent=
-      `단계 ${recoveryStage}/3`;
-
-  $("recoveryStartBtn")
-    .disabled=true;
-
-  clearTimeout(recoveryTimer);
-
-  recoveryTimer =
-    setTimeout(()=>{
-
-      $("recoveryStartBtn")
-        .disabled=false;
-
-      $("recoveryStartBtn")
-        .textContent="확인";
-
-      $("recoveryStartBtn")
-        .onclick=
-          checkRecovery;
-
-    },times[recoveryStage]+50);
-
+      <button class="btn" style="margin-top:10px"
+        onclick="submitRecoveryStage(${stage},'${code}')">
+        확인
+      </button>
+    `;
+  },config.time);
 }
 
-function checkRecovery(){
+function submitRecoveryStage(stage,code){
+  const input=document.getElementById("memoryInput");
 
-  const input =
-    $("memoryInput")
-      .value
-      .trim();
+  if(!input)return;
 
-  if(input!==recoveryAnswer){
+  const value=input.value.trim();
 
+  const best=Number(
+    localStorage.getItem(REVIVE_BEST_KEY)||0
+  );
+
+  if(stage>best){
+    localStorage.setItem(
+      REVIVE_BEST_KEY,
+      String(stage)
+    );
+  }
+
+  if(value!==code){
     localStorage.setItem(
       REVIVE_KEY,
       String(Date.now())
     );
 
-    alert(
-      `❌ 실패!\n${recoveryStage}단계에서 틀렸습니다.`
-    );
+    toast("실패했습니다. 5분 후 다시 시도할 수 있습니다.");
 
-    recoveryStage=0;
+    renderRecovery();
 
-    $("memoryNumber")
-      .textContent="실패";
-
-    $("memoryInput")
-      .style.display="none";
-
-    $("recoveryStartBtn")
-      .onclick=startRecovery;
-
-    $("recoveryStartBtn")
-      .textContent=
-        "회생 테스트 시작";
-
-    updateRecovery();
+    document.getElementById("recoveryGame").innerHTML=`
+      <button class="btn" onclick="startRecovery()">
+        다시 시도
+      </button>
+    `;
 
     return;
-
   }
 
-  recoveryStage++;
+  if(stage<3){
+    runRecoveryStage(stage+1);
+    return;
+  }
 
-  $("recoveryStartBtn")
-    .onclick=startRecovery;
+  addBalance(1000);
 
-  nextRecoveryStage();
+  const count=Number(
+    localStorage.getItem(REVIVE_COUNT_KEY)||0
+  );
 
+  localStorage.setItem(
+    REVIVE_COUNT_KEY,
+    String(count+1)
+  );
+
+  localStorage.removeItem(REVIVE_KEY);
+
+  toast("🆘 회생 성공! +1,000 COIN");
+
+  document.getElementById("recoveryGame").innerHTML=`
+    <div style="font-size:22px;font-weight:900">
+      회생 성공 🎉
+    </div>
+  `;
+
+  renderRecovery();
+  renderProfile();
 }
 
-
 /* =========================================================
-   UPDATE
+   ACHIEVEMENT REWARD AUTO APPLY
 ========================================================= */
 
-function updateAll(){
+/*
+  업적을 달성하면:
+  1. 해당 업적 전용 칭호 지급
+  2. 해당 업적 전용 타이틀(프로필 프레임) 지급
+  3. CORE 테마 지급
+  이 보상들은 상점에 존재하지 않음.
+*/
 
-  balance=getBalance();
+function getAchievementRewards(){
+  const state=getAchievementState();
 
-  $("balance")
-    .textContent=fmt(balance);
+  return ACHIEVEMENTS
+    .filter(a=>state[a.id])
+    .map(a=>({
+      achievement:a,
+      honor:a.honor,
+      title:a.title
+    }));
+}
 
-  $("topBalance")
-    .textContent=fmt(balance);
+function equipAchievementHonor(id){
+  const a=ACHIEVEMENTS.find(x=>x.id===id);
 
-  $("betBtn")
-    .disabled=
-      balance<=0;
+  if(!a || !getAchievementState()[id]){
+    toast("아직 달성하지 않은 업적입니다.");
+    return;
+  }
 
-  $("bankrupt")
-    .style.display=
-      balance===0
-      ? "block"
-      : "none";
+  applyHonor(a.honor);
+  toast(`🏷️ ${a.honor} 칭호 장착`);
+}
 
-  renderHistory();
+function equipAchievementTitle(id){
+  const a=ACHIEVEMENTS.find(x=>x.id===id);
+
+  if(!a || !getAchievementState()[id]){
+    toast("아직 달성하지 않은 업적입니다.");
+    return;
+  }
+
+  localStorage.setItem(
+    "coinlab_achievement_title",
+    a.title
+  );
+
+  /*
+    업적 타이틀은 일반 상점 프레임과 별도.
+    실제 프로필 프레임에 고유한 색/스타일 적용.
+  */
+  const el=document.getElementById("avatarWrap");
+
+  el.className=
+    "avatar-wrap "+a.title;
+
+  toast(`🪪 ${a.titleName} 타이틀 장착`);
+}
+
+/* 업적 보상 UI를 조금 더 쉽게 사용하도록 버튼 추가 */
+function renderAchievementRewardControls(){
+  const state=getAchievementState();
+
+  document.querySelectorAll(".achievement.unlocked")
+    .forEach((card,index)=>{
+      const a=ACHIEVEMENTS.find(x=>{
+        const name=card.querySelector(".row-title")?.textContent||"";
+        return name.includes(x.name);
+      });
+
+      if(!a)return;
+
+      const existing=card.querySelector(".reward-controls");
+
+      if(existing)return;
+
+      const div=document.createElement("div");
+      div.className="reward-controls";
+      div.style.marginTop="10px";
+      div.style.display="flex";
+      div.style.gap="7px";
+      div.style.flexWrap="wrap";
+
+      div.innerHTML=`
+        <button class="btn secondary"
+          onclick="equipAchievementHonor('${a.id}')">
+          🏷️ 칭호 장착
+        </button>
+
+        <button class="btn secondary"
+          onclick="equipAchievementTitle('${a.id}')">
+          🪪 타이틀 장착
+        </button>
+      `;
+
+      card.appendChild(div);
+    });
+}
+
+/* renderAchievements를 감싼 버전 */
+const originalRenderAchievements=renderAchievements;
+
+renderAchievements=function(){
+  originalRenderAchievements();
+  renderAchievementRewardControls();
+};
+
+/* =========================================================
+   ACHIEVEMENT TITLE CSS
+========================================================= */
+
+const achievementStyle=document.createElement("style");
+
+achievementStyle.textContent=`
+.ach-first:before{
+  border-color:#65a86b !important;
+  box-shadow:0 0 10px #65a86b !important;
+}
+
+.ach-getting:before{
+  border-color:#4e9cff !important;
+  box-shadow:0 0 10px #4e9cff !important;
+}
+
+.ach-bettor:before{
+  border-color:#ff6d3d !important;
+  box-shadow:0 0 12px #ff6d3d !important;
+}
+
+.ach-regular:before{
+  border-color:#d9b94b !important;
+  box-shadow:0 0 15px #d9b94b !important;
+}
+
+.ach-streak:before{
+  border-color:#ff4b26 !important;
+  box-shadow:0 0 16px #ff4b26 !important;
+}
+
+.ach-bigwin:before{
+  border-color:#2fbf7a !important;
+  box-shadow:0 0 14px #2fbf7a !important;
+}
+
+.ach-rich:before{
+  border-color:#d8bc50 !important;
+  box-shadow:0 0 20px #d8bc50 !important;
+}
+
+.ach-bottom:before{
+  border-color:#555 !important;
+  box-shadow:0 0 5px #333 !important;
+}
+
+.ach-boundary:before{
+  border-color:#b96cff !important;
+  box-shadow:0 0 22px #b96cff !important;
+}
+
+.ach-zero500k:before{
+  border-color:#e33b3b !important;
+  box-shadow:0 0 20px #e33b3b !important;
+}
+
+.ach-devsigh:before{
+  border-color:#888 !important;
+  box-shadow:0 0 8px #888 !important;
+}
+
+.ach-hacker:before{
+  border-color:#21d1c3 !important;
+  box-shadow:0 0 22px #21d1c3 !important;
+}
+`;
+
+document.head.appendChild(achievementStyle);
+
+/* =========================================================
+   CORE THEME FROM ACHIEVEMENT
+========================================================= */
+
+function applyAchievementCoreTheme(){
+  const owned=getOwnedItems();
+
+  if(owned.includes("achievement-core-theme")){
+    /*
+      업적 CORE 테마는 상점 테마가 아니므로
+      별도의 버튼 없이 지급만 됨.
+    */
+  }
+}
+
+/* =========================================================
+   LOAD SAVED STATE
+========================================================= */
+
+function loadState(){
+  const theme=localStorage.getItem(THEME_KEY)||"default";
+  const bg=localStorage.getItem(BG_KEY)||"none";
+  const ui=localStorage.getItem(UI_KEY)||"default";
+  const font=localStorage.getItem(FONT_KEY)||"default";
+  const frame=localStorage.getItem(FRAME_KEY)||"default";
+  const decoration=localStorage.getItem(DECORATION_KEY)||"none";
+  const honor=localStorage.getItem(HONOR_KEY)||"🌱 새내기";
+  const experiment=localStorage.getItem(EXPERIMENT_KEY)||"none";
+
+  applyTheme(theme);
+  applyBackground(bg);
+  applyUI(ui);
+  applyFont(font);
+  applyFrame(frame);
+  applyDecoration(decoration);
+  applyHonor(honor);
+  applyExperiment(experiment);
+
+  const equipped=getEquipped();
+
+  for(const cat of SHOP_CATEGORIES){
+    const id=equipped[cat.id];
+
+    if(id){
+      const item=findShopItem(id);
+
+      if(item && isOwned(id)){
+        applyItem(item);
+      }
+    }
+  }
+
+  checkAchievementCoreTheme();
+}
+
+/* =========================================================
+   DAILY MISSION UPDATE AFTER BET
+========================================================= */
+
+function updateMissionAfterBet(win,profit){
+  const state=getMissionState();
+
+  state.bets++;
+
+  if(win){
+    state.wins++;
+  }
+
+  state.profit+=profit;
+
+  setJSON(MISSION_KEY,state);
+}
+
+/* Hook mission update into betting */
+const originalPlaceBet=placeBet;
+
+placeBet=function(){
+  const beforeHistoryLength=getHistory().length;
+
+  originalPlaceBet();
+
+  const afterHistory=getHistory();
+
+  if(afterHistory.length>beforeHistoryLength){
+    const latest=afterHistory[afterHistory.length-1];
+
+    updateMissionAfterBet(
+      latest.result==="win",
+      latest.profit
+    );
+
+    if(document.getElementById("page-missions")
+      .classList.contains("active")){
+      renderMissions();
+    }
+  }
+};
+
+/* =========================================================
+   FINAL INIT
+========================================================= */
+
+function init(){
+  loadState();
+
+  updateBalanceUI();
+
+  renderRecentHistory();
+  renderAttendance();
   renderMissions();
   renderAchievements();
   renderProfile();
   renderShop();
+  renderRecovery();
 
-  updateAttendance();
-  updateRecovery();
+  drawGraph("miniGraph");
+  drawGraph("mainGraph");
 
-  drawMiniChart();
-  drawLargeChart();
+  checkAchievementCoreTheme();
 
-}
-
-
-/* =========================================================
-   LOAD EQUIPPED
-========================================================= */
-
-function loadEquipped(){
-
-  const equipped =
-    getEquipped();
-
-  for(
-    const type in equipped
-  ){
-
-    const item =
-      getItem(
-        equipped[type]
-      );
-
-    if(item){
-
-      applyItem(item);
-
-    }
-
+  /* 페이지가 열린 직후에도 0이면 그대로 유지 */
+  if(getBalance()===0){
+    updateBalanceUI();
   }
-
-  const theme =
-    localStorage.getItem(
-      THEME_KEY
-    );
-
-  if(theme)
-    applyTheme(theme);
-
-  const bg =
-    localStorage.getItem(
-      BG_KEY
-    );
-
-  if(bg)
-    applyBackground(bg);
-
-  const ui =
-    localStorage.getItem(
-      UI_KEY
-    );
-
-  if(ui)
-    applyUI(ui);
-
-  const font =
-    localStorage.getItem(
-      FONT_KEY
-    );
-
-  if(font)
-    applyFont(font);
-
 }
 
-
-/* =========================================================
-   FIRST RUN
-========================================================= */
-
-function firstRun(){
-
-  const owned =
-    getOwned();
-
-  const defaults=[
-
-    "theme-default",
-    "bg-none",
-    "ui-default",
-    "dec-none",
-    "font-default",
-    "honor-newbie",
-    "frame-default",
-    "sound-off"
-
-  ];
-
-  defaults.forEach(id=>{
-
-    if(!owned.includes(id))
-      owned.push(id);
-
-  });
-
-  saveOwned(owned);
-
-  const equipped =
-    getEquipped();
-
-  const defaultEquips={
-
-    theme:"theme-default",
-    background:"bg-none",
-    ui:"ui-default",
-    decoration:"dec-none",
-    font:"font-default",
-    honor:"honor-newbie",
-    frame:"frame-default",
-    sound:"sound-off"
-
-  };
-
-  Object.keys(defaultEquips)
-    .forEach(type=>{
-
-      if(!equipped[type])
-        equipped[type]=
-          defaultEquips[type];
-
-    });
-
-  saveEquipped(equipped);
-
-  loadEquipped();
-
-}
-
-
-/* =========================================================
-   RESIZE
-========================================================= */
-
-window.addEventListener(
-  "resize",
-  ()=>{
-    drawMiniChart();
-    drawLargeChart();
-  }
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-firstRun();
-
-checkAchievements();
-
-updateAll();
-
-setInterval(
-  updateAttendance,
-  1000
-);
-
-setInterval(
-  updateRecovery,
-  1000
-);
-
+init();
 </script>
 
 </body>
