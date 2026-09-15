@@ -2,237 +2,343 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>COINLAB</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
 }
 
 :root{
-  --page-bg:#f4f6fa;
-  --header-bg:#ffffff;
-  --card-bg:#ffffff;
-  --input-bg:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --accent:#2563eb;
-  --accent2:#60a5fa;
-  --border:#e5e7eb;
-  --shadow:0 10px 30px rgba(15,23,42,.08);
-  --button-text:#ffffff;
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#202124;
+  --muted:#737b86;
+  --border:#e1e5ea;
+  --accent:#202124;
+  --accent2:#555;
+  --danger:#d64545;
+  --success:#16803c;
+  --shadow:0 5px 20px rgba(20,30,40,.06);
+  --font:'Noto Sans KR',sans-serif;
 }
 
-html,body{
-  margin:0;
-  min-height:100%;
-  font-family:Arial,"Noto Sans KR",sans-serif;
-  background:var(--page-bg);
-  color:var(--text);
-  transition:
-    background .35s ease,
-    color .35s ease;
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-  min-height:100vh;
-  overflow-x:hidden;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  transition:.25s;
 }
 
-/* =========================
-   BACKGROUND FX
-   ========================= */
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
 
 #backgroundFx{
   position:fixed;
   inset:0;
-  z-index:0;
   pointer-events:none;
+  z-index:-1;
   overflow:hidden;
 }
 
-main,
-.topbar{
-  position:relative;
-  z-index:2;
+/* =========================
+   THEMES
+========================= */
+
+body.theme-default{
+  --bg:#f5f7fa;
+  --card:#fff;
+  --text:#202124;
+  --muted:#737b86;
+  --border:#e1e5ea;
+  --accent:#202124;
+  --accent2:#555;
 }
 
-/* 기본 */
-body.bg-none #backgroundFx{
-  display:none;
+body.theme-neon{
+  --bg:#07101b;
+  --card:#0d1723;
+  --text:#ecf8ff;
+  --muted:#8da4b7;
+  --border:#1b9cff;
+  --accent:#00aaff;
+  --accent2:#0077ff;
 }
 
-/* 🌌 은하수 */
-body.bg-galaxy #backgroundFx{
-  display:block;
+body.theme-green{
+  --bg:#07120c;
+  --card:#0d1b12;
+  --text:#ecfff1;
+  --muted:#8ba994;
+  --border:#35d46b;
+  --accent:#20c85a;
+  --accent2:#0c8f3c;
+}
+
+body.theme-night{
+  --bg:#070707;
+  --card:#111;
+  --text:#eee;
+  --muted:#888;
+  --border:#444;
+  --accent:#ddd;
+  --accent2:#777;
+}
+
+body.theme-red{
+  --bg:#180808;
+  --card:#210e0e;
+  --text:#fff0f0;
+  --muted:#b18c8c;
+  --border:#ff4848;
+  --accent:#ff3d3d;
+  --accent2:#bd2222;
+}
+
+body.theme-ocean{
+  --bg:#06151b;
+  --card:#0b2029;
+  --text:#eaffff;
+  --muted:#87aab3;
+  --border:#20d7e9;
+  --accent:#14c8df;
+  --accent2:#0c8497;
+}
+
+body.theme-sunset{
+  --bg:#17100a;
+  --card:#24170d;
+  --text:#fff5e9;
+  --muted:#bca38d;
+  --border:#ff8c42;
+  --accent:#ff7b25;
+  --accent2:#d55210;
+}
+
+body.theme-purple{
+  --bg:#100817;
+  --card:#190d25;
+  --text:#fbf0ff;
+  --muted:#aa91b6;
+  --border:#bd5cff;
+  --accent:#a93cff;
+  --accent2:#7220aa;
+}
+
+body.theme-silver{
+  --bg:#17191c;
+  --card:#22252a;
+  --text:#f5f5f5;
+  --muted:#a4a8ae;
+  --border:#bfc5cc;
+  --accent:#d7dce2;
+  --accent2:#858b93;
+}
+
+/* 업적 전용 */
+body.theme-core{
+  --bg:#050505;
+  --card:#0a0a0a;
+  --text:#ffffff;
+  --muted:#a6a6a6;
+  --border:#00ffff;
+  --accent:#00ffff;
+  --accent2:#8a2be2;
+}
+
+body.theme-core .card,
+body.theme-core .topbar{
+  box-shadow:
+    0 0 8px rgba(0,255,255,.18),
+    0 0 25px rgba(138,43,226,.08);
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body.bg-grid #backgroundFx{
+  background-image:
+    linear-gradient(rgba(0,0,0,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.06) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+
+body.bg-wave #backgroundFx{
   background:
-    radial-gradient(
-      ellipse at 50% 50%,
-      rgba(120,150,255,.10),
-      transparent 55%
+    radial-gradient(circle at 20% 20%,rgba(100,120,255,.12),transparent 30%),
+    radial-gradient(circle at 80% 70%,rgba(0,200,255,.12),transparent 30%);
+}
+
+body.bg-scan #backgroundFx{
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,.04) 0,
+      rgba(0,0,0,.04) 1px,
+      transparent 1px,
+      transparent 5px
     );
 }
 
-/* 작은 별 */
 .galaxy-star{
   position:absolute;
   width:3px;
   height:3px;
   border-radius:50%;
-  background:rgba(255,255,255,.8);
-  box-shadow:0 0 6px rgba(140,180,255,.8);
+  background:#fff;
+  opacity:.5;
   animation:galaxyFloat linear infinite;
-  opacity:.55;
 }
 
 @keyframes galaxyFloat{
-  0%{
-    transform:translate3d(0,30px,0) scale(.7);
-    opacity:0;
-  }
-  15%{
-    opacity:.6;
-  }
-  50%{
-    transform:translate3d(18px,-20px,0) scale(1);
-    opacity:.75;
-  }
-  85%{
-    opacity:.45;
-  }
-  100%{
-    transform:translate3d(-10px,-90px,0) scale(.65);
-    opacity:0;
-  }
+  0%{transform:translateY(0);opacity:.25}
+  50%{opacity:.8}
+  100%{transform:translateY(-40px);opacity:.25}
 }
-
-/* 테크 그리드 */
-body.bg-grid #backgroundFx{
-  display:block;
-  opacity:.35;
-  background-image:
-    linear-gradient(
-      rgba(100,140,255,.18) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(100,140,255,.18) 1px,
-      transparent 1px
-    );
-  background-size:32px 32px;
-}
-
-/* 웨이브 */
-body.bg-wave #backgroundFx{
-  display:block;
-  opacity:.3;
-  background:
-    radial-gradient(
-      ellipse at 20% 30%,
-      transparent 0 80px,
-      rgba(80,140,255,.25) 82px,
-      transparent 85px
-    ),
-    radial-gradient(
-      ellipse at 80% 70%,
-      transparent 0 100px,
-      rgba(120,90,255,.2) 102px,
-      transparent 105px
-    );
-  background-size:420px 420px;
-  animation:waveMove 15s linear infinite;
-}
-
-@keyframes waveMove{
-  from{
-    background-position:0 0,100px 100px;
-  }
-  to{
-    background-position:420px 420px,520px 520px;
-  }
-}
-
 
 /* =========================
-   TOP BAR
-   ========================= */
+   UI EFFECTS
+========================= */
+
+.ui-smooth .card,
+.ui-smooth button{
+  transition:.25s;
+}
+
+.ui-neon .card,
+.ui-neon button{
+  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 20%,transparent);
+}
+
+.ui-pop .card{
+  border-width:2px;
+}
+
+.ui-pop button:hover{
+  transform:translateY(-2px);
+}
+
+.ui-minimal .card{
+  box-shadow:none;
+}
+
+.ui-glass .card{
+  background:color-mix(in srgb,var(--card) 80%,transparent);
+  backdrop-filter:blur(12px);
+}
+
+.ui-terminal .card,
+.ui-terminal button{
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .topbar{
   position:sticky;
   top:0;
-  width:100%;
-  background:var(--header-bg);
-  border-bottom:1px solid var(--border);
-  box-shadow:var(--shadow);
-  padding:12px 14px;
-  z-index:20;
-}
+  z-index:50;
 
-.topbarInner{
-  max-width:1250px;
-  margin:auto;
+  min-height:64px;
+
   display:flex;
   align-items:center;
-  gap:15px;
+  gap:20px;
+
+  padding:10px 22px;
+
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+}
+
+.logoBox{
+  min-width:max-content;
 }
 
 .logo{
-  font-size:20px;
-  font-weight:900;
-  white-space:nowrap;
-  color:var(--accent);
-}
-
-.balanceTop{
+  font-size:21px;
   font-weight:800;
-  white-space:nowrap;
+  letter-spacing:-1px;
 }
 
-.nav{
+.beta{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-top:-2px;
+  letter-spacing:1px;
+}
+
+.tabs{
   display:flex;
-  gap:5px;
+  gap:3px;
   overflow-x:auto;
   scrollbar-width:none;
-  flex:1;
 }
 
-.nav::-webkit-scrollbar{
+.tabs::-webkit-scrollbar{
   display:none;
 }
 
-.nav button{
+.tab{
+  border:0;
+  border-bottom:3px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  padding:12px 11px;
   white-space:nowrap;
-  border:1px solid var(--border);
-  background:var(--card-bg);
+  font-size:14px;
+}
+
+.tab:hover{
   color:var(--text);
-  padding:9px 11px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:.2s;
 }
 
-.nav button:hover{
-  border-color:var(--accent);
+.tab.active{
+  color:var(--text);
+  border-bottom-color:var(--accent);
+  font-weight:800;
 }
 
-.nav button.active{
-  background:var(--accent);
-  color:var(--button-text);
-  border-color:var(--accent);
+.balance{
+  margin-left:auto;
+  white-space:nowrap;
+  background:color-mix(in srgb,var(--accent) 8%,var(--card));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:9px 14px;
+  font-weight:800;
 }
-
 
 /* =========================
-   MAIN
-   ========================= */
+   LAYOUT
+========================= */
 
 main{
-  max-width:1200px;
+  max-width:1180px;
   margin:auto;
-  padding:25px 15px 60px;
+  padding:30px 20px 80px;
 }
 
 .page{
@@ -244,16 +350,12 @@ main{
 }
 
 .hero{
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:24px;
-  margin-bottom:20px;
-  box-shadow:var(--shadow);
+  margin-bottom:22px;
 }
 
 .hero h1{
-  margin:0 0 7px;
+  margin:0 0 5px;
+  font-size:30px;
 }
 
 .hero p{
@@ -261,331 +363,291 @@ main{
   color:var(--muted);
 }
 
-
-/* =========================
-   CARDS
-   ========================= */
-
-.card{
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-  box-shadow:var(--shadow);
-  transition:
-    background .35s ease,
-    border-color .25s ease,
-    box-shadow .25s ease,
-    transform .2s ease;
-}
-
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
+  grid-template-columns:360px 1fr;
+  gap:20px;
 }
 
-.sectionTitle{
-  margin:25px 0 12px;
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
-.muted{
+.card h2{
+  margin:0 0 18px;
+  font-size:19px;
+}
+
+.asset{
+  font-size:34px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.asset small{
+  font-size:14px;
   color:var(--muted);
 }
 
-
-/* =========================
-   BUTTONS
-   ========================= */
-
-button{
-  font-family:inherit;
+label{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:7px;
 }
 
-.btn{
-  border:1px solid var(--accent);
-  background:var(--accent);
-  color:var(--button-text);
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  transition:.2s;
-}
-
-.btn:hover{
-  filter:brightness(1.08);
-}
-
-.btn:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-.btn.secondary{
-  background:var(--card-bg);
-  color:var(--text);
-  border-color:var(--border);
-}
-
-.btn.danger{
-  background:#dc2626;
-  border-color:#dc2626;
-}
-
-
-/* =========================
-   INPUT
-   ========================= */
-
-input{
+input,
+select{
   width:100%;
   padding:12px;
-  border-radius:10px;
   border:1px solid var(--border);
-  background:var(--input-bg);
+  background:var(--card);
   color:var(--text);
+  border-radius:10px;
   outline:none;
-  transition:.2s;
 }
 
 input:focus{
   border-color:var(--accent);
-  box-shadow:0 0 0 3px color-mix(
-    in srgb,
-    var(--accent) 15%,
-    transparent
-  );
 }
 
-
-/* =========================
-   BETTING
-   ========================= */
-
-.balanceBig{
-  font-size:38px;
-  font-weight:900;
-  margin:10px 0;
-  color:var(--accent);
-}
-
-.betBox{
-  max-width:600px;
-  margin:auto;
-}
-
-.quickBet{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:10px 0;
-}
-
-.quickBet button{
-  padding:8px 12px;
+.btn{
   border:1px solid var(--border);
-  background:var(--card-bg);
+  background:var(--card);
   color:var(--text);
-  border-radius:8px;
-  cursor:pointer;
+  padding:11px 15px;
+  border-radius:10px;
+  font-weight:700;
 }
 
-.betButton{
+.btn:hover{
+  border-color:var(--accent);
+}
+
+.btn.primary{
+  background:var(--accent);
+  color:var(--card);
+  border-color:var(--accent);
+}
+
+.btn.danger{
+  color:var(--danger);
+}
+
+.quick{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.quick button{
+  flex:1;
+}
+
+.betBtn{
   width:100%;
-  margin-top:10px;
-  padding:16px;
-  font-size:18px;
+  margin-top:12px;
 }
 
-.result{
-  text-align:center;
-  font-size:25px;
-  font-weight:900;
-  min-height:35px;
-  margin:18px 0;
+.message{
+  min-height:24px;
+  margin-top:13px;
+  font-size:14px;
+  font-weight:700;
 }
 
-.win{
-  color:#16a34a;
-}
+.win{color:var(--success)}
+.lose{color:var(--danger)}
+.neutral{color:var(--muted)}
 
-.loss{
-  color:#dc2626;
+.bankrupt{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background:#fff0f0;
+  border:1px solid #ffd0d0;
+  color:#a22;
 }
-
 
 /* =========================
-   HISTORY
-   ========================= */
+   CHART
+========================= */
+
+.chart-wrap{
+  height:300px;
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.chart-note{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* =========================
+   TABLE
+========================= */
 
 .history{
   margin-top:20px;
+  overflow:auto;
 }
 
-.historyRow{
-  display:grid;
-  grid-template-columns:
-    1.3fr .8fr .8fr .8fr .8fr;
-  gap:8px;
-  padding:10px 0;
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:10px 7px;
   border-bottom:1px solid var(--border);
-  font-size:14px;
+  text-align:left;
+  white-space:nowrap;
+  font-size:13px;
 }
 
-@media(max-width:650px){
-  .historyRow{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-
-/* =========================
-   PROGRESS
-   ========================= */
-
-.progress{
-  height:9px;
-  border-radius:99px;
-  background:color-mix(
-    in srgb,
-    var(--text) 10%,
-    transparent
-  );
-  overflow:hidden;
-  margin:10px 0;
-}
-
-.progressBar{
-  height:100%;
-  width:0%;
-  background:var(--accent);
-  transition:.3s;
-}
-
-
-/* =========================
-   SHOP
-   ========================= */
-
-.shopSection{
-  margin-top:25px;
-}
-
-.shopGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:15px;
-}
-
-.shopItem{
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:17px;
-  box-shadow:var(--shadow);
-  transition:.2s;
-}
-
-.shopItem:hover{
-  transform:translateY(-2px);
-}
-
-.shopIcon{
-  font-size:30px;
-}
-
-.shopName{
-  font-weight:900;
-  margin:8px 0 4px;
-}
-
-.shopPrice{
+th{
   color:var(--muted);
-  margin-bottom:12px;
 }
 
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+/* =========================
+   ATTENDANCE / MISSION
+========================= */
+
+.centerCard{
+  max-width:760px;
+  margin:auto;
+}
+
+.bigReward{
+  font-size:40px;
+  font-weight:900;
+  margin:20px 0;
+}
+
+.timer{
+  color:var(--muted);
+  margin-bottom:15px;
+}
+
+.mission{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.missionInfo{
+  flex:1;
+}
+
+.missionTitle{
+  font-weight:800;
+}
+
+.missionDesc{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+
+.achievement{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:10px;
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.achievement.locked{
+  opacity:.55;
+}
+
+.achievementIcon{
+  font-size:28px;
+  width:45px;
+  text-align:center;
+}
+
+.achievementInfo{
+  flex:1;
+}
+
+.achievementName{
+  font-weight:800;
+}
+
+.achievementDesc{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.rewardLine{
+  margin-top:7px;
+  font-size:12px;
+  color:var(--accent);
+}
 
 /* =========================
    PROFILE
-   ========================= */
+========================= */
 
-.profileHead{
-  display:flex;
-  align-items:center;
-  gap:22px;
-  flex-wrap:wrap;
+.profileTop{
+  text-align:center;
+  padding:25px;
 }
 
 .avatar-wrap{
-  width:105px;
-  height:105px;
+  width:120px;
+  height:120px;
+  margin:5px auto 18px;
   position:relative;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.profile-avatar{
-  width:82px;
-  height:82px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:42px;
-  background:var(--card-bg);
-  border:3px solid var(--border);
-  position:relative;
-  z-index:2;
 }
 
 .avatar-ring{
   position:absolute;
-  inset:3px;
+  inset:-5px;
+  border:4px solid var(--accent);
   border-radius:50%;
-  border:4px solid transparent;
-  z-index:1;
+  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 40%,transparent);
 }
 
-/* 타이틀별 프로필 테두리 */
-
-.title-newbie .avatar-ring{
-  border-color:#94a3b8;
-}
-
-.title-bettor .avatar-ring{
-  border-color:#3b82f6;
-  box-shadow:0 0 12px rgba(59,130,246,.55);
-}
-
-.title-streak .avatar-ring{
-  border-color:#f97316;
-  box-shadow:
-    0 0 10px rgba(249,115,22,.65),
-    0 0 22px rgba(239,68,68,.35);
-}
-
-.title-whale .avatar-ring{
-  border-color:#eab308;
-  box-shadow:0 0 15px rgba(234,179,8,.6);
-}
-
-.title-legend .avatar-ring{
-  border-color:#a855f7;
-  box-shadow:
-    0 0 10px rgba(168,85,247,.7),
-    0 0 25px rgba(59,130,246,.45);
-}
-
-.title-legend::after{
-  content:"👑";
+.profile-avatar{
   position:absolute;
-  top:-9px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:22px;
-  z-index:5;
+  inset:7px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  background:var(--bg);
 }
 
 .nickname{
@@ -593,52 +655,26 @@ input:focus{
   font-weight:900;
 }
 
-.nicknameColor-newbie{
-  color:var(--text);
-}
-
-.nicknameColor-bettor{
-  color:#3b82f6;
-}
-
-.nicknameColor-streak{
-  color:#f97316;
-}
-
-.nicknameColor-whale{
-  color:#ca8a04;
-}
-
-.nicknameColor-legend{
-  color:#9333ea;
-}
-
 .honor{
-  font-size:.34em;
-  margin-top:6px;
-  color:var(--muted);
-  font-weight:700;
-}
-
-.profileBalance{
-  margin-top:8px;
-  font-size:18px;
+  font-size:12px;
+  color:var(--accent);
   font-weight:800;
+  margin-top:3px;
 }
 
-.statsGrid{
+.profileDecor{
+  margin-top:10px;
+  font-size:20px;
+}
+
+.profileStats{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
 }
 
 .stat{
   padding:14px;
-  background:color-mix(
-    in srgb,
-    var(--card-bg) 90%,
-    var(--accent)
-  );
   border:1px solid var(--border);
   border-radius:12px;
 }
@@ -649,829 +685,872 @@ input:focus{
 }
 
 .statValue{
+  font-weight:900;
   margin-top:5px;
-  font-size:19px;
-  font-weight:900;
 }
 
-
-/* =========================
-   TITLE / HONOR
-   ========================= */
-
-.itemLocked{
-  opacity:.45;
-}
-
-.equipBox{
-  margin-top:10px;
-}
-
-.currentBadge{
-  display:inline-block;
-  margin-top:7px;
-  padding:4px 8px;
-  border-radius:7px;
-  font-size:11px;
-  background:color-mix(
-    in srgb,
-    var(--accent) 15%,
-    transparent
-  );
-  color:var(--accent);
-}
-
-
-/* =========================
-   GRAPH
-   ========================= */
-
-canvas{
-  width:100%;
-  max-width:100%;
-  display:block;
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:15px;
-}
-
-
-/* =========================
-   RECOVERY
-   ========================= */
-
-.recoveryNumber{
-  text-align:center;
-  font-size:42px;
-  font-weight:900;
-  letter-spacing:8px;
-  margin:25px 0;
-  min-height:55px;
-}
-
-.recoveryStage{
-  text-align:center;
-  font-weight:900;
-  margin:10px 0;
-}
-
-.recoveryInput{
-  max-width:300px;
-  margin:10px auto;
-}
-
-.recoveryInput input{
-  text-align:center;
-  font-size:20px;
-  letter-spacing:4px;
-}
-
-
-/* =========================
-   MODAL
-   ========================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:100;
-}
-
-.modal.hidden{
+.secretHole{
   display:none;
+  margin-top:35px;
+  padding:20px;
+  text-align:center;
+  border:2px dashed var(--accent);
+  border-radius:14px;
+  cursor:pointer;
+  animation:pulse 1.7s infinite;
 }
 
-.modalCard{
-  width:min(420px,100%);
-  background:var(--card-bg);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 25px 70px rgba(0,0,0,.3);
+@keyframes pulse{
+  50%{box-shadow:0 0 20px color-mix(in srgb,var(--accent) 35%,transparent)}
 }
 
-.modalActions{
+/* =========================
+   SHOP
+========================= */
+
+.shopTools{
   display:flex;
   gap:8px;
-  margin-top:12px;
+  margin-bottom:20px;
 }
 
-.modalActions button{
+.shopTools input{
   flex:1;
 }
 
-
-/* =========================
-   TOAST
-   ========================= */
-
-#toast{
-  position:fixed;
-  bottom:22px;
-  left:50%;
-  transform:translate(-50%,20px);
-  opacity:0;
-  pointer-events:none;
-  background:#111827;
-  color:white;
-  padding:12px 17px;
-  border-radius:10px;
-  z-index:200;
-  transition:.25s;
-  font-weight:700;
+.shopCategory{
+  margin-bottom:28px;
 }
 
-#toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+.shopCategoryTitle{
+  font-size:21px;
+  font-weight:900;
+  margin-bottom:12px;
 }
 
-
-/* =====================================================
-   UI EFFECTS
-   ⚠️ 카드 + 버튼 테두리에만 적용
-   ===================================================== */
-
-/* Smooth */
-body.ui-smooth .card,
-body.ui-smooth .shopItem,
-body.ui-smooth button{
-  transition:
-    border-color .35s ease,
-    box-shadow .35s ease,
-    transform .35s ease,
-    background .35s ease;
+.shopGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
-/* Neon */
-body.ui-neon .card,
-body.ui-neon .shopItem{
-  border-color:color-mix(
-    in srgb,
-    var(--accent) 70%,
-    var(--border)
-  );
-  box-shadow:
-    0 0 0 1px color-mix(
-      in srgb,
-      var(--accent) 20%,
-      transparent
-    ),
-    0 0 15px color-mix(
-      in srgb,
-      var(--accent) 20%,
-      transparent
-    );
+.shopItem{
+  position:relative;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:14px;
+  padding:15px;
 }
 
-body.ui-neon .btn,
-body.ui-neon button{
+.shopItem.favorite::before{
+  content:"⭐";
+  position:absolute;
+  right:10px;
+  top:8px;
+}
+
+.shopItem.core{
   border-color:var(--accent);
-  box-shadow:
-    0 0 7px color-mix(
-      in srgb,
-      var(--accent) 35%,
-      transparent
-    );
+  box-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent);
 }
 
-/* Pop */
-body.ui-pop .card,
-body.ui-pop .shopItem{
-  border-width:2px;
+.shopName{
+  font-weight:900;
 }
 
-body.ui-pop button{
-  border-width:2px;
+.shopDesc{
+  color:var(--muted);
+  font-size:12px;
+  margin:5px 0 10px;
+  min-height:32px;
 }
 
-body.ui-pop button:hover{
-  transform:translateY(-2px);
+.shopPrice{
+  font-weight:800;
+  margin-bottom:9px;
 }
 
-/* Minimal */
-body.ui-minimal .card,
-body.ui-minimal .shopItem{
-  box-shadow:none;
+.shopActions{
+  display:flex;
+  gap:6px;
 }
 
-body.ui-minimal button{
-  box-shadow:none;
+.shopActions button{
+  flex:1;
 }
 
+.badge{
+  display:inline-block;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:6px;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  margin-left:4px;
+}
 
 /* =========================
-   THEMES
-   ========================= */
+   GRAPH
+========================= */
 
-/* 🤍 기본 */
-body.theme-default{
-  --page-bg:#f4f6fa;
-  --header-bg:#ffffff;
-  --card-bg:#ffffff;
-  --input-bg:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --accent:#2563eb;
-  --accent2:#60a5fa;
-  --border:#e5e7eb;
-  --button-text:#ffffff;
-  --shadow:0 10px 30px rgba(15,23,42,.08);
+.largeChart{
+  height:480px;
 }
 
-/* 🌌 네온 블루 */
-body.theme-neon{
-  --page-bg:#07111f;
-  --header-bg:#0b1728;
-  --card-bg:#0d1b2f;
-  --input-bg:#091525;
-  --text:#e5f3ff;
-  --muted:#91a9c2;
-  --accent:#22d3ee;
-  --accent2:#3b82f6;
-  --border:#1b4260;
-  --button-text:#00151c;
-  --shadow:0 10px 35px rgba(0,0,0,.3);
+/* =========================
+   RECOVERY
+========================= */
+
+.recoveryBox{
+  text-align:center;
 }
 
-/* 🌿 그린 터미널 */
-body.theme-green{
-  --page-bg:#06120b;
-  --header-bg:#091a10;
-  --card-bg:#0b1f13;
-  --input-bg:#07170d;
-  --text:#d8ffe6;
-  --muted:#83b995;
-  --accent:#22c55e;
-  --accent2:#4ade80;
-  --border:#1e5632;
-  --button-text:#001b09;
-  --shadow:0 10px 35px rgba(0,0,0,.3);
+.memoryNumber{
+  font-size:42px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:900;
+  letter-spacing:8px;
+  margin:25px 0;
 }
 
-/* 🌙 다크 나이트 */
-body.theme-night{
-  --page-bg:#08090f;
-  --header-bg:#10111b;
-  --card-bg:#131521;
-  --input-bg:#0d0e16;
-  --text:#f0f1ff;
-  --muted:#9a9caf;
-  --accent:#8b5cf6;
-  --accent2:#6366f1;
-  --border:#292b3c;
-  --button-text:#ffffff;
-  --shadow:0 10px 35px rgba(0,0,0,.4);
+.recoveryProgress{
+  color:var(--muted);
 }
 
-/* 🔥 레드 알림 */
-body.theme-red{
-  --page-bg:#170707;
-  --header-bg:#210909;
-  --card-bg:#2a0d0d;
-  --input-bg:#1e0909;
-  --text:#fff0f0;
-  --muted:#c89696;
-  --accent:#ef4444;
-  --accent2:#f97316;
-  --border:#642020;
-  --button-text:#ffffff;
-  --shadow:0 10px 35px rgba(0,0,0,.35);
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
 }
 
-/* 🌊 오션 */
-body.theme-ocean{
-  --page-bg:#04131b;
-  --header-bg:#06212b;
-  --card-bg:#07303d;
-  --input-bg:#05242e;
-  --text:#e3fbff;
-  --muted:#86b9c5;
-  --accent:#06b6d4;
-  --accent2:#38bdf8;
-  --border:#17596b;
-  --button-text:#002027;
-  --shadow:0 10px 35px rgba(0,0,0,.35);
+.modal.show{
+  display:flex;
 }
 
-/* 🌅 선셋 */
-body.theme-sunset{
-  --page-bg:#21100b;
-  --header-bg:#32150d;
-  --card-bg:#3a1b11;
-  --input-bg:#2b130d;
-  --text:#fff2e7;
-  --muted:#cda795;
-  --accent:#f97316;
-  --accent2:#f59e0b;
-  --border:#75402a;
-  --button-text:#2b1000;
-  --shadow:0 10px 35px rgba(0,0,0,.35);
+.modalBox{
+  width:min(700px,100%);
+  max-height:85vh;
+  overflow:auto;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
 }
 
-/* 🟣 퍼플 보이드 */
-body.theme-purple{
-  --page-bg:#10071b;
-  --header-bg:#190b27;
-  --card-bg:#211034;
-  --input-bg:#160b23;
-  --text:#f8eaff;
-  --muted:#b79bc8;
-  --accent:#a855f7;
-  --accent2:#c084fc;
-  --border:#542b72;
-  --button-text:#ffffff;
-  --shadow:0 10px 35px rgba(0,0,0,.4);
+.modalBox h2{
+  margin-top:0;
 }
 
-/* ⚪ 실버 */
-body.theme-silver{
-  --page-bg:#dce1e7;
-  --header-bg:#eef1f4;
-  --card-bg:#f8fafc;
-  --input-bg:#ffffff;
-  --text:#1f2937;
-  --muted:#64748b;
-  --accent:#64748b;
-  --accent2:#94a3b8;
-  --border:#b9c1cb;
-  --button-text:#ffffff;
-  --shadow:0 10px 25px rgba(15,23,42,.12);
+.modalButtons{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
 }
 
+.modalButtons button{
+  flex:1;
+}
+
+/* =========================
+   FRAME TYPES
+========================= */
+
+.frame-default .avatar-ring{
+  border-style:solid;
+}
+
+.frame-chrome .avatar-ring{
+  border-style:double;
+  border-width:7px;
+}
+
+.frame-warning .avatar-ring{
+  border-style:dashed;
+}
+
+.frame-void .avatar-ring{
+  border-width:5px;
+  box-shadow:0 0 15px #a93cff;
+}
+
+.frame-holo .avatar-ring{
+  border-style:double;
+  box-shadow:0 0 20px cyan;
+}
+
+.frame-ice .avatar-ring{
+  border-width:6px;
+  box-shadow:0 0 20px #8eeaff;
+}
+
+.frame-core .avatar-ring{
+  border-width:6px;
+  border-style:double;
+  animation:coreFrame 2s infinite;
+}
+
+@keyframes coreFrame{
+  50%{
+    box-shadow:
+      0 0 12px cyan,
+      0 0 28px #8a2be2;
+  }
+}
+
+/* =========================
+   ACHIEVEMENT FRAMES
+========================= */
+
+.frame-ach-first .avatar-ring{
+  border-color:#6bff7d;
+}
+
+.frame-ach-getting .avatar-ring{
+  border-color:#58b8ff;
+}
+
+.frame-ach-bettor .avatar-ring{
+  border-color:#ff9f43;
+}
+
+.frame-ach-regular .avatar-ring{
+  border-color:#ffd43b;
+}
+
+.frame-ach-streak .avatar-ring{
+  border-color:#ff4d4d;
+  box-shadow:0 0 20px #ff4d4d;
+}
+
+.frame-ach-bigwin .avatar-ring{
+  border-color:#00d084;
+}
+
+.frame-ach-rich .avatar-ring{
+  border-color:#ffd700;
+}
+
+.frame-ach-bottom .avatar-ring{
+  border-color:#555;
+  border-style:dashed;
+}
+
+.frame-ach-boundary .avatar-ring{
+  border-color:#00ffff;
+  box-shadow:0 0 20px cyan;
+}
+
+.frame-ach-zero500k .avatar-ring{
+  border-color:#ff1744;
+  box-shadow:0 0 25px #ff1744;
+}
+
+.frame-ach-devsigh .avatar-ring{
+  border-color:#888;
+}
+
+.frame-ach-hacker .avatar-ring{
+  border-color:#8a2be2;
+  box-shadow:0 0 25px #8a2be2;
+}
+
+/* =========================
+   DECORATION
+========================= */
+
+.decoration{
+  position:absolute;
+  right:-5px;
+  bottom:0;
+  font-size:25px;
+}
+
+/* =========================
+   EXPERIMENTAL VISUALS
+========================= */
+
+.experiment-404 .card{
+  position:relative;
+}
+
+.experiment-404 .card::after{
+  content:"404";
+  position:absolute;
+  right:10px;
+  top:8px;
+  font-size:9px;
+  opacity:.18;
+}
+
+.experiment-glitch .logo{
+  animation:glitch .8s infinite alternate;
+}
+
+@keyframes glitch{
+  from{transform:translateX(0)}
+  to{transform:translateX(1px)}
+}
+
+.experiment-noise #backgroundFx::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.04;
+  background:repeating-linear-gradient(
+    90deg,
+    #fff 0 1px,
+    transparent 1px 4px
+  );
+}
 
 /* =========================
    MOBILE
-   ========================= */
+========================= */
 
-@media(max-width:800px){
-  .topbarInner{
+@media(max-width:900px){
+
+  .topbar{
+    align-items:flex-start;
     flex-wrap:wrap;
   }
 
-  .nav{
+  .tabs{
+    width:100%;
     order:3;
-    flex-basis:100%;
+  }
+
+  .balance{
+    margin-left:auto;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .profileStats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:600px){
+
+  main{
+    padding:20px 12px 60px;
+  }
+
+  .topbar{
+    padding:10px 12px;
   }
 
   .logo{
-    flex:1;
+    font-size:18px;
   }
 
-  main{
-    padding-top:18px;
+  .balance{
+    font-size:13px;
+  }
+
+  .tab{
+    font-size:12px;
+    padding:10px 7px;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .shopGrid{
+    grid-template-columns:1fr;
+  }
+
+  .profileStats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .mission{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .mission button{
+    width:100%;
+  }
+
+  .achievement{
+    align-items:flex-start;
+  }
+
+  .chart-wrap{
+    height:250px;
+  }
+
+  .largeChart{
+    height:350px;
+  }
+
+  .quick{
+    flex-wrap:wrap;
+  }
+
+  .quick button{
+    min-width:45%;
+  }
+}
+
+@media(max-width:400px){
+
+  .profileStats{
+    grid-template-columns:1fr;
+  }
+
+  .nickname{
+    font-size:21px;
+  }
+
+  .asset{
+    font-size:29px;
   }
 }
 </style>
 </head>
 
-<body>
+<body class="theme-default bg-none ui-smooth">
 
-<!-- 뒤쪽 배경 효과 -->
 <div id="backgroundFx"></div>
 
 <header class="topbar">
-  <div class="topbarInner">
 
+  <div class="logoBox">
     <div class="logo">COINLAB</div>
-
-    <div class="balanceTop">
-      <span id="topBalance">10,000</span> COIN
-    </div>
-
-    <nav class="nav">
-
-      <button class="active"
-        onclick="showPage('bet',this)">
-        배팅
-      </button>
-
-      <button onclick="showPage('attendance',this)">
-        출석 보상
-      </button>
-
-      <button onclick="showPage('missions',this)">
-        일일 미션
-      </button>
-
-      <button onclick="showPage('achievements',this)">
-        업적
-      </button>
-
-      <button onclick="showPage('profile',this)">
-        👤 프로필
-      </button>
-
-      <button onclick="showPage('shop',this)">
-        상점
-      </button>
-
-      <button onclick="showPage('graph',this)">
-        📈 그래프
-      </button>
-
-      <button onclick="showPage('recovery',this)">
-        🆘 회생
-      </button>
-
-    </nav>
+    <span class="beta">beta</span>
   </div>
-</header>
 
+  <nav class="tabs">
+
+    <button class="tab active" data-page="betPage">
+      배팅
+    </button>
+
+    <button class="tab" data-page="attendancePage">
+      출석 보상
+    </button>
+
+    <button class="tab" data-page="missionPage">
+      일일 미션
+    </button>
+
+    <button class="tab" data-page="achievementPage">
+      업적
+    </button>
+
+    <button class="tab" data-page="profilePage">
+      👤 프로필
+    </button>
+
+    <button class="tab" data-page="shopPage">
+      상점
+    </button>
+
+    <button class="tab" data-page="graphPage">
+      📈 그래프
+    </button>
+
+    <button class="tab" data-page="recoveryPage">
+      🆘 회생
+    </button>
+
+  </nav>
+
+  <div class="balance">
+    🪙 <span id="topBalance">10,000</span>
+  </div>
+
+</header>
 
 <main>
 
-<!-- =====================================================
-     BET
-===================================================== -->
+<!-- =========================
+     BETTING
+========================= -->
 
-<section id="bet" class="page active">
+<section id="betPage" class="page active">
 
   <div class="hero">
-    <h1>🎲 COINLAB</h1>
-    <p>50:50 확률로 COIN을 걸어보세요.</p>
+    <h1>가상 배팅</h1>
+    <p>가상 COIN으로 즐기는 50:50 배팅</p>
   </div>
 
-  <div class="card betBox">
+  <div class="grid">
 
-    <div class="muted">현재 보유 COIN</div>
+    <div class="card">
 
-    <div class="balanceBig" id="betBalance">
-      10,000
+      <h2>현재 자산</h2>
+
+      <div class="asset">
+        <span id="balance">10,000</span>
+        <small>COIN</small>
+      </div>
+
+      <label>배팅 금액</label>
+
+      <input
+        id="amount"
+        type="number"
+        min="1"
+        step="1"
+        placeholder="금액을 입력하세요"
+      >
+
+      <div class="quick">
+
+        <button class="btn" onclick="setAmount(100)">
+          100
+        </button>
+
+        <button class="btn" onclick="setAmount(500)">
+          500
+        </button>
+
+        <button class="btn" onclick="setAmount(1000)">
+          1,000
+        </button>
+
+        <button class="btn" onclick="setAllIn()">
+          ALL IN
+        </button>
+
+      </div>
+
+      <button
+        id="betBtn"
+        class="btn primary betBtn"
+        onclick="placeBet()"
+      >
+        배팅하기
+      </button>
+
+      <div id="message" class="message neutral">
+        성공 확률 50% · 성공 시 배팅금만큼 순이익
+      </div>
+
+      <div id="bankrupt" class="bankrupt">
+        💀 자산이 0 COIN이 되었습니다.
+        <br>
+        🆘 회생 메뉴를 이용할 수 있습니다.
+      </div>
+
     </div>
 
-    <label>배팅 금액</label>
+    <div class="card">
 
-    <input
-      id="betAmount"
-      type="number"
-      min="1"
-      placeholder="배팅 금액 입력"
-    >
+      <h2>자산 변화</h2>
 
-    <div class="quickBet">
+      <div class="chart-wrap">
+        <canvas id="miniChart"></canvas>
+      </div>
 
-      <button onclick="setBet(100)">
-        100
-      </button>
-
-      <button onclick="setBet(500)">
-        500
-      </button>
-
-      <button onclick="setBet(1000)">
-        1,000
-      </button>
-
-      <button onclick="setAllIn()">
-        ALL IN
-      </button>
+      <div class="chart-note">
+        배팅 결과가 시간순으로 기록됩니다.
+      </div>
 
     </div>
 
-    <button
-      class="btn betButton"
-      onclick="placeBet()">
-      🎲 배팅하기
-    </button>
-
-    <div id="betResult" class="result"></div>
-
-    <div id="bankruptcy"></div>
-
   </div>
 
+  <section class="card history">
 
-  <h2 class="sectionTitle">📊 자산 그래프</h2>
+    <h2>배팅 기록</h2>
 
-  <canvas id="miniGraph" width="900" height="280"></canvas>
+    <table>
 
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>시간</th>
+          <th>결과</th>
+          <th>배팅</th>
+          <th>변화</th>
+          <th>자산</th>
+        </tr>
+      </thead>
 
-  <h2 class="sectionTitle">📜 배팅 기록</h2>
+      <tbody id="historyBody"></tbody>
 
-  <div class="card history">
-    <div id="historyList"></div>
-  </div>
+    </table>
+
+    <div id="emptyHistory" class="empty">
+      아직 배팅 기록이 없습니다.
+    </div>
+
+  </section>
 
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
      ATTENDANCE
-===================================================== -->
+========================= -->
 
-<section id="attendance" class="page">
+<section id="attendancePage" class="page">
 
   <div class="hero">
     <h1>🎁 출석 보상</h1>
-    <p>24시간마다 한 번씩 받을 수 있습니다.</p>
+    <p>매일 한 번 받을 수 있습니다.</p>
   </div>
 
-  <div class="card">
+  <div class="card centerCard">
 
-    <h2>🔥 출석 스트릭</h2>
+    <h2>오늘의 출석</h2>
 
-    <div id="streakText"></div>
-
-    <div class="balanceBig" id="rewardAmount">
+    <div class="bigReward" id="attendanceReward">
       +1,000 COIN
     </div>
 
+    <div class="timer" id="attendanceTimer">
+      출석 가능
+    </div>
+
     <button
-      id="rewardButton"
-      class="btn"
-      onclick="claimAttendance()">
-      출석 보상 받기
+      id="attendanceBtn"
+      class="btn primary"
+      onclick="claimAttendance()"
+    >
+      출석 받기
     </button>
 
-    <p id="rewardTimer" class="muted"></p>
+    <p id="attendanceStreak">
+      현재 출석 연속 기록: 0일
+    </p>
 
   </div>
 
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
      MISSIONS
-===================================================== -->
+========================= -->
 
-<section id="missions" class="page">
+<section id="missionPage" class="page">
 
   <div class="hero">
     <h1>🎯 일일 미션</h1>
-    <p>하루에 한 번만 보상을 받을 수 있습니다.</p>
+    <p>오늘의 미션을 완료하고 COIN을 획득하세요.</p>
   </div>
 
-  <div id="missionList" class="grid"></div>
+  <div class="card centerCard">
+
+    <div id="missionList"></div>
+
+  </div>
 
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
      ACHIEVEMENTS
-===================================================== -->
+========================= -->
 
-<section id="achievements" class="page">
+<section id="achievementPage" class="page">
 
   <div class="hero">
     <h1>🏆 업적</h1>
-    <p>COINLAB에서 달성한 기록입니다.</p>
-  </div>
-
-  <div id="achievementList" class="grid"></div>
-
-</section>
-
-
-<!-- =====================================================
-     PROFILE
-===================================================== -->
-
-<section id="profile" class="page">
-
-  <div class="hero">
-    <h1>👤 프로필</h1>
-    <p>나의 COINLAB 기록과 장식을 관리하세요.</p>
-  </div>
-
-
-  <div class="card">
-
-    <div class="profileHead">
-
-      <div
-        id="avatarWrap"
-        class="avatar-wrap title-newbie">
-
-        <div class="avatar-ring"></div>
-
-        <div class="profile-avatar">
-          👤
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div style="display:flex;align-items:center;gap:8px;">
-
-          <div
-            id="profileNickname"
-            class="nickname">
-            플레이어
-          </div>
-
-          <button
-            class="btn secondary"
-            onclick="openNicknameEditor()">
-            이름 수정
-          </button>
-
-        </div>
-
-        <div
-          id="profileHonor"
-          class="honor">
-          🌱 새내기
-        </div>
-
-        <div
-          id="profileTitleName"
-          class="muted">
-          타이틀: 🌱 초보자
-        </div>
-
-        <div
-          id="profileBalance"
-          class="profileBalance">
-          10,000 COIN
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <h2 class="sectionTitle">📊 상세 기록</h2>
-
-  <div
-    id="profileStats"
-    class="statsGrid">
-  </div>
-
-
-  <h2 class="sectionTitle">🎨 타이틀</h2>
-
-  <p class="muted">
-    타이틀은 프로필 사진의 원형 테두리와 닉네임 색상을 변경합니다.
-  </p>
-
-  <div
-    id="titleList"
-    class="grid">
-  </div>
-
-
-  <h2 class="sectionTitle">🏷️ 칭호</h2>
-
-  <p class="muted">
-    칭호는 닉네임 아래에 작게 표시됩니다. 타이틀과 별개입니다.
-  </p>
-
-  <div
-    id="honorList"
-    class="grid">
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SHOP
-===================================================== -->
-
-<section id="shop" class="page">
-
-  <div class="hero">
-    <h1>🛒 상점</h1>
-    <p>모은 COIN으로 테마와 각종 효과를 구매하세요.</p>
-  </div>
-
-
-  <div class="shopSection">
-
-    <h2>🎨 테마</h2>
-
-    <div
-      id="themeShop"
-      class="shopGrid">
-    </div>
-
-  </div>
-
-
-  <div class="shopSection">
-
-    <h2>🌌 배경 효과</h2>
-
-    <div
-      id="backgroundShop"
-      class="shopGrid">
-    </div>
-
-  </div>
-
-
-  <div class="shopSection">
-
-    <h2>✨ UI 효과</h2>
-
-    <div
-      id="uiShop"
-      class="shopGrid">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     GRAPH
-===================================================== -->
-
-<section id="graph" class="page">
-
-  <div class="hero">
-    <h1>📈 자산 그래프</h1>
-    <p>배팅에 따른 COIN 변화를 확인하세요.</p>
-  </div>
-
-  <div class="card">
-
-    <canvas
-      id="largeGraph"
-      width="1100"
-      height="500">
-    </canvas>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     RECOVERY
-===================================================== -->
-
-<section id="recovery" class="page">
-
-  <div class="hero">
-    <h1>🆘 회생</h1>
     <p>
-      COIN이 0일 때 기억력 테스트를 통과하면
-      1,000 COIN을 회복합니다.
+      업적을 달성하면 COIN + 칭호 + 프로필 프레임을 획득합니다.
+      <br>
+      업적 보상인 COINLAB CORE 테마는 상점에서 구매할 수 없습니다.
     </p>
   </div>
 
+  <div class="card centerCard">
+
+    <div id="achievementList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<section id="profilePage" class="page">
+
+  <div class="card profileTop">
+
+    <div id="avatarWrap" class="avatar-wrap frame-default">
+
+      <div class="avatar-ring"></div>
+
+      <div class="profile-avatar">
+        👤
+      </div>
+
+      <div id="profileDecoration" class="decoration"></div>
+
+    </div>
+
+    <div id="profileNickname" class="nickname">
+      플레이어
+    </div>
+
+    <div id="profileHonor" class="honor">
+      🌱 새내기
+    </div>
+
+    <br>
+
+    <button class="btn" onclick="openNicknameEditor()">
+      ✏️ 이름 수정
+    </button>
+
+  </div>
 
   <div class="card">
 
-    <div
-      id="recoveryStatus"
-      style="text-align:center;font-weight:800;">
-    </div>
+    <h2>📊 상세 통계</h2>
 
-    <div
-      id="recoveryStage"
-      class="recoveryStage">
-    </div>
+    <div id="profileStats" class="profileStats"></div>
 
-    <div
-      id="recoveryNumber"
-      class="recoveryNumber">
-    </div>
+  </div>
 
-    <div
-      id="recoveryInputBox"
-      class="recoveryInput"
-      style="display:none;">
+  <div
+    id="secretHole"
+    class="secretHole"
+    onclick="enterSecretHole()"
+  >
+    🕳️ 이상한 구멍이 보인다...
+    <br>
+    <small>들어가시겠습니까?</small>
+  </div>
+
+</section>
+
+
+<!-- =========================
+     SHOP
+========================= -->
+
+<section id="shopPage" class="page">
+
+  <div class="hero">
+    <h1>🛒 상점</h1>
+    <p>COIN으로 다양한 프로필 요소를 구매하세요.</p>
+  </div>
+
+  <div class="card">
+
+    <div class="shopTools">
 
       <input
-        id="recoveryInput"
-        inputmode="numeric"
-        autocomplete="off"
-        placeholder="숫자를 입력하세요">
+        id="shopSearch"
+        placeholder="🔍 아이템 검색"
+        oninput="renderShop()"
+      >
 
       <button
         class="btn"
-        style="width:100%;margin-top:8px;"
-        onclick="submitRecovery()">
-        확인
+        onclick="toggleFavorites()"
+        id="favoriteFilterBtn"
+      >
+        ⭐ 전체
       </button>
 
     </div>
 
+    <div id="shopContainer"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     GRAPH
+========================= -->
+
+<section id="graphPage" class="page">
+
+  <div class="hero">
+    <h1>📈 그래프</h1>
+    <p>지금까지의 COIN 변화를 확인합니다.</p>
+  </div>
+
+  <div class="card">
+
+    <div class="largeChart">
+      <canvas id="largeChart"></canvas>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     RECOVERY
+========================= -->
+
+<section id="recoveryPage" class="page">
+
+  <div class="hero">
+    <h1>🆘 회생</h1>
+    <p>COIN이 완전히 바닥났을 때 사용할 수 있습니다.</p>
+  </div>
+
+  <div class="card centerCard recoveryBox">
+
+    <h2>🧠 기억력 테스트</h2>
+
+    <p id="recoveryStatus">
+      잔액이 0 COIN일 때만 이용할 수 있습니다.
+    </p>
+
+    <div
+      id="memoryNumber"
+      class="memoryNumber"
+    >
+      준비
+    </div>
+
+    <input
+      id="memoryInput"
+      placeholder="숫자를 입력하세요"
+      inputmode="numeric"
+      style="display:none"
+    >
+
+    <br>
+
     <button
-      id="recoveryStart"
-      class="btn"
-      style="width:100%;"
-      onclick="startRecovery()">
-      🧠 회생 테스트 시작
+      id="recoveryStartBtn"
+      class="btn primary"
+      onclick="startRecovery()"
+    >
+      회생 테스트 시작
     </button>
 
     <div
-      id="recoveryMessage"
-      style="text-align:center;margin-top:15px;">
+      id="recoveryProgress"
+      class="recoveryProgress"
+    >
+      최고 단계: 0
     </div>
 
   </div>
@@ -1481,38 +1560,35 @@ body.theme-silver{
 </main>
 
 
-<!-- =====================================================
+<!-- =========================
      NICKNAME MODAL
-===================================================== -->
+========================= -->
 
-<div
-  id="nicknameModal"
-  class="modal hidden">
+<div id="nicknameModal" class="modal">
 
-  <div class="modalCard">
+  <div class="modalBox">
 
-    <h2>✏️ 이름 수정</h2>
-
-    <p class="muted">
-      1~16글자로 입력하세요.
-    </p>
+    <h2>✏️ 닉네임 수정</h2>
 
     <input
       id="nicknameInput"
       maxlength="16"
-      placeholder="닉네임">
+      placeholder="1~16자"
+    >
 
-    <div class="modalActions">
+    <div class="modalButtons">
 
       <button
-        class="btn secondary"
-        onclick="closeNicknameEditor()">
+        class="btn"
+        onclick="closeModal('nicknameModal')"
+      >
         취소
       </button>
 
       <button
-        class="btn"
-        onclick="saveNickname()">
+        class="btn primary"
+        onclick="saveNickname()"
+      >
         저장
       </button>
 
@@ -1523,17 +1599,21 @@ body.theme-silver{
 </div>
 
 
-<div id="toast"></div>
-
-
 <script>
 
-/* =====================================================
-   STORAGE
-===================================================== */
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const START_BALANCE = 10000;
+const REWARD_AMOUNT = 1000;
+const REWARD_COOLDOWN = 24 * 60 * 60 * 1000;
+const RECOVERY_COOLDOWN = 5 * 60 * 1000;
 
 const BALANCE_KEY = "coinlab_balance";
 const HISTORY_KEY = "coinlab_history";
+const POINTS_KEY = "coinlab_points";
+
 const REWARD_KEY = "coinlab_reward_time";
 const STREAK_KEY = "coinlab_streak";
 const LAST_STREAK_KEY = "coinlab_last_streak";
@@ -1559,35 +1639,40 @@ const REVIVE_BEST_KEY = "coinlab_revive_best";
 
 const NICKNAME_KEY = "coinlab_nickname";
 
+const OWNED_KEY = "coinlab_owned_items";
+const EQUIPPED_KEY = "coinlab_equipped_shop";
+const FAVORITE_KEY = "coinlab_favorites";
+const SHOP_SPENT_KEY = "coinlab_shop_spent";
 
-/* =====================================================
-   CONSTANTS
-===================================================== */
+const FONT_KEY = "coinlab_font";
+const SOUND_KEY = "coinlab_sound";
+const FRAME_KEY = "coinlab_frame";
+const DECORATION_KEY = "coinlab_decoration";
+const EXPERIMENT_KEY = "coinlab_experiment";
 
-const START_BALANCE = 10000;
-const REWARD_AMOUNT = 1000;
-const REWARD_COOLDOWN = 24 * 60 * 60 * 1000;
+const CORE_THEME_KEY = "coinlab_core_theme";
 
-const RECOVERY_COOLDOWN = 5 * 60 * 1000;
+const $ = id => document.getElementById(id);
+
+const fmt = n =>
+  Math.floor(Number(n) || 0).toLocaleString("ko-KR");
 
 
-/* =====================================================
-   SAFE STORAGE
-===================================================== */
+/* =========================================================
+   STORAGE HELPERS
+========================================================= */
 
-function safeJSON(key, fallback){
+function readJSON(key, fallback){
 
   try{
 
     const raw = localStorage.getItem(key);
 
-    if(raw === null){
-      return fallback;
-    }
+    if(raw === null) return fallback;
 
     return JSON.parse(raw);
 
-  }catch(e){
+  }catch{
 
     return fallback;
 
@@ -1595,8 +1680,7 @@ function safeJSON(key, fallback){
 
 }
 
-
-function saveJSON(key,value){
+function writeJSON(key,value){
 
   localStorage.setItem(
     key,
@@ -1606,17 +1690,13 @@ function saveJSON(key,value){
 }
 
 
-/*
-  중요:
-  0은 정상적인 값이다.
-  따라서 0일 때 절대로 10,000으로 되돌리지 않는다.
-*/
+/* =========================================================
+   BALANCE
+========================================================= */
 
 function getBalance(){
 
-  const raw = localStorage.getItem(
-    BALANCE_KEY
-  );
+  const raw = localStorage.getItem(BALANCE_KEY);
 
   if(raw === null){
 
@@ -1631,10 +1711,7 @@ function getBalance(){
 
   const n = Number(raw);
 
-  if(
-    !Number.isFinite(n) ||
-    n < 0
-  ){
+  if(!Number.isFinite(n) || n < 0){
 
     localStorage.setItem(
       BALANCE_KEY,
@@ -1649,14 +1726,11 @@ function getBalance(){
 
 }
 
-
 function setBalance(value){
 
   const n = Math.max(
     0,
-    Math.floor(
-      Number(value) || 0
-    )
+    Math.floor(Number(value) || 0)
   );
 
   localStorage.setItem(
@@ -1668,10 +1742,591 @@ function setBalance(value){
 
 }
 
+let balance = getBalance();
 
-/* =====================================================
-   DATE
-===================================================== */
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+let history = readJSON(
+  HISTORY_KEY,
+  []
+);
+
+let points = readJSON(
+  POINTS_KEY,
+  [{label:"시작",value:balance}]
+);
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function totalBets(){
+
+  return history.length;
+
+}
+
+function wins(){
+
+  return history.filter(x => x.success).length;
+
+}
+
+function losses(){
+
+  return history.filter(x => !x.success).length;
+
+}
+
+function totalBetAmount(){
+
+  return history.reduce(
+    (a,x) => a + x.amount,
+    0
+  );
+
+}
+
+function totalProfit(){
+
+  return history.reduce(
+    (a,x) => a + x.change,
+    0
+  );
+
+}
+
+function averageBet(){
+
+  return totalBets()
+    ? totalBetAmount()/totalBets()
+    : 0;
+
+}
+
+function averageProfit(){
+
+  return totalBets()
+    ? totalProfit()/totalBets()
+    : 0;
+
+}
+
+function maxWin(){
+
+  const arr =
+    history
+      .filter(x=>x.change>0)
+      .map(x=>x.change);
+
+  return arr.length ? Math.max(...arr) : 0;
+
+}
+
+function maxLoss(){
+
+  const arr =
+    history
+      .filter(x=>x.change<0)
+      .map(x=>Math.abs(x.change));
+
+  return arr.length ? Math.max(...arr) : 0;
+
+}
+
+function maxBalance(){
+
+  return Math.max(
+    balance,
+    ...points.map(x=>x.value)
+  );
+
+}
+
+function minBalance(){
+
+  return Math.min(
+    balance,
+    ...points.map(x=>x.value)
+  );
+
+}
+
+function currentStreak(){
+
+  let streak = 0;
+
+  for(const x of history){
+
+    if(x.success) streak++;
+    else break;
+
+  }
+
+  return streak;
+
+}
+
+function maxStreak(){
+
+  let max = 0;
+  let current = 0;
+
+  for(const x of [...history].reverse()){
+
+    if(x.success){
+
+      current++;
+      max = Math.max(max,current);
+
+    }else{
+
+      current = 0;
+
+    }
+
+  }
+
+  return max;
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document.querySelectorAll(".tab")
+.forEach(btn => {
+
+  btn.addEventListener("click",()=>{
+
+    document.querySelectorAll(".tab")
+      .forEach(x=>x.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    document.querySelectorAll(".page")
+      .forEach(x=>x.classList.remove("active"));
+
+    $(btn.dataset.page)
+      .classList.add("active");
+
+    if(btn.dataset.page==="graphPage"){
+
+      setTimeout(drawLargeChart,50);
+
+    }
+
+    if(btn.dataset.page==="profilePage"){
+
+      renderProfile();
+
+    }
+
+    if(btn.dataset.page==="shopPage"){
+
+      renderShop();
+
+    }
+
+  });
+
+});
+
+
+function openPage(id){
+
+  document.querySelectorAll(".tab")
+    .forEach(x=>{
+      x.classList.toggle(
+        "active",
+        x.dataset.page===id
+      );
+    });
+
+  document.querySelectorAll(".page")
+    .forEach(x=>{
+      x.classList.toggle(
+        "active",
+        x.id===id
+      );
+    });
+
+}
+
+
+/* =========================================================
+   BETTING
+========================================================= */
+
+function setAmount(n){
+
+  $("amount").value =
+    Math.min(n,balance);
+
+}
+
+function setAllIn(){
+
+  $("amount").value = balance;
+
+}
+
+function placeBet(){
+
+  const amount =
+    Number($("amount").value);
+
+  const msg = $("message");
+
+  if(!Number.isInteger(amount) || amount<=0){
+
+    msg.className="message lose";
+    msg.textContent =
+      "⚠️ 1 COIN 이상의 정수 금액을 입력하세요.";
+
+    return;
+
+  }
+
+  if(amount>balance){
+
+    msg.className="message lose";
+    msg.textContent =
+      "🚫 현재 자산보다 큰 금액은 배팅할 수 없습니다.";
+
+    return;
+
+  }
+
+  const before = balance;
+
+  const success =
+    Math.random() < 0.5;
+
+  let change;
+
+  if(success){
+
+    change = amount;
+
+    balance = setBalance(
+      balance + amount
+    );
+
+    msg.className="message win";
+
+    msg.textContent =
+      `🎉 성공! +${fmt(amount)} COIN`;
+
+    playSound("win");
+
+  }else{
+
+    change = -amount;
+
+    balance = setBalance(
+      balance - amount
+    );
+
+    msg.className="message lose";
+
+    msg.textContent =
+      `💀 실패! -${fmt(amount)} COIN`;
+
+    playSound("lose");
+
+  }
+
+  const now = new Date();
+
+  const time =
+    now.toLocaleTimeString(
+      "ko-KR",
+      {
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+      }
+    );
+
+  history.unshift({
+    time,
+    success,
+    amount,
+    change,
+    balance
+  });
+
+  points.push({
+    label:time,
+    value:balance
+  });
+
+  if(points.length>50){
+
+    points.shift();
+
+  }
+
+  writeJSON(
+    HISTORY_KEY,
+    history
+  );
+
+  writeJSON(
+    POINTS_KEY,
+    points
+  );
+
+  $("amount").value="";
+
+  if(balance===0){
+
+    $("bankrupt").style.display="block";
+
+  }
+
+  if(
+    before===500000 &&
+    amount===500000 &&
+    !success &&
+    balance===0
+  ){
+
+    unlockAchievement("zero500k");
+
+  }
+
+  checkAchievements();
+
+  updateAll();
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function renderHistory(){
+
+  const body =
+    $("historyBody");
+
+  $("emptyHistory").style.display =
+    history.length ? "none" : "block";
+
+  body.innerHTML =
+    history.map((r,i)=>`
+
+      <tr>
+
+        <td>${history.length-i}</td>
+
+        <td>${r.time}</td>
+
+        <td>
+          ${r.success ? "성공 🎉" : "실패 💀"}
+        </td>
+
+        <td>${fmt(r.amount)}</td>
+
+        <td class="${r.change>=0?'win':'lose'}">
+          ${r.change>=0?"+":""}${fmt(r.change)}
+        </td>
+
+        <td>${fmt(r.balance)}</td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function drawChart(canvasId){
+
+  const canvas = $(canvasId);
+
+  if(!canvas) return;
+
+  const box = canvas.parentElement;
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+  const w = box.clientWidth;
+
+  const h = box.clientHeight;
+
+  if(w<=0 || h<=0) return;
+
+  canvas.width = w*dpr;
+  canvas.height = h*dpr;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.setTransform(
+    dpr,0,0,dpr,0,0
+  );
+
+  ctx.clearRect(
+    0,0,w,h
+  );
+
+  const vals =
+    points.map(x=>x.value);
+
+  let min =
+    Math.min(...vals);
+
+  let max =
+    Math.max(...vals);
+
+  if(min===max){
+
+    min-=1000;
+    max+=1000;
+
+  }
+
+  const range = max-min;
+
+  min =
+    Math.max(
+      0,
+      min-range*.12
+    );
+
+  max += range*.12;
+
+  const pad={
+    l:50,
+    r:15,
+    t:20,
+    b:30
+  };
+
+  const cw =
+    w-pad.l-pad.r;
+
+  const ch =
+    h-pad.t-pad.b;
+
+  ctx.font =
+    "11px sans-serif";
+
+  ctx.textAlign="right";
+
+  ctx.strokeStyle =
+    getComputedStyle(document.body)
+      .getPropertyValue("--border");
+
+  ctx.fillStyle =
+    getComputedStyle(document.body)
+      .getPropertyValue("--muted");
+
+  for(let i=0;i<4;i++){
+
+    const y =
+      pad.t+ch*i/3;
+
+    const val =
+      max-(max-min)*i/3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(pad.l,y);
+
+    ctx.lineTo(
+      w-pad.r,
+      y
+    );
+
+    ctx.stroke();
+
+    ctx.fillText(
+      fmt(val),
+      pad.l-8,
+      y+4
+    );
+
+  }
+
+  if(points.length<2){
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+      "배팅을 시작하면 그래프가 표시됩니다.",
+      w/2,
+      h/2
+    );
+
+    return;
+
+  }
+
+  const accent =
+    getComputedStyle(document.body)
+      .getPropertyValue("--accent");
+
+  ctx.strokeStyle=accent;
+
+  ctx.lineWidth=2.5;
+
+  ctx.beginPath();
+
+  points.forEach((p,i)=>{
+
+    const x =
+      pad.l+
+      cw*i/(points.length-1);
+
+    const y =
+      pad.t+
+      ch-
+      (p.value-min)/
+      (max-min)*ch;
+
+    if(i===0)
+      ctx.moveTo(x,y);
+    else
+      ctx.lineTo(x,y);
+
+  });
+
+  ctx.stroke();
+
+}
+
+function drawMiniChart(){
+
+  drawChart("miniChart");
+
+}
+
+function drawLargeChart(){
+
+  drawChart("largeChart");
+
+}
+
+
+/* =========================================================
+   ATTENDANCE
+========================================================= */
 
 function getToday(){
 
@@ -1684,999 +2339,6 @@ function getToday(){
 
 }
 
-
-/* =====================================================
-   NICKNAME
-===================================================== */
-
-function makeDefaultNickname(){
-
-  return "플레이어 " +
-    Math.floor(
-      1000 +
-      Math.random() * 9000
-    );
-
-}
-
-
-function getNickname(){
-
-  let name =
-    localStorage.getItem(
-      NICKNAME_KEY
-    );
-
-  if(!name){
-
-    name = makeDefaultNickname();
-
-    localStorage.setItem(
-      NICKNAME_KEY,
-      name
-    );
-
-  }
-
-  return name;
-
-}
-
-
-function openNicknameEditor(){
-
-  const modal =
-    document.getElementById(
-      "nicknameModal"
-    );
-
-  const input =
-    document.getElementById(
-      "nicknameInput"
-    );
-
-  input.value = getNickname();
-
-  modal.classList.remove(
-    "hidden"
-  );
-
-  setTimeout(
-    ()=>input.focus(),
-    50
-  );
-
-}
-
-
-function closeNicknameEditor(){
-
-  document
-    .getElementById("nicknameModal")
-    .classList.add("hidden");
-
-}
-
-
-function saveNickname(){
-
-  const input =
-    document.getElementById(
-      "nicknameInput"
-    );
-
-  const name =
-    input.value.trim();
-
-  if(!name){
-
-    showToast(
-      "닉네임을 입력해주세요."
-    );
-
-    return;
-
-  }
-
-  if(name.length > 16){
-
-    showToast(
-      "닉네임은 16글자 이하입니다."
-    );
-
-    return;
-
-  }
-
-  localStorage.setItem(
-    NICKNAME_KEY,
-    name
-  );
-
-  closeNicknameEditor();
-
-  renderProfile();
-  updateIdentity();
-
-  showToast(
-    "닉네임이 변경되었습니다."
-  );
-
-}
-
-
-/* =====================================================
-   THEMES
-===================================================== */
-
-const themes = [
-
-  {
-    id:"default",
-    name:"🤍 기본",
-    price:0
-  },
-
-  {
-    id:"neon",
-    name:"🌌 네온 블루",
-    price:5000
-  },
-
-  {
-    id:"green",
-    name:"🌿 그린 터미널",
-    price:7500
-  },
-
-  {
-    id:"night",
-    name:"🌙 다크 나이트",
-    price:10000
-  },
-
-  {
-    id:"red",
-    name:"🔥 레드 알림",
-    price:15000
-  },
-
-  {
-    id:"ocean",
-    name:"🌊 오션",
-    price:20000
-  },
-
-  {
-    id:"sunset",
-    name:"🌅 선셋",
-    price:25000
-  },
-
-  {
-    id:"purple",
-    name:"🟣 퍼플 보이드",
-    price:30000
-  },
-
-  {
-    id:"silver",
-    name:"⚪ 실버",
-    price:40000
-  }
-
-];
-
-
-const backgrounds = [
-
-  {
-    id:"none",
-    name:"⬜ 없음",
-    price:0
-  },
-
-  {
-    id:"galaxy",
-    name:"🌌 은하수",
-    price:5000
-  },
-
-  {
-    id:"grid",
-    name:"▦ 테크 그리드",
-    price:7500
-  },
-
-  {
-    id:"wave",
-    name:"〰️ 웨이브",
-    price:10000
-  }
-
-];
-
-
-const uiEffects = [
-
-  {
-    id:"default",
-    name:"🖥️ 기본",
-    price:0
-  },
-
-  {
-    id:"smooth",
-    name:"🌊 Smooth",
-    price:5000
-  },
-
-  {
-    id:"neon",
-    name:"💡 Neon",
-    price:10000
-  },
-
-  {
-    id:"pop",
-    name:"✨ Pop",
-    price:7500
-  },
-
-  {
-    id:"minimal",
-    name:"▫️ Minimal",
-    price:5000
-  }
-
-];
-
-
-/* =====================================================
-   SHOP STORAGE
-===================================================== */
-
-function getOwned(key, defaultValue){
-
-  const arr =
-    safeJSON(
-      key,
-      defaultValue
-    );
-
-  return Array.isArray(arr)
-    ? arr
-    : defaultValue;
-
-}
-
-
-function ensureShopDefaults(){
-
-  let themesOwned =
-    getOwned(
-      OWNED_THEMES_KEY,
-      ["default"]
-    );
-
-  if(!themesOwned.includes("default")){
-    themesOwned.push("default");
-  }
-
-  saveJSON(
-    OWNED_THEMES_KEY,
-    themesOwned
-  );
-
-
-  let bgOwned =
-    getOwned(
-      OWNED_BG_KEY,
-      ["none"]
-    );
-
-  if(!bgOwned.includes("none")){
-    bgOwned.push("none");
-  }
-
-  saveJSON(
-    OWNED_BG_KEY,
-    bgOwned
-  );
-
-
-  let uiOwned =
-    getOwned(
-      OWNED_UI_KEY,
-      ["default"]
-    );
-
-  if(!uiOwned.includes("default")){
-    uiOwned.push("default");
-  }
-
-  saveJSON(
-    OWNED_UI_KEY,
-    uiOwned
-  );
-
-}
-
-
-/* =====================================================
-   APPLY THEME
-===================================================== */
-
-function applyTheme(){
-
-  const selected =
-    localStorage.getItem(
-      THEME_KEY
-    ) || "default";
-
-  document.body.className =
-    document.body.className
-      .replace(/\btheme-\S+/g,"");
-
-  document.body.classList.add(
-    "theme-" + selected
-  );
-
-}
-
-
-/* =====================================================
-   APPLY BACKGROUND
-===================================================== */
-
-function applyBackground(){
-
-  const selected =
-    localStorage.getItem(
-      BG_KEY
-    ) || "none";
-
-  document.body.classList.remove(
-    "bg-none",
-    "bg-galaxy",
-    "bg-grid",
-    "bg-wave"
-  );
-
-  document.body.classList.add(
-    "bg-" + selected
-  );
-
-
-  createGalaxyStars(
-    selected === "galaxy"
-  );
-
-}
-
-
-function createGalaxyStars(active){
-
-  const fx =
-    document.getElementById(
-      "backgroundFx"
-    );
-
-  fx.innerHTML = "";
-
-  if(!active){
-    return;
-  }
-
-  /*
-    너무 크고 화려한 파티클이 아니라
-    작게 조금씩 움직이는 별.
-  */
-
-  for(let i=0;i<55;i++){
-
-    const star =
-      document.createElement("div");
-
-    star.className =
-      "galaxy-star";
-
-    const size =
-      Math.random() < .75
-        ? 2
-        : 3;
-
-    star.style.width =
-      size + "px";
-
-    star.style.height =
-      size + "px";
-
-    star.style.left =
-      Math.random() * 100 + "%";
-
-    star.style.top =
-      Math.random() * 100 + "%";
-
-    star.style.animationDuration =
-      (8 + Math.random()*16) + "s";
-
-    star.style.animationDelay =
-      (-Math.random()*18) + "s";
-
-    fx.appendChild(star);
-
-  }
-
-}
-
-
-/* =====================================================
-   APPLY UI
-===================================================== */
-
-function applyUI(){
-
-  const selected =
-    localStorage.getItem(
-      UI_KEY
-    ) || "default";
-
-  document.body.classList.remove(
-    "ui-default",
-    "ui-smooth",
-    "ui-neon",
-    "ui-pop",
-    "ui-minimal"
-  );
-
-  document.body.classList.add(
-    "ui-" + selected
-  );
-
-}
-
-
-/* =====================================================
-   BUY SHOP ITEM
-===================================================== */
-
-function buyOrUse(type,id){
-
-  let item;
-  let ownedKey;
-  let selectedKey;
-
-  if(type === "theme"){
-
-    item =
-      themes.find(
-        x=>x.id===id
-      );
-
-    ownedKey =
-      OWNED_THEMES_KEY;
-
-    selectedKey =
-      THEME_KEY;
-
-  }
-
-  else if(type === "background"){
-
-    item =
-      backgrounds.find(
-        x=>x.id===id
-      );
-
-    ownedKey =
-      OWNED_BG_KEY;
-
-    selectedKey =
-      BG_KEY;
-
-  }
-
-  else{
-
-    item =
-      uiEffects.find(
-        x=>x.id===id
-      );
-
-    ownedKey =
-      OWNED_UI_KEY;
-
-    selectedKey =
-      UI_KEY;
-
-  }
-
-
-  if(!item){
-    return;
-  }
-
-
-  let owned =
-    getOwned(
-      ownedKey,
-      []
-    );
-
-
-  /* 구매 */
-  if(!owned.includes(id)){
-
-    const balance =
-      getBalance();
-
-    if(balance < item.price){
-
-      showToast(
-        "COIN이 부족합니다."
-      );
-
-      return;
-
-    }
-
-    setBalance(
-      balance - item.price
-    );
-
-    owned.push(id);
-
-    saveJSON(
-      ownedKey,
-      owned
-    );
-
-    showToast(
-      item.name +
-      " 구매 완료!"
-    );
-
-  }
-
-
-  /* 사용 */
-  localStorage.setItem(
-    selectedKey,
-    id
-  );
-
-
-  if(type === "theme"){
-
-    applyTheme();
-
-  }
-
-  else if(type === "background"){
-
-    applyBackground();
-
-  }
-
-  else{
-
-    applyUI();
-
-  }
-
-
-  renderShop();
-  updateTopBalance();
-  drawGraphs();
-
-}
-
-
-/* =====================================================
-   RENDER SHOP
-===================================================== */
-
-function renderShop(){
-
-  renderShopCategory(
-    "themeShop",
-    themes,
-    OWNED_THEMES_KEY,
-    THEME_KEY,
-    "theme"
-  );
-
-  renderShopCategory(
-    "backgroundShop",
-    backgrounds,
-    OWNED_BG_KEY,
-    BG_KEY,
-    "background"
-  );
-
-  renderShopCategory(
-    "uiShop",
-    uiEffects,
-    OWNED_UI_KEY,
-    UI_KEY,
-    "ui"
-  );
-
-}
-
-
-function renderShopCategory(
-  elementId,
-  items,
-  ownedKey,
-  selectedKey,
-  type
-){
-
-  const container =
-    document.getElementById(
-      elementId
-    );
-
-  const owned =
-    getOwned(
-      ownedKey,
-      []
-    );
-
-  const selected =
-    localStorage.getItem(
-      selectedKey
-    ) ||
-    (
-      type === "background"
-        ? "none"
-        : "default"
-    );
-
-
-  container.innerHTML =
-    items.map(item=>{
-
-      const isOwned =
-        owned.includes(item.id);
-
-      const isSelected =
-        selected === item.id;
-
-
-      let buttonText;
-
-      if(isSelected){
-
-        buttonText =
-          "사용 중";
-
-      }else if(isOwned){
-
-        buttonText =
-          "사용";
-
-      }else{
-
-        buttonText =
-          item.price === 0
-            ? "무료 사용"
-            : "구매";
-
-      }
-
-
-      return `
-
-        <div class="shopItem">
-
-          <div class="shopIcon">
-            ${item.name.slice(0,2)}
-          </div>
-
-          <div class="shopName">
-            ${item.name}
-          </div>
-
-          <div class="shopPrice">
-
-            ${
-              item.price === 0
-                ? "무료"
-                : item.price.toLocaleString()+" COIN"
-            }
-
-          </div>
-
-          <button
-            class="btn ${isSelected ? "secondary" : ""}"
-            ${isSelected ? "disabled" : ""}
-            onclick="buyOrUse('${type}','${item.id}')">
-
-            ${buttonText}
-
-          </button>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   BETTING
-===================================================== */
-
-function setBet(amount){
-
-  const balance =
-    getBalance();
-
-  const value =
-    Math.min(
-      amount,
-      balance
-    );
-
-  document.getElementById(
-    "betAmount"
-  ).value = value;
-
-}
-
-
-function setAllIn(){
-
-  document.getElementById(
-    "betAmount"
-  ).value =
-    getBalance();
-
-}
-
-
-function placeBet(){
-
-  let balance =
-    getBalance();
-
-  if(balance <= 0){
-
-    showToast(
-      "COIN이 모두 소진되었습니다."
-    );
-
-    update();
-
-    return;
-
-  }
-
-
-  const input =
-    document.getElementById(
-      "betAmount"
-    );
-
-  const bet =
-    Math.floor(
-      Number(input.value)
-    );
-
-
-  if(
-    !Number.isFinite(bet) ||
-    bet <= 0
-  ){
-
-    showToast(
-      "배팅 금액을 입력해주세요."
-    );
-
-    return;
-
-  }
-
-
-  if(bet > balance){
-
-    showToast(
-      "현재 COIN보다 많이 걸 수 없습니다."
-    );
-
-    return;
-
-  }
-
-
-  const win =
-    Math.random() < .5;
-
-  const change =
-    win ? bet : -bet;
-
-  balance =
-    setBalance(
-      balance + change
-    );
-
-
-  const history =
-    safeJSON(
-      HISTORY_KEY,
-      []
-    );
-
-  history.unshift({
-
-    time:new Date().toISOString(),
-
-    date:getToday(),
-
-    result:win
-      ? "WIN"
-      : "LOSS",
-
-    amount:bet,
-
-    change:change,
-
-    balance:balance
-
-  });
-
-
-  if(history.length > 100){
-    history.length = 100;
-  }
-
-  saveJSON(
-    HISTORY_KEY,
-    history
-  );
-
-
-  const result =
-    document.getElementById(
-      "betResult"
-    );
-
-  result.className =
-    "result " +
-    (
-      win
-        ? "win"
-        : "loss"
-    );
-
-  result.textContent =
-    win
-      ? `🎉 WIN +${bet.toLocaleString()} COIN`
-      : `💥 LOSS -${bet.toLocaleString()} COIN`;
-
-
-  input.value = "";
-
-  update();
-
-  checkAchievements();
-
-}
-
-
-/* =====================================================
-   HISTORY
-===================================================== */
-
-function renderHistory(){
-
-  const list =
-    document.getElementById(
-      "historyList"
-    );
-
-  const history =
-    safeJSON(
-      HISTORY_KEY,
-      []
-    );
-
-
-  if(!history.length){
-
-    list.innerHTML =
-      `<div class="muted">
-        아직 배팅 기록이 없습니다.
-      </div>`;
-
-    return;
-
-  }
-
-
-  list.innerHTML = `
-
-    <div class="historyRow"
-         style="font-weight:900;">
-
-      <div>시간</div>
-      <div>결과</div>
-      <div>배팅</div>
-      <div>변화</div>
-      <div>잔액</div>
-
-    </div>
-
-    ${
-      history.map(h=>`
-
-        <div class="historyRow">
-
-          <div>
-            ${formatDate(h.time)}
-          </div>
-
-          <div class="${h.result==="WIN" ? "win":"loss"}">
-            ${h.result}
-          </div>
-
-          <div>
-            ${Number(h.amount).toLocaleString()}
-          </div>
-
-          <div class="${h.change>=0 ? "win":"loss"}">
-            ${
-              h.change>=0
-                ? "+"
-                : ""
-            }${Number(h.change).toLocaleString()}
-          </div>
-
-          <div>
-            ${Number(h.balance).toLocaleString()}
-          </div>
-
-        </div>
-
-      `).join("")
-    }
-
-  `;
-
-}
-
-
-function formatDate(value){
-
-  const d =
-    new Date(value);
-
-  if(Number.isNaN(d.getTime())){
-    return "-";
-  }
-
-  return d.toLocaleString(
-    "ko-KR",
-    {
-      month:"numeric",
-      day:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
-    }
-  );
-
-}
-
-
-/* =====================================================
-   ATTENDANCE
-===================================================== */
-
 function claimAttendance(){
 
   const now =
@@ -2686,77 +2348,63 @@ function claimAttendance(){
     Number(
       localStorage.getItem(
         REWARD_KEY
-      )
+      ) || 0
     );
 
-
-  /*
-    중복 지급 방지.
-    먼저 쿨타임 검사.
-  */
-
-  if(
-    Number.isFinite(last) &&
-    last > 0 &&
-    now - last < REWARD_COOLDOWN
-  ){
-
-    showToast(
-      "아직 출석 보상을 받을 수 없습니다."
-    );
+  if(now-last < REWARD_COOLDOWN){
 
     return;
 
   }
 
-
-  let streak =
+  const previous =
     Number(
       localStorage.getItem(
         STREAK_KEY
-      )
-    ) || 0;
-
-
-  const lastStreak =
-    Number(
-      localStorage.getItem(
-        LAST_STREAK_KEY
-      )
+      ) || 0
     );
 
+  const lastDate =
+    localStorage.getItem(
+      LAST_STREAK_KEY
+    );
 
-  if(
-    Number.isFinite(lastStreak) &&
-    now - lastStreak <=
-      REWARD_COOLDOWN * 2
-  ){
+  let streak = previous;
 
-    streak++;
+  if(lastDate){
+
+    const diff =
+      Math.floor(
+        (new Date(getToday()) -
+         new Date(lastDate))
+        /86400000
+      );
+
+    if(diff===1){
+
+      streak++;
+
+    }else if(diff>1){
+
+      streak=1;
+
+    }
 
   }else{
 
-    streak = 1;
+    streak=1;
 
   }
 
+  if(streak<1) streak=1;
 
   const reward =
-    1000 +
-    Math.min(
-      streak - 1,
-      6
-    ) * 100;
+    1000+
+    Math.min(streak-1,6)*100;
 
-
-  const balance =
-    getBalance();
-
-
-  setBalance(
-    balance + reward
+  balance=setBalance(
+    balance+reward
   );
-
 
   localStorage.setItem(
     REWARD_KEY,
@@ -2770,18 +2418,16 @@ function claimAttendance(){
 
   localStorage.setItem(
     LAST_STREAK_KEY,
-    String(now)
+    getToday()
   );
 
-
-  showToast(
-    `출석 보상 +${reward.toLocaleString()} COIN!`
+  alert(
+    `🎁 출석 보상!\n+${fmt(reward)} COIN`
   );
 
-  update();
+  updateAll();
 
 }
-
 
 function updateAttendance(){
 
@@ -2789,452 +2435,435 @@ function updateAttendance(){
     Number(
       localStorage.getItem(
         REWARD_KEY
-      )
+      ) || 0
     );
 
+  const diff =
+    Date.now()-last;
+
+  const btn =
+    $("attendanceBtn");
+
+  if(diff>=REWARD_COOLDOWN){
+
+    btn.disabled=false;
+
+    btn.textContent=
+      "출석 받기";
+
+    $("attendanceTimer")
+      .textContent=
+      "지금 받을 수 있습니다!";
+
+  }else{
+
+    btn.disabled=true;
+
+    const remain =
+      REWARD_COOLDOWN-diff;
+
+    const h =
+      Math.floor(remain/3600000);
+
+    const m =
+      Math.floor(
+        (remain%3600000)/60000
+      );
+
+    const s =
+      Math.floor(
+        (remain%60000)/1000
+      );
+
+    btn.textContent="대기 중";
+
+    $("attendanceTimer")
+      .textContent=
+      `${h}시간 ${m}분 ${s}초 후 다시 받을 수 있습니다.`;
+
+  }
 
   const streak =
     Number(
       localStorage.getItem(
         STREAK_KEY
-      )
-    ) || 0;
-
-
-  document.getElementById(
-    "streakText"
-  ).textContent =
-    `현재 ${streak}일 연속 출석`;
-
-
-  const button =
-    document.getElementById(
-      "rewardButton"
+      ) || 0
     );
 
-
-  const timer =
-    document.getElementById(
-      "rewardTimer"
-    );
-
-
-  if(
-    !Number.isFinite(last) ||
-    last <= 0
-  ){
-
-    button.disabled = false;
-
-    timer.textContent =
-      "지금 받을 수 있습니다.";
-
-    return;
-
-  }
-
-
-  const remaining =
-    REWARD_COOLDOWN -
-    (
-      Date.now() - last
-    );
-
-
-  if(remaining <= 0){
-
-    button.disabled = false;
-
-    timer.textContent =
-      "지금 받을 수 있습니다.";
-
-  }else{
-
-    button.disabled = true;
-
-    timer.textContent =
-      `다음 보상까지 ${formatTime(remaining)}`;
-
-  }
+  $("attendanceStreak")
+    .textContent=
+    `현재 출석 연속 기록: ${streak}일`;
 
 }
 
 
-/* =====================================================
+/* =========================================================
    MISSIONS
-===================================================== */
+========================================================= */
 
-const missionData = [
+const MISSION_DATA = [
 
   {
-    id:"bets",
-    name:"🎲 오늘 3번 배팅",
+    id:"three",
+    title:"🎲 오늘 3번 배팅",
+    desc:"오늘 배팅을 3회 진행하세요.",
     reward:500
   },
 
   {
-    id:"wins",
-    name:"🎉 오늘 1번 승리",
+    id:"win",
+    title:"🎉 오늘 1승",
+    desc:"오늘 배팅에서 한 번 승리하세요.",
     reward:700
   },
 
   {
     id:"profit",
-    name:"💰 오늘 +2,000 순수익",
+    title:"💰 오늘 +2,000 COIN",
+    desc:"오늘 순수익 +2,000 COIN을 달성하세요.",
     reward:1000
   }
 
 ];
 
-
 function getMissionState(){
 
-  const today =
-    getToday();
-
-  let state =
-    safeJSON(
+  const saved =
+    readJSON(
       MISSION_KEY,
       null
     );
 
-
   if(
-    !state ||
-    state.date !== today
+    !saved ||
+    saved.date!==getToday()
   ){
 
-    state = {
-
-      date:today,
-
-      claimed:{
-
-        bets:false,
-        wins:false,
-        profit:false
-
-      }
-
+    const state={
+      date:getToday(),
+      claimed:{}
     };
 
-    saveJSON(
+    writeJSON(
       MISSION_KEY,
       state
     );
 
+    return state;
+
   }
 
-
-  if(!state.claimed){
-    state.claimed = {};
-  }
-
-  return state;
+  return saved;
 
 }
 
-
-function getTodayStats(){
-
-  const history =
-    safeJSON(
-      HISTORY_KEY,
-      []
-    );
+function getTodayHistory(){
 
   const today =
     getToday();
 
-  const todayHistory =
-    history.filter(
-      x=>x.date === today
-    );
+  return history.filter(x=>{
 
+    const d =
+      x.timeDate ||
+      "";
 
-  const bets =
-    todayHistory.length;
+    return d===today;
 
-  const wins =
-    todayHistory.filter(
-      x=>x.result==="WIN"
-    ).length;
-
-  const profit =
-    todayHistory.reduce(
-      (sum,x)=>
-        sum + Number(x.change || 0),
-      0
-    );
-
-
-  return {
-    bets,
-    wins,
-    profit
-  };
+  });
 
 }
 
-
-function missionProgress(index){
-
-  const stats =
-    getTodayStats();
-
-
-  if(index === 0){
-
-    return {
-      current:stats.bets,
-      max:3
-    };
-
-  }
-
-
-  if(index === 1){
-
-    return {
-      current:stats.wins,
-      max:1
-    };
-
-  }
-
-
-  return {
-    current:Math.max(
-      0,
-      stats.profit
-    ),
-    max:2000
-  };
-
-}
-
-
-function claimMission(index){
+function renderMissions(){
 
   const state =
     getMissionState();
 
+  const bets =
+    history.filter(x=>{
+
+      const now =
+        new Date();
+
+      const time =
+        new Date(
+          now.toDateString()+" "+x.time
+        );
+
+      return (
+        time.toDateString() ===
+        now.toDateString()
+      );
+
+    });
+
+  const count =
+    bets.length;
+
+  const win =
+    bets.some(x=>x.success);
+
+  const profit =
+    bets.reduce(
+      (a,x)=>a+x.change,
+      0
+    );
+
+  $("missionList").innerHTML =
+    MISSION_DATA.map((m,i)=>{
+
+      let complete=false;
+
+      if(m.id==="three")
+        complete=count>=3;
+
+      if(m.id==="win")
+        complete=win;
+
+      if(m.id==="profit")
+        complete=profit>=2000;
+
+      const claimed =
+        state.claimed[m.id]===true;
+
+      return `
+
+        <div class="mission">
+
+          <div class="missionInfo">
+
+            <div class="missionTitle">
+              ${m.title}
+            </div>
+
+            <div class="missionDesc">
+              ${m.desc}
+              <br>
+              보상: +${fmt(m.reward)} COIN
+            </div>
+
+          </div>
+
+          <button
+            class="btn ${complete&&!claimed?'primary':''}"
+            ${!complete||claimed?'disabled':''}
+            onclick="claimMission('${m.id}')"
+          >
+            ${
+              claimed
+              ? "완료"
+              : complete
+              ? "받기"
+              : "진행 중"
+            }
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+function claimMission(id){
+
+  const state =
+    getMissionState();
+
+  if(state.claimed[id]) return;
 
   const mission =
-    missionData[index];
-
-
-  if(!mission){
-    return;
-  }
-
-
-  /*
-    이미 받은 미션은 절대 재지급하지 않음.
-  */
-
-  if(
-    state.claimed[mission.id] === true
-  ){
-
-    showToast(
-      "이미 받은 미션 보상입니다."
+    MISSION_DATA.find(
+      x=>x.id===id
     );
 
-    return;
+  if(!mission) return;
 
-  }
+  const bets =
+    history.filter(x=>{
 
+      const now =
+        new Date();
 
-  const p =
-    missionProgress(index);
+      const d =
+        new Date(
+          now.toDateString()+" "+x.time
+        );
 
+      return d.toDateString()===
+        now.toDateString();
 
-  if(p.current < p.max){
+    });
 
-    showToast(
-      "아직 미션을 완료하지 않았습니다."
+  const count=bets.length;
+
+  const win=
+    bets.some(x=>x.success);
+
+  const profit=
+    bets.reduce(
+      (a,x)=>a+x.change,
+      0
     );
 
-    return;
+  let complete=false;
 
-  }
+  if(id==="three") complete=count>=3;
+  if(id==="win") complete=win;
+  if(id==="profit") complete=profit>=2000;
 
+  if(!complete) return;
 
-  const balance =
-    getBalance();
+  state.claimed[id]=true;
 
-
-  setBalance(
-    balance + mission.reward
-  );
-
-
-  state.claimed[mission.id] =
-    true;
-
-
-  saveJSON(
+  writeJSON(
     MISSION_KEY,
     state
   );
 
-
-  showToast(
-    `미션 보상 +${mission.reward.toLocaleString()} COIN!`
+  balance=setBalance(
+    balance+mission.reward
   );
 
+  alert(
+    `🎯 미션 완료!\n+${fmt(mission.reward)} COIN`
+  );
 
-  renderMissions();
-  update();
-
-}
-
-
-function renderMissions(){
-
-  const container =
-    document.getElementById(
-      "missionList"
-    );
-
-  const state =
-    getMissionState();
-
-
-  container.innerHTML =
-    missionData.map(
-      (mission,index)=>{
-
-        const p =
-          missionProgress(index);
-
-        const done =
-          p.current >= p.max;
-
-        const claimed =
-          state.claimed[mission.id] === true;
-
-        const percent =
-          Math.min(
-            100,
-            p.current / p.max * 100
-          );
-
-
-        return `
-
-          <div class="card">
-
-            <h3>
-              ${mission.name}
-            </h3>
-
-            <div class="muted">
-              보상:
-              ${mission.reward.toLocaleString()}
-              COIN
-            </div>
-
-            <div class="progress">
-              <div
-                class="progressBar"
-                style="width:${percent}%">
-              </div>
-            </div>
-
-            <div>
-              ${
-                mission.id==="profit"
-                  ? `${p.current.toLocaleString()} / ${p.max.toLocaleString()}`
-                  : `${Math.min(p.current,p.max)} / ${p.max}`
-              }
-            </div>
-
-            <br>
-
-            <button
-              class="btn ${claimed ? "secondary":""}"
-              ${
-                claimed || !done
-                  ? "disabled"
-                  : ""
-              }
-              onclick="claimMission(${index})">
-
-              ${
-                claimed
-                  ? "수령 완료"
-                  : done
-                    ? "보상 받기"
-                    : "진행 중"
-              }
-
-            </button>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
+  updateAll();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    ACHIEVEMENTS
-===================================================== */
+========================================================= */
 
-const achievements = [
+const ACHIEVEMENTS = [
 
   {
     id:"first",
-    name:"🎯 첫걸음",
-    desc:"첫 배팅을 완료하세요.",
-    reward:500
+    icon:"🎯",
+    name:"첫걸음",
+    desc:"첫 배팅을 진행하세요.",
+    reward:500,
+    honor:"🌱 첫걸음",
+    frame:"frame-ach-first"
   },
 
   {
-    id:"ten",
-    name:"🎲 슬슬 감 잡는 중",
-    desc:"10번 배팅하세요.",
-    reward:1000
+    id:"getting",
+    icon:"🎲",
+    name:"슬슬 감 잡는 중",
+    desc:"총 10회 배팅하세요.",
+    reward:1000,
+    honor:"🎲 감 잡은 자",
+    frame:"frame-ach-getting"
   },
 
   {
-    id:"fifty",
-    name:"🔥 승부사",
-    desc:"50번 배팅하세요.",
-    reward:2500
+    id:"bettor",
+    icon:"🔥",
+    name:"승부사",
+    desc:"총 50회 배팅하세요.",
+    reward:2500,
+    honor:"🔥 승부사",
+    frame:"frame-ach-bettor"
   },
 
   {
-    id:"hundred",
-    name:"👑 COINLAB 단골",
-    desc:"100번 배팅하세요.",
-    reward:5000
+    id:"regular",
+    icon:"👑",
+    name:"COINLAB 단골",
+    desc:"총 100회 배팅하세요.",
+    reward:5000,
+    honor:"👑 COINLAB 단골",
+    frame:"frame-ach-regular"
   },
 
   {
-    id:"streak5",
-    name:"⚡ 연승 시작",
+    id:"streak",
+    icon:"⚡",
+    name:"연승 시작",
     desc:"5연승을 달성하세요.",
-    reward:1500
+    reward:1500,
+    honor:"⚡ 연승자",
+    frame:"frame-ach-streak"
   },
 
   {
     id:"bigwin",
-    name:"💰 한 방",
-    desc:"한 번에 5,000 COIN 이상 승리하세요.",
-    reward:3000
+    icon:"💰",
+    name:"한 방",
+    desc:"한 번에 5,000 COIN 이상의 순이익을 얻으세요.",
+    reward:3000,
+    honor:"💰 한 방",
+    frame:"frame-ach-bigwin"
   },
 
   {
     id:"rich",
-    name:"💎 부자",
-    desc:"25,000 COIN 이상 보유하세요.",
-    reward:5000
+    icon:"💎",
+    name:"부자",
+    desc:"잔액 25,000 COIN을 달성하세요.",
+    reward:5000,
+    honor:"💎 부자",
+    frame:"frame-ach-rich"
+  },
+
+  {
+    id:"bottom",
+    icon:"🕳️",
+    name:"바닥까지 가봤다",
+    desc:"상점에서 총 30,000 COIN 이상 사용하고 0 COIN을 만드세요.",
+    reward:3000,
+    honor:"🕳️ 바닥 경험자",
+    frame:"frame-ach-bottom",
+    hidden:true
+  },
+
+  {
+    id:"boundary",
+    icon:"🌐",
+    name:"경계 너머",
+    desc:"모든 상점 카테고리의 CORE 아이템을 장착한 뒤 비밀 통로에 들어가세요.",
+    reward:5000,
+    honor:"🌐 경계 너머",
+    frame:"frame-ach-boundary",
+    hidden:true
+  },
+
+  {
+    id:"zero500k",
+    icon:"💀",
+    name:"개@#&*",
+    desc:"500,000 COIN을 한 번에 전부 잃으세요.",
+    reward:5000,
+    honor:"💀 개@#&*",
+    frame:"frame-ach-zero500k",
+    hidden:true
+  },
+
+  {
+    id:"devsigh",
+    icon:"😮‍💨",
+    name:"그걸 왜 샀어?",
+    desc:"'개발자의 한숨 한 봉지'를 구매하세요.",
+    reward:5000,
+    honor:"😮‍💨 개발자에게 미안한 자",
+    frame:"frame-ach-devsigh",
+    hidden:true
+  },
+
+  {
+    id:"hacker",
+    icon:"👀",
+    name:"혹시 핵?",
+    desc:"50연승을 달성하세요.",
+    reward:10000,
+    honor:"👀 혹시 핵?",
+    frame:"frame-ach-hacker",
+    hidden:true
   }
 
 ];
@@ -3242,1920 +2871,2286 @@ const achievements = [
 
 function getAchievementState(){
 
-  const state =
-    safeJSON(
-      ACHIEVEMENT_KEY,
-      {}
-    );
-
-  return (
-    state &&
-    typeof state==="object"
-  )
-    ? state
-    : {};
+  return readJSON(
+    ACHIEVEMENT_KEY,
+    {}
+  );
 
 }
 
+function unlockAchievement(id){
 
-function calculateStats(){
+  const state =
+    getAchievementState();
 
-  const history =
-    safeJSON(
-      HISTORY_KEY,
+  if(state[id]) return;
+
+  const a =
+    ACHIEVEMENTS.find(
+      x=>x.id===id
+    );
+
+  if(!a) return;
+
+  state[id]={
+    unlocked:true,
+    date:new Date().toISOString()
+  };
+
+  writeJSON(
+    ACHIEVEMENT_KEY,
+    state
+  );
+
+  balance=setBalance(
+    balance+a.reward
+  );
+
+  /*
+    업적 보상:
+    1. COIN
+    2. 전용 칭호
+    3. 전용 프로필 프레임
+    4. COINLAB CORE 테마
+  */
+
+  const owned =
+    readJSON(
+      OWNED_KEY,
       []
     );
 
+  if(!owned.includes("achievement-core-theme")){
 
-  const bets =
-    history.length;
-
-  const wins =
-    history.filter(
-      x=>x.result==="WIN"
+    owned.push(
+      "achievement-core-theme"
     );
 
-  const losses =
-    history.filter(
-      x=>x.result==="LOSS"
+    writeJSON(
+      OWNED_KEY,
+      owned
     );
-
-
-  const totalBet =
-    history.reduce(
-      (s,x)=>
-        s + Number(x.amount || 0),
-      0
-    );
-
-  const totalProfit =
-    history.reduce(
-      (s,x)=>
-        s + Number(x.change || 0),
-      0
-    );
-
-
-  let currentStreak = 0;
-  let maxStreak = 0;
-
-
-  for(const h of history){
-
-    if(h.result==="WIN"){
-
-      currentStreak++;
-      maxStreak =
-        Math.max(
-          maxStreak,
-          currentStreak
-        );
-
-    }else{
-
-      currentStreak = 0;
-
-    }
 
   }
 
-
-  const balances =
-    history
-      .map(x=>Number(x.balance))
-      .filter(Number.isFinite);
-
-
-  balances.push(
-    getBalance()
+  localStorage.setItem(
+    CORE_THEME_KEY,
+    "owned"
   );
 
+  alert(
+    `🏆 업적 달성!\n\n`+
+    `${a.icon} ${a.name}\n\n`+
+    `💰 +${fmt(a.reward)} COIN\n`+
+    `🏷️ 칭호: ${a.honor}\n`+
+    `🪪 프로필 프레임 획득\n`+
+    `🎨 COINLAB CORE 테마 해금!`
+  );
 
-  const maxBalance =
-    balances.length
-      ? Math.max(...balances)
-      : getBalance();
-
-
-  const minBalance =
-    balances.length
-      ? Math.min(...balances)
-      : getBalance();
-
-
-  const maxWin =
-    wins.length
-      ? Math.max(
-          ...wins.map(
-            x=>Number(x.change)
-          )
-        )
-      : 0;
-
-
-  const maxLoss =
-    losses.length
-      ? Math.max(
-          ...losses.map(
-            x=>Math.abs(
-              Number(x.change)
-            )
-          )
-        )
-      : 0;
-
-
-  return {
-
-    bets,
-
-    wins:wins.length,
-
-    losses:losses.length,
-
-    winRate:
-      bets
-        ? wins.length / bets * 100
-        : 0,
-
-    totalBet,
-
-    totalProfit,
-
-    avgBet:
-      bets
-        ? totalBet / bets
-        : 0,
-
-    avgProfit:
-      bets
-        ? totalProfit / bets
-        : 0,
-
-    maxBalance,
-
-    minBalance,
-
-    maxWin,
-
-    maxLoss,
-
-    maxStreak,
-
-    currentStreak,
-
-    returnRate:
-      totalBet
-        ? totalProfit / totalBet * 100
-        : 0,
-
-    firstDate:
-      history.length
-        ? history[history.length-1].time
-        : null,
-
-    lastDate:
-      history.length
-        ? history[0].time
-        : null
-
-  };
+  updateAll();
 
 }
 
 
 function checkAchievements(){
 
-  const stats =
-    calculateStats();
+  const count =
+    totalBets();
 
-  const state =
-    getAchievementState();
+  if(count>=1)
+    unlockAchievement("first");
 
+  if(count>=10)
+    unlockAchievement("getting");
 
-  achievements.forEach(a=>{
+  if(count>=50)
+    unlockAchievement("bettor");
 
-    if(state[a.id]){
-      return;
-    }
+  if(count>=100)
+    unlockAchievement("regular");
 
+  if(maxStreak()>=5)
+    unlockAchievement("streak");
 
-    let unlocked = false;
+  if(maxWin()>=5000)
+    unlockAchievement("bigwin");
 
+  if(maxBalance()>=25000)
+    unlockAchievement("rich");
 
-    if(a.id==="first"){
-      unlocked =
-        stats.bets >= 1;
-    }
+  if(
+    getShopSpent()>=30000 &&
+    balance===0
+  ){
 
-    if(a.id==="ten"){
-      unlocked =
-        stats.bets >= 10;
-    }
+    unlockAchievement("bottom");
 
-    if(a.id==="fifty"){
-      unlocked =
-        stats.bets >= 50;
-    }
+  }
 
-    if(a.id==="hundred"){
-      unlocked =
-        stats.bets >= 100;
-    }
-
-    if(a.id==="streak5"){
-      unlocked =
-        stats.maxStreak >= 5;
-    }
-
-    if(a.id==="bigwin"){
-      unlocked =
-        stats.maxWin >= 5000;
-    }
-
-    if(a.id==="rich"){
-      unlocked =
-        stats.maxBalance >= 25000;
-    }
-
-
-    if(unlocked){
-
-      state[a.id] = true;
-
-      setBalance(
-        getBalance() + a.reward
-      );
-
-      showToast(
-        `🏆 업적 달성: ${a.name} +${a.reward.toLocaleString()} COIN`
-      );
-
-    }
-
-  });
-
-
-  saveJSON(
-    ACHIEVEMENT_KEY,
-    state
-  );
-
-  renderAchievements();
+  if(maxStreak()>=50)
+    unlockAchievement("hacker");
 
 }
 
 
 function renderAchievements(){
 
-  const container =
-    document.getElementById(
-      "achievementList"
+  const state =
+    getAchievementState();
+
+  $("achievementList").innerHTML =
+    ACHIEVEMENTS.map(a=>{
+
+      const unlocked =
+        !!state[a.id];
+
+      const name =
+        a.hidden && !unlocked
+        ? "???"
+        : `${a.icon} ${a.name}`;
+
+      const desc =
+        a.hidden && !unlocked
+        ? "숨겨진 업적입니다."
+        : a.desc;
+
+      return `
+
+        <div class="achievement ${unlocked?'':'locked'}">
+
+          <div class="achievementIcon">
+            ${unlocked ? a.icon : "🔒"}
+          </div>
+
+          <div class="achievementInfo">
+
+            <div class="achievementName">
+              ${name}
+            </div>
+
+            <div class="achievementDesc">
+              ${desc}
+            </div>
+
+            ${
+              unlocked
+              ?
+              `
+              <div class="rewardLine">
+                💰 +${fmt(a.reward)}
+                · 🏷️ ${a.honor}
+                · 🪪 전용 프레임
+                · 🎨 COINLAB CORE
+              </div>
+              `
+              :
+              `
+              <div class="rewardLine">
+                🔒 보상 잠김
+              </div>
+              `
+            }
+
+          </div>
+
+          <div>
+            ${
+              unlocked
+              ? "✅ 달성"
+              : "🔒"
+            }
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   SHOP DATA
+========================================================= */
+
+const SHOP_CATEGORIES = [
+
+  {
+    id:"theme",
+    title:"🎨 테마",
+    items:[
+
+      {
+        id:"theme-default",
+        name:"🤍 기본",
+        price:0,
+        desc:"기본 흰색 테마.",
+        type:"theme",
+        value:"default"
+      },
+
+      {
+        id:"theme-neon",
+        name:"🌌 네온 블루",
+        price:5000,
+        desc:"푸른 네온 스타일.",
+        type:"theme",
+        value:"neon"
+      },
+
+      {
+        id:"theme-green",
+        name:"🌿 그린 터미널",
+        price:7500,
+        desc:"터미널 느낌의 녹색 테마.",
+        type:"theme",
+        value:"green"
+      },
+
+      {
+        id:"theme-night",
+        name:"🌙 다크 나이트",
+        price:10000,
+        desc:"차분한 다크 테마.",
+        type:"theme",
+        value:"night"
+      },
+
+      {
+        id:"theme-red",
+        name:"🔥 레드 알림",
+        price:15000,
+        desc:"강렬한 붉은 테마.",
+        type:"theme",
+        value:"red"
+      },
+
+      {
+        id:"theme-ocean",
+        name:"🌊 오션",
+        price:20000,
+        desc:"청록색 바다 느낌.",
+        type:"theme",
+        value:"ocean"
+      },
+
+      {
+        id:"theme-sunset",
+        name:"🌅 선셋",
+        price:25000,
+        desc:"주황빛 선셋 테마.",
+        type:"theme",
+        value:"sunset"
+      },
+
+      {
+        id:"theme-purple",
+        name:"🟣 퍼플 보이드",
+        price:30000,
+        desc:"보라색 우주 느낌.",
+        type:"theme",
+        value:"purple"
+      },
+
+      {
+        id:"theme-silver",
+        name:"⚪ 실버",
+        price:40000,
+        desc:"메탈릭 실버 테마.",
+        type:"theme",
+        value:"silver"
+      }
+
+    ]
+  },
+
+
+  {
+    id:"background",
+    title:"🌌 배경 효과",
+    items:[
+
+      {
+        id:"bg-none",
+        name:"⬜ 없음",
+        price:0,
+        desc:"깔끔한 기본 배경.",
+        type:"background",
+        value:"none"
+      },
+
+      {
+        id:"bg-galaxy",
+        name:"🌌 은하수",
+        price:5000,
+        desc:"작은 별이 천천히 움직입니다.",
+        type:"background",
+        value:"galaxy"
+      },
+
+      {
+        id:"bg-grid",
+        name:"▦ 테크 그리드",
+        price:7500,
+        desc:"배경에 기술적인 격자무늬를 표시합니다.",
+        type:"background",
+        value:"grid"
+      },
+
+      {
+        id:"bg-wave",
+        name:"〰️ 웨이브",
+        price:10000,
+        desc:"은은한 빛의 파동 효과.",
+        type:"background",
+        value:"wave"
+      },
+
+      {
+        id:"bg-blackhole",
+        name:"🕳️ 블랙홀",
+        price:15000,
+        desc:"어두운 중심부를 가진 배경 효과.",
+        type:"background",
+        value:"blackhole"
+      },
+
+      {
+        id:"bg-scan",
+        name:"📺 스캔라인",
+        price:20000,
+        desc:"모니터 스캔라인 효과.",
+        type:"background",
+        value:"scan"
+      },
+
+      {
+        id:"bg-core",
+        name:"⭐ CORE 입자",
+        price:50000,
+        desc:"CORE 스타일의 움직이는 입자.",
+        type:"background",
+        value:"core",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"ui",
+    title:"✨ UI 효과",
+    items:[
+
+      {
+        id:"ui-default",
+        name:"🖥️ 기본",
+        price:0,
+        desc:"기본 UI.",
+        type:"ui",
+        value:"smooth"
+      },
+
+      {
+        id:"ui-smooth",
+        name:"🌊 Smooth",
+        price:5000,
+        desc:"부드러운 전환 효과.",
+        type:"ui",
+        value:"smooth"
+      },
+
+      {
+        id:"ui-neon",
+        name:"💡 Neon",
+        price:10000,
+        desc:"카드와 버튼에 네온 테두리.",
+        type:"ui",
+        value:"neon"
+      },
+
+      {
+        id:"ui-pop",
+        name:"✨ Pop",
+        price:7500,
+        desc:"강조된 테두리와 호버 효과.",
+        type:"ui",
+        value:"pop"
+      },
+
+      {
+        id:"ui-minimal",
+        name:"▫️ Minimal",
+        price:5000,
+        desc:"그림자를 제거한 미니멀 UI.",
+        type:"ui",
+        value:"minimal"
+      },
+
+      {
+        id:"ui-glass",
+        name:"🪟 Glass",
+        price:15000,
+        desc:"반투명 유리 느낌.",
+        type:"ui",
+        value:"glass"
+      },
+
+      {
+        id:"ui-terminal",
+        name:"💻 Terminal",
+        price:25000,
+        desc:"터미널 스타일 UI.",
+        type:"ui",
+        value:"terminal"
+      },
+
+      {
+        id:"ui-core",
+        name:"⚡ CORE Pulse",
+        price:50000,
+        desc:"CORE 네온 테두리 효과.",
+        type:"ui",
+        value:"neon",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"decoration",
+    title:"🖼️ 장식물",
+    items:[
+
+      {
+        id:"dec-none",
+        name:"⬜ 없음",
+        price:0,
+        desc:"장식물을 표시하지 않습니다.",
+        type:"decoration",
+        value:""
+      },
+
+      {
+        id:"dec-fragment",
+        name:"🔺 코어 파편",
+        price:10000,
+        desc:"프로필에 작은 코어 파편을 표시합니다.",
+        type:"decoration",
+        value:"🔺"
+      },
+
+      {
+        id:"dec-satellite",
+        name:"🛰️ 위성",
+        price:15000,
+        desc:"프로필 옆에 위성을 표시합니다.",
+        type:"decoration",
+        value:"🛰️"
+      },
+
+      {
+        id:"dec-holo",
+        name:"💠 홀로그램 큐브",
+        price:25000,
+        desc:"프로필에 홀로그램 큐브를 표시합니다.",
+        type:"decoration",
+        value:"💠"
+      },
+
+      {
+        id:"dec-warning",
+        name:"⚠️ 경고 마크",
+        price:30000,
+        desc:"경고 표시를 추가합니다.",
+        type:"decoration",
+        value:"⚠️"
+      },
+
+      {
+        id:"dec-secret",
+        name:"🌀 비밀 통로 표식",
+        price:40000,
+        desc:"비밀 통로를 상징하는 장식.",
+        type:"decoration",
+        value:"🌀"
+      },
+
+      {
+        id:"dec-core",
+        name:"💎 CORE 경계 표식",
+        price:60000,
+        desc:"CORE 경계 표식.",
+        type:"decoration",
+        value:"💎",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"font",
+    title:"🔤 폰트",
+    items:[
+
+      {
+        id:"font-default",
+        name:"기본",
+        price:0,
+        desc:"COINLAB 기본 폰트.",
+        type:"font",
+        value:"Noto"
+      },
+
+      {
+        id:"font-noto",
+        name:"Noto Sans",
+        price:3000,
+        desc:"깔끔한 산세리프 폰트.",
+        type:"font",
+        value:"Noto"
+      },
+
+      {
+        id:"font-pretendard",
+        name:"Pretendard",
+        price:5000,
+        desc:"현대적인 UI 폰트.",
+        type:"font",
+        value:"Pretendard"
+      },
+
+      {
+        id:"font-mono",
+        name:"JetBrains Mono",
+        price:7500,
+        desc:"개발자 느낌의 고정폭 폰트.",
+        type:"font",
+        value:"Mono"
+      },
+
+      {
+        id:"font-orbitron",
+        name:"Orbitron",
+        price:12000,
+        desc:"미래적인 HUD 스타일.",
+        type:"font",
+        value:"Orbitron"
+      },
+
+      {
+        id:"font-pixel",
+        name:"Press Start 2P",
+        price:20000,
+        desc:"레트로 픽셀 폰트.",
+        type:"font",
+        value:"Pixel"
+      },
+
+      {
+        id:"font-core",
+        name:"COINLAB CORE",
+        price:50000,
+        desc:"CORE 전용 폰트 스타일.",
+        type:"font",
+        value:"Core",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"honor",
+    title:"🏷️ 칭호",
+    items:[
+
+      {
+        id:"honor-newbie",
+        name:"🌱 새내기",
+        price:0,
+        desc:"기본 칭호.",
+        type:"honor",
+        value:"🌱 새내기"
+      },
+
+      {
+        id:"honor-test",
+        name:"🧪 실험체",
+        price:4000,
+        desc:"프로필 아래에 표시됩니다.",
+        type:"honor",
+        value:"🧪 실험체"
+      },
+
+      {
+        id:"honor-observer",
+        name:"🛰️ 관측자",
+        price:8000,
+        desc:"관측자 칭호.",
+        type:"honor",
+        value:"🛰️ 관측자"
+      },
+
+      {
+        id:"honor-access",
+        name:"🔐 접근 승인",
+        price:15000,
+        desc:"접근 승인을 받은 사용자.",
+        type:"honor",
+        value:"🔐 접근 승인"
+      },
+
+      {
+        id:"honor-data",
+        name:"💿 데이터 수집가",
+        price:30000,
+        desc:"데이터 수집가 칭호.",
+        type:"honor",
+        value:"💿 데이터 수집가"
+      },
+
+      {
+        id:"honor-system",
+        name:"⚙️ 시스템 사용자",
+        price:40000,
+        desc:"시스템 사용자 칭호.",
+        type:"honor",
+        value:"⚙️ 시스템 사용자"
+      },
+
+      {
+        id:"honor-core",
+        name:"⚡ CORE 인증 사용자",
+        price:60000,
+        desc:"CORE 인증 사용자.",
+        type:"honor",
+        value:"⚡ CORE 인증 사용자",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"frame",
+    title:"🪪 프로필 프레임",
+    items:[
+
+      {
+        id:"frame-default",
+        name:"기본 프레임",
+        price:0,
+        desc:"기본 프로필 프레임.",
+        type:"frame",
+        value:"frame-default"
+      },
+
+      {
+        id:"frame-chrome",
+        name:"🔷 크롬 프레임",
+        price:5000,
+        desc:"두꺼운 크롬 스타일.",
+        type:"frame",
+        value:"frame-chrome"
+      },
+
+      {
+        id:"frame-warning",
+        name:"⚠️ 경고 프레임",
+        price:10000,
+        desc:"점선 경고 프레임.",
+        type:"frame",
+        value:"frame-warning"
+      },
+
+      {
+        id:"frame-void",
+        name:"🟣 보이드 프레임",
+        price:20000,
+        desc:"보라색 빛을 냅니다.",
+        type:"frame",
+        value:"frame-void"
+      },
+
+      {
+        id:"frame-holo",
+        name:"💠 홀로 프레임",
+        price:30000,
+        desc:"홀로그램 느낌의 프레임.",
+        type:"frame",
+        value:"frame-holo"
+      },
+
+      {
+        id:"frame-ice",
+        name:"🧊 아이스 프레임",
+        price:40000,
+        desc:"차가운 빛의 프레임.",
+        type:"frame",
+        value:"frame-ice"
+      },
+
+      {
+        id:"frame-core",
+        name:"⚡ CORE FRAME",
+        price:70000,
+        desc:"CORE 프로필 프레임.",
+        type:"frame",
+        value:"frame-core",
+        core:true
+      }
+
+    ]
+  },
+
+
+  {
+    id:"sound",
+    title:"🔊 사운드",
+    items:[
+
+      {
+        id:"sound-off",
+        name:"🔇 기본 무음",
+        price:0,
+        desc:"효과음을 사용하지 않습니다.",
+        type:"sound",
+        value:"off"
+      },
+
+      {
+        id:"sound-beep",
+        name:"📡 삑- 시스템",
+        price:5000,
+        desc:"짧은 시스템 비프음.",
+        type:"sound",
+        value:"beep"
+      },
+
+      {
+        id:"sound-low",
+        name:"〰️ 저주파",
+        price:10000,
+        desc:"낮은 주파수 효과음.",
+        type:"sound",
+        value:"low"
+      },
+
+      {
+        id:"sound-click",
+        name:"🖱️ 클릭",
+        price:15000,
+        desc:"버튼 클릭 느낌의 효과음.",
+        type:"sound",
+        value:"click"
+      },
+
+      {
+        id:"sound-arcade",
+        name:"🕹️ 아케이드",
+        price:25000,
+        desc:"간단한 아케이드 효과음.",
+        type:"sound",
+        value:"arcade"
+      },
+
+      {
+        id:"sound-core",
+        name:"⚡ CORE SIGNAL",
+        price:50000,
+        desc:"CORE 전용 신호음.",
+        type:"sound",
+        value:"core",
+        core:true
+      }
+
+    ]
+  }
+
+];
+
+
+/* =========================================================
+   SHOP HELPERS
+========================================================= */
+
+function allShopItems(){
+
+  return SHOP_CATEGORIES.flatMap(
+    c=>c.items
+  );
+
+}
+
+function getItem(id){
+
+  return allShopItems().find(
+    x=>x.id===id
+  );
+
+}
+
+function getOwned(){
+
+  return readJSON(
+    OWNED_KEY,
+    [
+      "theme-default",
+      "bg-none",
+      "ui-default",
+      "dec-none",
+      "font-default",
+      "honor-newbie",
+      "frame-default",
+      "sound-off"
+    ]
+  );
+
+}
+
+function saveOwned(arr){
+
+  writeJSON(
+    OWNED_KEY,
+    [...new Set(arr)]
+  );
+
+}
+
+function getEquipped(){
+
+  return readJSON(
+    EQUIPPED_KEY,
+    {}
+  );
+
+}
+
+function saveEquipped(obj){
+
+  writeJSON(
+    EQUIPPED_KEY,
+    obj
+  );
+
+}
+
+function getFavorites(){
+
+  return readJSON(
+    FAVORITE_KEY,
+    []
+  );
+
+}
+
+function toggleFavorite(id){
+
+  const arr =
+    getFavorites();
+
+  const index =
+    arr.indexOf(id);
+
+  if(index>=0)
+    arr.splice(index,1);
+  else
+    arr.push(id);
+
+  writeJSON(
+    FAVORITE_KEY,
+    arr
+  );
+
+  renderShop();
+
+}
+
+let favoritesOnly=false;
+
+function toggleFavorites(){
+
+  favoritesOnly=!favoritesOnly;
+
+  $("favoriteFilterBtn")
+    .textContent =
+      favoritesOnly
+      ? "⭐ 즐겨찾기"
+      : "⭐ 전체";
+
+  renderShop();
+
+}
+
+function getShopSpent(){
+
+  return Number(
+    localStorage.getItem(
+      SHOP_SPENT_KEY
+    ) || 0
+  );
+
+}
+
+
+/* =========================================================
+   SHOP PURCHASE
+========================================================= */
+
+function buyItem(id){
+
+  const item =
+    getItem(id);
+
+  if(!item) return;
+
+  const owned =
+    getOwned();
+
+  if(owned.includes(id)){
+
+    equipItem(id);
+
+    return;
+
+  }
+
+  if(balance < item.price){
+
+    alert("💸 COIN이 부족합니다.");
+
+    return;
+
+  }
+
+  if(item.price>0){
+
+    balance=setBalance(
+      balance-item.price
     );
+
+    localStorage.setItem(
+      SHOP_SPENT_KEY,
+      String(
+        getShopSpent()+item.price
+      )
+    );
+
+  }
+
+  owned.push(id);
+
+  saveOwned(owned);
+
+  equipItem(id);
+
+  if(id==="dev-sigh-bag"){
+
+    unlockAchievement("devsigh");
+
+  }
+
+  checkAchievements();
+
+  updateAll();
+
+}
+
+function equipItem(id){
+
+  const item =
+    getItem(id);
+
+  if(!item) return;
+
+  const owned =
+    getOwned();
+
+  if(!owned.includes(id)) return;
+
+  const equipped =
+    getEquipped();
+
+  equipped[item.type]=id;
+
+  saveEquipped(equipped);
+
+  applyItem(item);
+
+  if(
+    isAllCoreEquipped()
+  ){
+
+    renderProfile();
+
+  }
+
+  renderShop();
+
+}
+
+function applyItem(item){
+
+  if(item.type==="theme"){
+
+    applyTheme(item.value);
+
+  }
+
+  if(item.type==="background"){
+
+    applyBackground(item.value);
+
+  }
+
+  if(item.type==="ui"){
+
+    applyUI(item.value);
+
+  }
+
+  if(item.type==="font"){
+
+    applyFont(item.value);
+
+  }
+
+  if(item.type==="honor"){
+
+    localStorage.setItem(
+      HONOR_KEY,
+      item.value
+    );
+
+  }
+
+  if(item.type==="frame"){
+
+    localStorage.setItem(
+      FRAME_KEY,
+      item.value
+    );
+
+  }
+
+  if(item.type==="decoration"){
+
+    localStorage.setItem(
+      DECORATION_KEY,
+      item.value
+    );
+
+  }
+
+  if(item.type==="sound"){
+
+    localStorage.setItem(
+      SOUND_KEY,
+      item.value
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOP RENDER
+========================================================= */
+
+function renderShop(){
+
+  const query =
+    ($("shopSearch")?.value || "")
+      .trim()
+      .toLowerCase();
+
+  const owned =
+    getOwned();
+
+  const favs =
+    getFavorites();
+
+  let html="";
+
+  SHOP_CATEGORIES.forEach(cat=>{
+
+    const filtered =
+      cat.items.filter(item=>{
+
+        const text =
+          (
+            item.name+
+            item.desc
+          ).toLowerCase();
+
+        if(
+          query &&
+          !text.includes(query)
+        )
+          return false;
+
+        if(
+          favoritesOnly &&
+          !favs.includes(item.id)
+        )
+          return false;
+
+        return true;
+
+      });
+
+    if(!filtered.length) return;
+
+    html += `
+
+      <div class="shopCategory">
+
+        <div class="shopCategoryTitle">
+          ${cat.title}
+        </div>
+
+        <div class="shopGrid">
+
+          ${filtered.map(item=>{
+
+            const isOwned =
+              owned.includes(item.id);
+
+            const equipped =
+              getEquipped()[item.type]
+              ===item.id;
+
+            const favorite =
+              favs.includes(item.id);
+
+            return `
+
+              <div
+                class="shopItem
+                  ${favorite?'favorite':''}
+                  ${item.core?'core':''}"
+              >
+
+                <div class="shopName">
+
+                  ${item.name}
+
+                  ${
+                    item.core
+                    ? `<span class="badge">CORE</span>`
+                    : ""
+                  }
+
+                </div>
+
+                <div class="shopDesc">
+                  ${item.desc}
+                </div>
+
+                <div class="shopPrice">
+
+                  ${
+                    item.price===0
+                    ? "FREE"
+                    : "🪙 "+fmt(item.price)
+                  }
+
+                </div>
+
+                <div class="shopActions">
+
+                  <button
+                    class="btn"
+                    onclick="toggleFavorite('${item.id}')"
+                  >
+                    ${favorite?"★":"☆"}
+                  </button>
+
+                  ${
+                    equipped
+                    ?
+                    `
+                    <button
+                      class="btn primary"
+                      disabled
+                    >
+                      장착 중
+                    </button>
+                    `
+                    :
+                    isOwned
+                    ?
+                    `
+                    <button
+                      class="btn primary"
+                      onclick="equipItem('${item.id}')"
+                    >
+                      장착
+                    </button>
+                    `
+                    :
+                    `
+                    <button
+                      class="btn primary"
+                      onclick="buyItem('${item.id}')"
+                    >
+                      ${
+                        item.price===0
+                        ? "받기"
+                        : "구매"
+                      }
+                    </button>
+                    `
+                  }
+
+                </div>
+
+              </div>
+
+            `;
+
+          }).join("")}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  $("shopContainer").innerHTML =
+    html ||
+    `<div class="empty">검색 결과가 없습니다.</div>`;
+
+}
+
+
+/* =========================================================
+   CORE SYSTEM
+========================================================= */
+
+function isAllCoreEquipped(){
+
+  const equipped =
+    getEquipped();
+
+  for(const cat of SHOP_CATEGORIES){
+
+    const core =
+      cat.items.find(
+        x=>x.core
+      );
+
+    if(!core) continue;
+
+    if(
+      equipped[cat.id] !== core.id &&
+      equipped[core.type] !== core.id
+    ){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+function enterSecretHole(){
+
+  if(!isAllCoreEquipped()){
+
+    alert(
+      "🕳️ 아직 안쪽으로 들어갈 수 없다..."
+    );
+
+    return;
+
+  }
+
+  const owned =
+    getOwned();
+
+  if(
+    !owned.includes(
+      "secret-core-hole"
+    )
+  ){
+
+    owned.push(
+      "secret-core-hole"
+    );
+
+    saveOwned(owned);
+
+  }
+
+  localStorage.setItem(
+    DECORATION_KEY,
+    "🕳️"
+  );
+
+  unlockAchievement(
+    "boundary"
+  );
+
+  alert(
+    "🌐 경계를 통과했습니다.\n\n"+
+    "숨겨진 장식물\n"+
+    "🕳️ CORE 경계 통로\n"+
+    "획득!"
+  );
+
+  renderProfile();
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(value){
+
+  document.body.className =
+    document.body.className
+      .replace(/\btheme-\S+/g,"");
+
+  document.body.classList.add(
+    `theme-${value}`
+  );
+
+  localStorage.setItem(
+    THEME_KEY,
+    value
+  );
+
+  drawMiniChart();
+  drawLargeChart();
+
+}
+
+function applyBackground(value){
+
+  document.body.className =
+    document.body.className
+      .replace(/\bbg-\S+/g,"");
+
+  document.body.classList.add(
+    `bg-${value}`
+  );
+
+  $("backgroundFx").innerHTML="";
+
+  if(value==="galaxy" || value==="core"){
+
+    for(let i=0;i<65;i++){
+
+      const star =
+        document.createElement("div");
+
+      star.className="galaxy-star";
+
+      star.style.left =
+        Math.random()*100+"%";
+
+      star.style.top =
+        Math.random()*100+"%";
+
+      star.style.animationDuration =
+        (3+Math.random()*6)+"s";
+
+      star.style.animationDelay =
+        (-Math.random()*6)+"s";
+
+      $("backgroundFx")
+        .appendChild(star);
+
+    }
+
+  }
+
+  if(value==="blackhole"){
+
+    const hole =
+      document.createElement("div");
+
+    hole.style.position="absolute";
+    hole.style.width="420px";
+    hole.style.height="420px";
+    hole.style.borderRadius="50%";
+    hole.style.left="50%";
+    hole.style.top="50%";
+    hole.style.transform="translate(-50%,-50%)";
+    hole.style.background=
+      "radial-gradient(circle,#000 0 25%,rgba(80,0,120,.2) 45%,transparent 70%)";
+    hole.style.boxShadow=
+      "0 0 100px rgba(120,0,255,.15)";
+
+    $("backgroundFx")
+      .appendChild(hole);
+
+  }
+
+}
+
+function applyUI(value){
+
+  document.body.className =
+    document.body.className
+      .replace(/\bui-\S+/g,"");
+
+  document.body.classList.add(
+    `ui-${value}`
+  );
+
+  localStorage.setItem(
+    UI_KEY,
+    value
+  );
+
+}
+
+
+/* =========================================================
+   FONT
+========================================================= */
+
+function applyFont(value){
+
+  let font =
+    "'Noto Sans KR',sans-serif";
+
+  if(value==="Pretendard")
+    font="'Pretendard','Noto Sans KR',sans-serif";
+
+  if(value==="Mono")
+    font="'JetBrains Mono',monospace";
+
+  if(value==="Orbitron")
+    font="'Orbitron','Noto Sans KR',sans-serif";
+
+  if(value==="Pixel")
+    font="'Press Start 2P','Noto Sans KR',sans-serif";
+
+  if(value==="Core")
+    font="'Orbitron','JetBrains Mono',sans-serif";
+
+  document.documentElement
+    .style
+    .setProperty(
+      "--font",
+      font
+    );
+
+  document.body.style.fontFamily =
+    font;
+
+  localStorage.setItem(
+    FONT_KEY,
+    value
+  );
+
+}
+
+
+/* =========================================================
+   SOUND
+========================================================= */
+
+let audioContext=null;
+
+function playSound(type){
+
+  const sound =
+    localStorage.getItem(
+      SOUND_KEY
+    ) || "off";
+
+  if(sound==="off") return;
+
+  try{
+
+    audioContext =
+      audioContext ||
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+    const osc =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    osc.connect(gain);
+    gain.connect(
+      audioContext.destination
+    );
+
+    let freq=500;
+
+    if(sound==="beep")
+      freq=600;
+
+    if(sound==="low")
+      freq=130;
+
+    if(sound==="click")
+      freq=800;
+
+    if(sound==="arcade")
+      freq=type==="win"?900:250;
+
+    if(sound==="core")
+      freq=type==="win"?1200:180;
+
+    osc.frequency.value=freq;
+
+    gain.gain.setValueAtTime(
+      .04,
+      audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioContext.currentTime+.12
+    );
+
+    osc.start();
+
+    osc.stop(
+      audioContext.currentTime+.12
+    );
+
+  }catch{}
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function makeDefaultNickname(){
+
+  return "플레이어 "+
+    Math.floor(
+      1000+
+      Math.random()*9000
+    );
+
+}
+
+function getNickname(){
+
+  let n =
+    localStorage.getItem(
+      NICKNAME_KEY
+    );
+
+  if(!n){
+
+    n=makeDefaultNickname();
+
+    localStorage.setItem(
+      NICKNAME_KEY,
+      n
+    );
+
+  }
+
+  return n;
+
+}
+
+function openNicknameEditor(){
+
+  $("nicknameInput").value =
+    getNickname();
+
+  $("nicknameModal")
+    .classList.add("show");
+
+}
+
+function closeModal(id){
+
+  $(id)
+    .classList.remove("show");
+
+}
+
+function saveNickname(){
+
+  const value =
+    $("nicknameInput")
+      .value
+      .trim();
+
+  if(
+    value.length<1 ||
+    value.length>16
+  ){
+
+    alert(
+      "닉네임은 1~16자로 입력하세요."
+    );
+
+    return;
+
+  }
+
+  localStorage.setItem(
+    NICKNAME_KEY,
+    value
+  );
+
+  closeModal(
+    "nicknameModal"
+  );
+
+  renderProfile();
+
+}
+
+function renderProfile(){
+
+  const nickname =
+    getNickname();
+
+  $("profileNickname")
+    .textContent=nickname;
+
+  const honor =
+    localStorage.getItem(
+      HONOR_KEY
+    ) ||
+    "🌱 새내기";
+
+  $("profileHonor")
+    .textContent=honor;
+
+  const frame =
+    localStorage.getItem(
+      FRAME_KEY
+    ) ||
+    "frame-default";
+
+  const avatar =
+    $("avatarWrap");
+
+  avatar.className =
+    "avatar-wrap "+frame;
+
+  const decoration =
+    localStorage.getItem(
+      DECORATION_KEY
+    ) || "";
+
+  $("profileDecoration")
+    .textContent=decoration;
+
+  const total =
+    totalBets();
+
+  const winRate =
+    total
+    ? (wins()/total*100).toFixed(1)
+    : "0.0";
+
+  const profitRate =
+    10000
+    ? (totalProfit()/10000*100).toFixed(1)
+    : "0.0";
 
   const state =
     getAchievementState();
 
-
-  container.innerHTML =
-    achievements.map(a=>{
-
-      const done =
-        !!state[a.id];
-
-
-      return `
-
-        <div
-          class="card ${
-            done
-              ? ""
-              : "itemLocked"
-          }">
-
-          <h3>
-            ${a.name}
-          </h3>
-
-          <p class="muted">
-            ${a.desc}
-          </p>
-
-          <b>
-            보상:
-            ${a.reward.toLocaleString()} COIN
-          </b>
-
-          <p>
-            ${
-              done
-                ? "✅ 달성 완료"
-                : "🔒 미달성"
-            }
-          </p>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   TITLES
-===================================================== */
-
-const titleData = [
-
-  {
-    id:"newbie",
-    name:"🌱 초보자",
-    color:"newbie",
-    unlock:()=>true
-  },
-
-  {
-    id:"bettor",
-    name:"🎲 승부사",
-    color:"bettor",
-    unlock:()=>{
-      return calculateStats().bets >= 10;
-    }
-  },
-
-  {
-    id:"streak",
-    name:"🔥 연승의 신",
-    color:"streak",
-    unlock:()=>{
-      return calculateStats().maxStreak >= 5;
-    }
-  },
-
-  {
-    id:"whale",
-    name:"💰 큰손",
-    color:"whale",
-    unlock:()=>{
-      return calculateStats().maxWin >= 5000;
-    }
-  },
-
-  {
-    id:"legend",
-    name:"👑 LEGEND",
-    color:"legend",
-    unlock:()=>{
-      return calculateStats().bets >= 100;
-    }
-  }
-
-];
-
-
-function equipTitle(id){
-
-  const item =
-    titleData.find(
-      x=>x.id===id
-    );
-
-  if(!item){
-    return;
-  }
-
-
-  if(!item.unlock()){
-
-    showToast(
-      "아직 잠금 해제되지 않았습니다."
-    );
-
-    return;
-
-  }
-
-
-  localStorage.setItem(
-    TITLE_KEY,
-    id
-  );
-
-
-  renderProfile();
-  updateIdentity();
-
-  showToast(
-    `${item.name} 타이틀 적용!`
-  );
-
-}
-
-
-/* =====================================================
-   HONORS
-===================================================== */
-
-const honorData = [
-
-  {
-    id:"newbie",
-    name:"🌱 새내기",
-    unlock:()=>true
-  },
-
-  {
-    id:"first",
-    name:"🎯 첫걸음",
-    unlock:()=>{
-      return calculateStats().bets >= 1;
-    }
-  },
-
-  {
-    id:"bettor",
-    name:"🎲 승부사",
-    unlock:()=>{
-      return calculateStats().bets >= 10;
-    }
-  },
-
-  {
-    id:"streak",
-    name:"🔥 연승의 신",
-    unlock:()=>{
-      return calculateStats().maxStreak >= 5;
-    }
-  },
-
-  {
-    id:"whale",
-    name:"💰 큰손",
-    unlock:()=>{
-      return calculateStats().maxWin >= 5000;
-    }
-  },
-
-  {
-    id:"legend",
-    name:"👑 COINLAB LEGEND",
-    unlock:()=>{
-      return calculateStats().bets >= 100;
-    }
-  }
-
-];
-
-
-function equipHonor(id){
-
-  const item =
-    honorData.find(
-      x=>x.id===id
-    );
-
-  if(!item){
-    return;
-  }
-
-
-  if(!item.unlock()){
-
-    showToast(
-      "아직 잠금 해제되지 않았습니다."
-    );
-
-    return;
-
-  }
-
-
-  localStorage.setItem(
-    HONOR_KEY,
-    id
-  );
-
-
-  renderProfile();
-
-  showToast(
-    `${item.name} 칭호 적용!`
-  );
-
-}
-
-
-/* =====================================================
-   PROFILE
-===================================================== */
-
-function renderProfile(){
-
-  const stats =
-    calculateStats();
-
-
-  const titleId =
-    localStorage.getItem(
-      TITLE_KEY
-    ) || "newbie";
-
-
-  const honorId =
-    localStorage.getItem(
-      HONOR_KEY
-    ) || "newbie";
-
-
-  const title =
-    titleData.find(
-      x=>x.id===titleId
-    ) || titleData[0];
-
-
-  const honor =
-    honorData.find(
-      x=>x.id===honorId
-    ) || honorData[0];
-
-
-  const avatar =
-    document.getElementById(
-      "avatarWrap"
-    );
-
-
-  avatar.className =
-    `avatar-wrap title-${title.color}`;
-
-
-  const nickname =
-    document.getElementById(
-      "profileNickname"
-    );
-
-
-  nickname.textContent =
-    getNickname();
-
-
-  nickname.className =
-    `nickname nicknameColor-${title.color}`;
-
-
-  document.getElementById(
-    "profileHonor"
-  ).textContent =
-    honor.name;
-
-
-  document.getElementById(
-    "profileTitleName"
-  ).textContent =
-    `타이틀: ${title.name}`;
-
-
-  document.getElementById(
-    "profileBalance"
-  ).textContent =
-    `${getBalance().toLocaleString()} COIN`;
-
-
-  const statsData = [
-
-    ["총 배팅 횟수",stats.bets],
-
-    ["승리",stats.wins],
-
-    ["패배",stats.losses],
-
-    ["승률",
-      stats.winRate.toFixed(1)+"%"
-    ],
-
-    ["총 배팅액",
-      stats.totalBet.toLocaleString()
-    ],
-
-    ["총 수익",
-      (
-        stats.totalProfit >= 0
-          ? "+"
-          : ""
-      ) +
-      stats.totalProfit.toLocaleString()
-    ],
-
-    ["평균 배팅액",
-      Math.round(
-        stats.avgBet
-      ).toLocaleString()
-    ],
-
-    ["평균 수익",
-      Math.round(
-        stats.avgProfit
-      ).toLocaleString()
-    ],
-
-    ["최고 잔액",
-      stats.maxBalance.toLocaleString()
-    ],
-
-    ["최저 잔액",
-      stats.minBalance.toLocaleString()
-    ],
-
-    ["최대 승리",
-      stats.maxWin.toLocaleString()
-    ],
-
-    ["최대 손실",
-      stats.maxLoss.toLocaleString()
-    ],
-
-    ["최고 연승",
-      stats.maxStreak
-    ],
-
-    ["현재 연승",
-      stats.currentStreak
-    ],
-
-    ["수익률",
-      stats.returnRate.toFixed(1)+"%"
-    ],
-
-    ["첫 배팅",
-      stats.firstDate
-        ? formatDate(stats.firstDate)
-        : "-"
-    ],
-
-    ["최근 배팅",
-      stats.lastDate
-        ? formatDate(stats.lastDate)
-        : "-"
-    ],
-
-    ["🆘 회생 성공",
-      Number(
-        localStorage.getItem(
-          REVIVE_COUNT_KEY
-        )
+  const achievements =
+    Object.keys(state).length;
+
+  const mission =
+    getMissionState();
+
+  const missionCount =
+    Object.values(
+      mission.claimed || {}
+    ).filter(Boolean).length;
+
+  const reviveCount =
+    Number(
+      localStorage.getItem(
+        REVIVE_COUNT_KEY
       ) || 0
-    ],
+    );
 
-    ["🧠 회생 최고 단계",
-      Number(
-        localStorage.getItem(
-          REVIVE_BEST_KEY
-        )
+  const reviveBest =
+    Number(
+      localStorage.getItem(
+        REVIVE_BEST_KEY
       ) || 0
-    ],
+    );
 
-    ["🏆 업적",
-      Object.keys(
-        getAchievementState()
-      ).length +
-      " / " +
-      achievements.length
-    ],
+  const first =
+    history.length
+    ? history[history.length-1].time
+    : "-";
 
-    ["🎯 오늘 미션",
-      Object.values(
-        getMissionState().claimed || {}
-      ).filter(Boolean).length +
-      " / " +
-      missionData.length
-    ]
+  const recent =
+    history.length
+    ? history[0].time
+    : "-";
+
+  const stats=[
+
+    ["총 배팅 횟수",fmt(total)],
+    ["승리",fmt(wins())],
+    ["패배",fmt(losses())],
+    ["승률",winRate+"%"],
+    ["총 배팅액",fmt(totalBetAmount())],
+    ["총 수익",fmt(totalProfit())],
+    ["평균 배팅액",fmt(averageBet())],
+    ["평균 수익",fmt(averageProfit())],
+    ["최고 잔액",fmt(maxBalance())],
+    ["최저 잔액",fmt(minBalance())],
+    ["최대 승리",fmt(maxWin())],
+    ["최대 손실",fmt(maxLoss())],
+    ["최고 연승",maxStreak()+"연승"],
+    ["현재 연승",currentStreak()+"연승"],
+    ["수익률",profitRate+"%"],
+    ["첫 배팅",first],
+    ["최근 배팅",recent],
+    ["🆘 회생 성공",fmt(reviveCount)],
+    ["🧠 회생 최고 단계",fmt(reviveBest)],
+    ["🏆 업적 달성",`${achievements}/${ACHIEVEMENTS.length}`],
+    ["🎯 오늘 미션",fmt(missionCount)],
+    ["🛒 상점 사용",fmt(getShopSpent())+" COIN"]
 
   ];
 
+  $("profileStats").innerHTML =
+    stats.map(x=>`
 
-  document.getElementById(
-    "profileStats"
-  ).innerHTML =
-    statsData.map(
-      x=>`
+      <div class="stat">
 
-        <div class="stat">
-
-          <div class="statName">
-            ${x[0]}
-          </div>
-
-          <div class="statValue">
-            ${x[1]}
-          </div>
-
+        <div class="statName">
+          ${x[0]}
         </div>
 
-      `
-    ).join("");
-
-
-  renderTitles();
-  renderHonors();
-
-}
-
-
-function renderTitles(){
-
-  const container =
-    document.getElementById(
-      "titleList"
-    );
-
-  const equipped =
-    localStorage.getItem(
-      TITLE_KEY
-    ) || "newbie";
-
-
-  container.innerHTML =
-    titleData.map(t=>{
-
-      const unlocked =
-        t.unlock();
-
-      const selected =
-        equipped === t.id;
-
-
-      return `
-
-        <div class="card ${
-          unlocked
-            ? ""
-            : "itemLocked"
-        }">
-
-          <h3>
-            ${t.name}
-          </h3>
-
-          <p class="muted">
-            ${
-              unlocked
-                ? "잠금 해제됨"
-                : "🔒 잠김"
-            }
-          </p>
-
-          <button
-            class="btn ${
-              selected
-                ? "secondary"
-                : ""
-            }"
-            ${
-              !unlocked || selected
-                ? "disabled"
-                : ""
-            }
-            onclick="equipTitle('${t.id}')">
-
-            ${
-              selected
-                ? "사용 중"
-                : "장착"
-            }
-
-          </button>
-
+        <div class="statValue">
+          ${x[1]}
         </div>
 
-      `;
+      </div>
 
-    }).join("");
+    `).join("");
 
-}
-
-
-function renderHonors(){
-
-  const container =
-    document.getElementById(
-      "honorList"
-    );
-
-  const equipped =
-    localStorage.getItem(
-      HONOR_KEY
-    ) || "newbie";
-
-
-  container.innerHTML =
-    honorData.map(h=>{
-
-      const unlocked =
-        h.unlock();
-
-      const selected =
-        equipped === h.id;
-
-
-      return `
-
-        <div class="card ${
-          unlocked
-            ? ""
-            : "itemLocked"
-        }">
-
-          <h3>
-            ${h.name}
-          </h3>
-
-          <p class="muted">
-            ${
-              unlocked
-                ? "잠금 해제됨"
-                : "🔒 잠김"
-            }
-          </p>
-
-          <button
-            class="btn ${
-              selected
-                ? "secondary"
-                : ""
-            }"
-            ${
-              !unlocked || selected
-                ? "disabled"
-                : ""
-            }
-            onclick="equipHonor('${h.id}')">
-
-            ${
-              selected
-                ? "사용 중"
-                : "장착"
-            }
-
-          </button>
-
-        </div>
-
-      `;
-
-    }).join("");
+  $("secretHole").style.display =
+    isAllCoreEquipped()
+    ? "block"
+    : "none";
 
 }
 
 
-/* =====================================================
-   IDENTITY
-===================================================== */
-
-function updateIdentity(){
-
-  const titleId =
-    localStorage.getItem(
-      TITLE_KEY
-    ) || "newbie";
-
-
-  const title =
-    titleData.find(
-      x=>x.id===titleId
-    ) || titleData[0];
-
-
-  document.getElementById(
-    "profileNickname"
-  ).textContent =
-    getNickname();
-
-
-  document.getElementById(
-    "profileNickname"
-  ).className =
-    `nickname nicknameColor-${title.color}`;
-
-}
-
-
-/* =====================================================
+/* =========================================================
    RECOVERY
-===================================================== */
+========================================================= */
 
-let recoveryStage = 0;
-let recoverySequence = "";
-let recoveryWaiting = false;
+let recoveryStage=0;
+let recoveryAnswer="";
+let recoveryTimer=null;
 
+function updateRecovery(){
 
-function updateRecoveryUI(){
-
-  const balance =
-    getBalance();
-
-  const status =
-    document.getElementById(
-      "recoveryStatus"
-    );
-
-  const start =
-    document.getElementById(
-      "recoveryStart"
-    );
-
-
-  const last =
+  const cooldown =
     Number(
       localStorage.getItem(
         REVIVE_KEY
-      )
+      ) || 0
     );
 
+  const remaining =
+    cooldown+
+    RECOVERY_COOLDOWN-
+    Date.now();
 
-  if(balance > 0){
+  const best =
+    Number(
+      localStorage.getItem(
+        REVIVE_BEST_KEY
+      ) || 0
+    );
 
-    status.textContent =
-      "현재 COIN이 남아 있어 회생을 사용할 수 없습니다.";
+  $("recoveryProgress")
+    .textContent=
+      `최고 단계: ${best}`;
 
-    start.disabled = true;
+  if(balance!==0){
+
+    $("recoveryStatus")
+      .textContent=
+      "잔액이 0 COIN일 때만 이용할 수 있습니다.";
+
+    $("recoveryStartBtn")
+      .disabled=true;
 
     return;
 
   }
 
+  if(remaining>0){
 
-  if(
-    Number.isFinite(last) &&
-    last > 0
-  ){
-
-    const remain =
-      RECOVERY_COOLDOWN -
-      (
-        Date.now() - last
+    const m =
+      Math.floor(
+        remaining/60000
       );
 
+    const s =
+      Math.floor(
+        (remaining%60000)/1000
+      );
 
-    if(remain > 0){
+    $("recoveryStatus")
+      .textContent=
+      `다시 시도하려면 ${m}분 ${s}초 기다려야 합니다.`;
 
-      status.textContent =
-        `재도전까지 ${formatTime(remain)}`;
+    $("recoveryStartBtn")
+      .disabled=true;
 
-      start.disabled = true;
+  }else{
 
-      return;
+    $("recoveryStatus")
+      .textContent=
+      "3단계 기억력 테스트를 통과하면 +1,000 COIN.";
 
-    }
+    $("recoveryStartBtn")
+      .disabled=false;
 
   }
 
-
-  status.textContent =
-    "회생 테스트를 시작할 수 있습니다.";
-
-  start.disabled = false;
-
 }
-
 
 function startRecovery(){
 
-  if(getBalance() > 0){
+  if(balance!==0){
 
-    showToast(
-      "COIN이 0일 때만 사용할 수 있습니다."
+    alert(
+      "🆘 회생은 잔액이 0일 때만 사용할 수 있습니다."
     );
 
     return;
 
   }
 
-
-  const last =
+  const cooldown =
     Number(
       localStorage.getItem(
         REVIVE_KEY
-      )
+      ) || 0
     );
-
 
   if(
-    Number.isFinite(last) &&
-    last > 0 &&
-    Date.now() - last <
-      RECOVERY_COOLDOWN
+    Date.now()-
+    cooldown <
+    RECOVERY_COOLDOWN
   ){
 
-    showToast(
-      "아직 재도전할 수 없습니다."
-    );
+    updateRecovery();
 
     return;
 
   }
 
+  recoveryStage=1;
 
-  recoveryStage = 1;
-
-  recoverySequence = "";
-
-  recoveryWaiting = false;
-
-
-  document.getElementById(
-    "recoveryMessage"
-  ).textContent = "";
-
-
-  document.getElementById(
-    "recoveryInputBox"
-  ).style.display = "none";
-
-
-  document.getElementById(
-    "recoveryStart"
-  ).disabled = true;
-
-
-  runRecoveryStage();
+  nextRecoveryStage();
 
 }
 
+function nextRecoveryStage(){
 
-function runRecoveryStage(){
+  if(recoveryStage>3){
 
-  const lengths = [
+    balance=setBalance(
+      1000
+    );
+
+    localStorage.setItem(
+      REVIVE_COUNT_KEY,
+      String(
+        Number(
+          localStorage.getItem(
+            REVIVE_COUNT_KEY
+          ) || 0
+        )+1
+      )
+    );
+
+    $("memoryNumber")
+      .textContent="SUCCESS";
+
+    $("memoryInput").style.display="none";
+
+    alert(
+      "🆘 회생 성공!\n+1,000 COIN"
+    );
+
+    updateAll();
+
+    return;
+
+  }
+
+  const lengths=[
     0,
     4,
     5,
     6
   ];
 
-  const durations = [
+  const times=[
     0,
     1000,
     700,
     500
   ];
 
-
-  const len =
+  const length =
     lengths[recoveryStage];
 
+  recoveryAnswer="";
 
-  recoverySequence = "";
+  for(let i=0;i<length;i++){
 
-  for(let i=0;i<len;i++){
-
-    recoverySequence +=
+    recoveryAnswer +=
       Math.floor(
         Math.random()*10
       );
 
   }
 
+  $("memoryInput").style.display=
+    "none";
 
-  document.getElementById(
-    "recoveryStage"
-  ).textContent =
-    `STAGE ${recoveryStage} / 3`;
+  $("memoryInput").value="";
 
+  $("memoryNumber")
+    .textContent=
+      recoveryAnswer;
 
-  const number =
-    document.getElementById(
-      "recoveryNumber"
+  const best =
+    Number(
+      localStorage.getItem(
+        REVIVE_BEST_KEY
+      ) || 0
     );
 
+  if(recoveryStage>best){
 
-  number.textContent =
-    recoverySequence;
+    localStorage.setItem(
+      REVIVE_BEST_KEY,
+      String(recoveryStage)
+    );
 
-
-  recoveryWaiting = true;
-
+  }
 
   setTimeout(()=>{
 
-    number.textContent =
-      "● ● ● ●";
+    $("memoryNumber")
+      .textContent="???";
 
-    recoveryWaiting = false;
-
-
-    const inputBox =
-      document.getElementById(
-        "recoveryInputBox"
-      );
-
-    inputBox.style.display =
+    $("memoryInput").style.display=
       "block";
 
+    $("memoryInput").focus();
 
-    const input =
-      document.getElementById(
-        "recoveryInput"
-      );
+  },times[recoveryStage]);
 
-    input.value = "";
+  $("recoveryStartBtn")
+    .textContent=
+      `단계 ${recoveryStage}/3`;
 
-    input.focus();
+  $("recoveryStartBtn")
+    .disabled=true;
 
-  },durations[recoveryStage]);
+  clearTimeout(recoveryTimer);
+
+  recoveryTimer =
+    setTimeout(()=>{
+
+      $("recoveryStartBtn")
+        .disabled=false;
+
+      $("recoveryStartBtn")
+        .textContent="확인";
+
+      $("recoveryStartBtn")
+        .onclick=
+          checkRecovery;
+
+    },times[recoveryStage]+50);
 
 }
 
-
-function submitRecovery(){
-
-  if(recoveryWaiting){
-    return;
-  }
-
+function checkRecovery(){
 
   const input =
-    document.getElementById(
-      "recoveryInput"
+    $("memoryInput")
+      .value
+      .trim();
+
+  if(input!==recoveryAnswer){
+
+    localStorage.setItem(
+      REVIVE_KEY,
+      String(Date.now())
     );
 
+    alert(
+      `❌ 실패!\n${recoveryStage}단계에서 틀렸습니다.`
+    );
 
-  if(
-    input.value.trim() !==
-    recoverySequence
-  ){
+    recoveryStage=0;
 
-    failRecovery();
+    $("memoryNumber")
+      .textContent="실패";
+
+    $("memoryInput")
+      .style.display="none";
+
+    $("recoveryStartBtn")
+      .onclick=startRecovery;
+
+    $("recoveryStartBtn")
+      .textContent=
+        "회생 테스트 시작";
+
+    updateRecovery();
 
     return;
 
   }
 
+  recoveryStage++;
 
-  if(recoveryStage < 3){
+  $("recoveryStartBtn")
+    .onclick=startRecovery;
 
-    recoveryStage++;
-
-    input.value = "";
-
-    document.getElementById(
-      "recoveryInputBox"
-    ).style.display =
-      "none";
-
-    runRecoveryStage();
-
-  }else{
-
-    succeedRecovery();
-
-  }
+  nextRecoveryStage();
 
 }
 
 
-function failRecovery(){
-
-  localStorage.setItem(
-    REVIVE_KEY,
-    String(Date.now())
-  );
-
-
-  const best =
-    Number(
-      localStorage.getItem(
-        REVIVE_BEST_KEY
-      )
-    ) || 0;
-
-
-  localStorage.setItem(
-    REVIVE_BEST_KEY,
-    String(
-      Math.max(
-        best,
-        recoveryStage
-      )
-    )
-  );
-
-
-  document.getElementById(
-    "recoveryMessage"
-  ).innerHTML =
-    `<span class="loss">
-      ❌ 실패!
-      5분 후 다시 도전할 수 있습니다.
-    </span>`;
-
-
-  document.getElementById(
-    "recoveryInputBox"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "recoveryNumber"
-  ).textContent = "";
-
-
-  document.getElementById(
-    "recoveryStage"
-  ).textContent = "테스트 실패";
-
-
-  updateRecoveryUI();
-
-}
-
-
-function succeedRecovery(){
-
-  /*
-    성공 순간에만 1회 지급.
-  */
-
-  if(getBalance() !== 0){
-
-    failRecovery();
-
-    return;
-
-  }
-
-
-  setBalance(1000);
-
-
-  const count =
-    Number(
-      localStorage.getItem(
-        REVIVE_COUNT_KEY
-      )
-    ) || 0;
-
-
-  localStorage.setItem(
-    REVIVE_COUNT_KEY,
-    String(count + 1)
-  );
-
-
-  const best =
-    Number(
-      localStorage.getItem(
-        REVIVE_BEST_KEY
-      )
-    ) || 0;
-
-
-  localStorage.setItem(
-    REVIVE_BEST_KEY,
-    String(
-      Math.max(
-        best,
-        3
-      )
-    )
-  );
-
-
-  document.getElementById(
-    "recoveryMessage"
-  ).innerHTML =
-    `<span class="win">
-      🎉 회생 성공! +1,000 COIN
-    </span>`;
-
-
-  document.getElementById(
-    "recoveryInputBox"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "recoveryNumber"
-  ).textContent =
-    "SUCCESS";
-
-
-  document.getElementById(
-    "recoveryStage"
-  ).textContent =
-    "회생 완료";
-
-
-  update();
-
-}
-
-
-/* =====================================================
-   GRAPH
-===================================================== */
-
-function drawGraph(canvasId){
-
-  const canvas =
-    document.getElementById(
-      canvasId
-    );
-
-  if(!canvas){
-    return;
-  }
-
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-
-  const ratio =
-    window.devicePixelRatio || 1;
-
-
-  const width =
-    Math.max(
-      300,
-      rect.width
-    );
-
-
-  const height =
-    canvasId === "largeGraph"
-      ? 500
-      : 280;
-
-
-  canvas.width =
-    width * ratio;
-
-  canvas.height =
-    height * ratio;
-
-  canvas.style.height =
-    height + "px";
-
-
-  ctx.setTransform(
-    ratio,
-    0,
-    0,
-    ratio,
-    0,
-    0
-  );
-
-
-  ctx.clearRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  const history =
-    safeJSON(
-      HISTORY_KEY,
-      []
-    );
-
-
-  const values =
-    history
-      .slice()
-      .reverse()
-      .map(
-        x=>Number(x.balance)
-      );
-
-
-  if(!values.length){
-
-    ctx.fillStyle =
-      getComputedStyle(
-        document.body
-      ).getPropertyValue(
-        "--muted"
-      );
-
-    ctx.font =
-      "16px Arial";
-
-    ctx.fillText(
-      "아직 그래프 데이터가 없습니다.",
-      20,
-      35
-    );
-
-    return;
-
-  }
-
-
-  const computed =
-    getComputedStyle(
-      document.body
-    );
-
-
-  const accent =
-    computed.getPropertyValue(
-      "--accent"
-    );
-
-
-  const border =
-    computed.getPropertyValue(
-      "--border"
-    );
-
-
-  const text =
-    computed.getPropertyValue(
-      "--muted"
-    );
-
-
-  const min =
-    Math.min(
-      START_BALANCE,
-      ...values
-    );
-
-
-  const max =
-    Math.max(
-      START_BALANCE,
-      ...values
-    );
-
-
-  const pad =
-    35;
-
-
-  ctx.strokeStyle =
-    border;
-
-  ctx.lineWidth = 1;
-
-
-  for(let i=0;i<5;i++){
-
-    const y =
-      pad +
-      (
-        height-pad*2
-      ) *
-      i/4;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      pad,
-      y
-    );
-
-    ctx.lineTo(
-      width-pad,
-      y
-    );
-
-    ctx.stroke();
-
-  }
-
-
-  ctx.strokeStyle =
-    accent;
-
-  ctx.lineWidth = 3;
-
-  ctx.beginPath();
-
-
-  values.forEach(
-    (value,index)=>{
-
-      const x =
-        pad +
-        (
-          width-pad*2
-        ) *
-        (
-          index /
-          Math.max(
-            1,
-            values.length-1
-          )
-        );
-
-
-      const y =
-        height-pad -
-        (
-          (
-            value-min
-          ) /
-          Math.max(
-            1,
-            max-min
-          )
-        ) *
-        (
-          height-pad*2
-        );
-
-
-      if(index===0){
-        ctx.moveTo(x,y);
-      }else{
-        ctx.lineTo(x,y);
-      }
-
-    }
-  );
-
-
-  ctx.stroke();
-
-
-  ctx.fillStyle =
-    text;
-
-  ctx.font =
-    "12px Arial";
-
-  ctx.fillText(
-    max.toLocaleString(),
-    5,
-    pad
-  );
-
-  ctx.fillText(
-    min.toLocaleString(),
-    5,
-    height-pad
-  );
-
-}
-
-
-function drawGraphs(){
-
-  drawGraph("miniGraph");
-  drawGraph("largeGraph");
-
-}
-
-
-/* =====================================================
-   PAGE
-===================================================== */
-
-function showPage(id,button){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      p=>p.classList.remove("active")
-    );
-
-
-  const page =
-    document.getElementById(id);
-
-
-  if(page){
-    page.classList.add("active");
-  }
-
-
-  document
-    .querySelectorAll(".nav button")
-    .forEach(
-      b=>b.classList.remove("active")
-    );
-
-
-  if(button){
-    button.classList.add("active");
-  }
-
-
-  if(id === "profile"){
-    renderProfile();
-  }
-
-  if(id === "shop"){
-    renderShop();
-  }
-
-  if(id === "missions"){
-    renderMissions();
-  }
-
-  if(id === "achievements"){
-    renderAchievements();
-  }
-
-  if(id === "graph"){
-    drawGraphs();
-  }
-
-  if(id === "recovery"){
-    updateRecoveryUI();
-  }
-
-}
-
-
-/* =====================================================
-   FORMAT TIME
-===================================================== */
-
-function formatTime(ms){
-
-  ms =
-    Math.max(
-      0,
-      ms
-    );
-
-
-  const total =
-    Math.ceil(
-      ms / 1000
-    );
-
-
-  const h =
-    Math.floor(
-      total / 3600
-    );
-
-  const m =
-    Math.floor(
-      total % 3600 / 60
-    );
-
-  const s =
-    total % 60;
-
-
-  if(h > 0){
-
-    return `${h}시간 ${m}분 ${s}초`;
-
-  }
-
-
-  return `${m}분 ${s}초`;
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast =
-    document.getElementById(
-      "toast"
-    );
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      ()=>{
-        toast.classList.remove(
-          "show"
-        );
-      },
-      2200
-    );
-
-}
-
-
-/* =====================================================
+/* =========================================================
    UPDATE
-===================================================== */
+========================================================= */
 
-function updateTopBalance(){
+function updateAll(){
 
-  const balance =
-    getBalance();
+  balance=getBalance();
 
+  $("balance")
+    .textContent=fmt(balance);
 
-  document.getElementById(
-    "topBalance"
-  ).textContent =
-    balance.toLocaleString();
+  $("topBalance")
+    .textContent=fmt(balance);
 
+  $("betBtn")
+    .disabled=
+      balance<=0;
 
-  document.getElementById(
-    "betBalance"
-  ).textContent =
-    balance.toLocaleString();
-
-
-  const bankruptcy =
-    document.getElementById(
-      "bankruptcy"
-    );
-
-
-  if(balance <= 0){
-
-    bankruptcy.innerHTML =
-      `<div class="loss"
-            style="text-align:center;margin-top:10px;font-weight:900;">
-        💀 잔액 0 COIN
-        <br>
-        🆘 회생 메뉴에서 다시 시작할 수 있습니다.
-      </div>`;
-
-  }else{
-
-    bankruptcy.innerHTML = "";
-
-  }
-
-}
-
-
-function update(){
-
-  updateTopBalance();
+  $("bankrupt")
+    .style.display=
+      balance===0
+      ? "block"
+      : "none";
 
   renderHistory();
-
   renderMissions();
-
   renderAchievements();
-
   renderProfile();
+  renderShop();
 
   updateAttendance();
+  updateRecovery();
 
-  updateRecoveryUI();
-
-  drawGraphs();
+  drawMiniChart();
+  drawLargeChart();
 
 }
 
 
-/* =====================================================
-   INIT
-===================================================== */
+/* =========================================================
+   LOAD EQUIPPED
+========================================================= */
 
-function ensureDefaults(){
+function loadEquipped(){
 
-  getBalance();
+  const equipped =
+    getEquipped();
 
-  getNickname();
+  for(
+    const type in equipped
+  ){
 
-  ensureShopDefaults();
+    const item =
+      getItem(
+        equipped[type]
+      );
 
+    if(item){
 
-  if(
-    !localStorage.getItem(
+      applyItem(item);
+
+    }
+
+  }
+
+  const theme =
+    localStorage.getItem(
       THEME_KEY
-    )
-  ){
-
-    localStorage.setItem(
-      THEME_KEY,
-      "default"
     );
 
-  }
+  if(theme)
+    applyTheme(theme);
 
-
-  if(
-    !localStorage.getItem(
+  const bg =
+    localStorage.getItem(
       BG_KEY
-    )
-  ){
-
-    localStorage.setItem(
-      BG_KEY,
-      "none"
     );
 
-  }
+  if(bg)
+    applyBackground(bg);
 
-
-  if(
-    !localStorage.getItem(
+  const ui =
+    localStorage.getItem(
       UI_KEY
-    )
-  ){
-
-    localStorage.setItem(
-      UI_KEY,
-      "default"
     );
 
-  }
+  if(ui)
+    applyUI(ui);
 
-
-  if(
-    !localStorage.getItem(
-      TITLE_KEY
-    )
-  ){
-
-    localStorage.setItem(
-      TITLE_KEY,
-      "newbie"
+  const font =
+    localStorage.getItem(
+      FONT_KEY
     );
 
-  }
-
-
-  if(
-    !localStorage.getItem(
-      HONOR_KEY
-    )
-  ){
-
-    localStorage.setItem(
-      HONOR_KEY,
-      "newbie"
-    );
-
-  }
+  if(font)
+    applyFont(font);
 
 }
 
 
-document.addEventListener(
-  "DOMContentLoaded",
+/* =========================================================
+   FIRST RUN
+========================================================= */
+
+function firstRun(){
+
+  const owned =
+    getOwned();
+
+  const defaults=[
+
+    "theme-default",
+    "bg-none",
+    "ui-default",
+    "dec-none",
+    "font-default",
+    "honor-newbie",
+    "frame-default",
+    "sound-off"
+
+  ];
+
+  defaults.forEach(id=>{
+
+    if(!owned.includes(id))
+      owned.push(id);
+
+  });
+
+  saveOwned(owned);
+
+  const equipped =
+    getEquipped();
+
+  const defaultEquips={
+
+    theme:"theme-default",
+    background:"bg-none",
+    ui:"ui-default",
+    decoration:"dec-none",
+    font:"font-default",
+    honor:"honor-newbie",
+    frame:"frame-default",
+    sound:"sound-off"
+
+  };
+
+  Object.keys(defaultEquips)
+    .forEach(type=>{
+
+      if(!equipped[type])
+        equipped[type]=
+          defaultEquips[type];
+
+    });
+
+  saveEquipped(equipped);
+
+  loadEquipped();
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  "resize",
   ()=>{
-
-    ensureDefaults();
-
-    applyTheme();
-
-    applyBackground();
-
-    applyUI();
-
-    update();
-
-    renderShop();
-
-    updateIdentity();
-
-
-    setInterval(
-      ()=>{
-
-        updateAttendance();
-
-        updateRecoveryUI();
-
-      },
-      1000
-    );
-
-
-    window.addEventListener(
-      "resize",
-      drawGraphs
-    );
-
+    drawMiniChart();
+    drawLargeChart();
   }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+firstRun();
+
+checkAchievements();
+
+updateAll();
+
+setInterval(
+  updateAttendance,
+  1000
+);
+
+setInterval(
+  updateRecovery,
+  1000
 );
 
 </script>
