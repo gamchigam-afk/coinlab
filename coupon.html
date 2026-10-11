@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoinLab | Coupon</title>
+<style>
+:root {
+  --bg:#f5f7fb;
+  --panel:#ffffff;
+  --text:#182235;
+  --muted:#7c879b;
+  --line:#e2e8f0;
+  --accent:#3979f6;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  font-family:system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.app { width:100%; max-width:420px; }
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.logo { font-size:23px; font-weight:900; }
+.logo span { color:var(--accent); }
+.tag {
+  font-size:11px;
+  color:var(--accent);
+  background:#eaf1ff;
+  padding:6px 9px;
+  border-radius:20px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 12px 35px #243b6010;
+}
+.icon {
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  background:#eaf1ff;
+  border-radius:17px;
+  margin-bottom:17px;
+}
+h1 { font-size:24px; margin:0 0 9px; }
+.desc {
+  font-size:14px;
+  line-height:1.7;
+  color:var(--muted);
+  margin:0 0 20px;
+}
+.reward {
+  padding:17px;
+  background:#effaf4;
+  border:1px solid #d2f0df;
+  border-radius:13px;
+  margin-bottom:20px;
+}
+.reward small { color:#32845b; }
+.reward strong {
+  display:block;
+  color:#168451;
+  font-size:30px;
+  margin-top:4px;
+}
+label {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+input {
+  width:100%;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:#fff;
+  color:var(--text);
+  font-size:16px;
+  outline:none;
+  text-transform:uppercase;
+}
+input:focus { border-color:var(--accent); }
+button {
+  width:100%;
+  padding:14px;
+  margin-top:11px;
+  border:0;
+  border-radius:11px;
+  background:var(--accent);
+  color:white;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+button:disabled { opacity:.5; cursor:not-allowed; }
+.message {
+  min-height:24px;
+  margin-top:14px;
+  font-size:13px;
+  line-height:1.6;
+  text-align:center;
+}
+.success { color:#168451; }
+.error { color:#d74452; }
+.back {
+  display:block;
+  text-align:center;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:13px;
+  margin-top:19px;
+}
+footer {
+  text-align:center;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">🪙 COIN<span>LAB</span></div>
+    <div class="tag">COUPON EVENT</div>
+  </header>
+
+  <section class="card">
+    <div class="icon">🎁</div>
+    <h1>쿠폰 교환</h1>
+    <p class="desc">
+      쿠폰 코드를 입력하고 특별 보상을 받아 보세요.
+      쿠폰은 이 브라우저에서 한 번만 사용할 수 있습니다.
+    </p>
+
+    <div class="reward">
+      <small>쿠폰 보상</small>
+      <strong>+50,000 COIN</strong>
+    </div>
+
+    <form id="couponForm">
+      <label for="couponInput">쿠폰 코드</label>
+      <input
+        id="couponInput"
+        type="text"
+        placeholder="COIN50000"
+        maxlength="40"
+        autocomplete="off"
+        required
+      >
+      <button id="redeemButton" type="submit">쿠폰 사용하기</button>
+    </form>
+
+    <div id="message" class="message" role="status"></div>
+
+    <a class="back" href="./index.html">← 코인랩으로 돌아가기</a>
+  </section>
+
+  <footer>COINLAB · Coupon Center</footer>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const COUPONS = {
+    "COIN50000": 50000
+  };
+
+  const form = document.getElementById("couponForm");
+  const input = document.getElementById("couponInput");
+  const message = document.getElementById("message");
+  const button = document.getElementById("redeemButton");
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+  }
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const code = input.value.trim().toUpperCase();
+
+    if (!Object.prototype.hasOwnProperty.call(COUPONS, code)) {
+      showMessage("❌ 유효하지 않은 쿠폰 코드입니다.", "error");
+      return;
+    }
+
+    let used;
+
+    try {
+      used = JSON.parse(
+        localStorage.getItem("coinlab_used_coupons") || "[]"
+      );
+
+      if (!Array.isArray(used)) used = [];
+    } catch {
+      showMessage("저장 데이터를 읽을 수 없습니다.", "error");
+      return;
+    }
+
+    if (used.includes(code)) {
+      showMessage("⚠️ 이미 사용한 쿠폰입니다.", "error");
+      return;
+    }
+
+    /*
+      주의:
+      기존 코인랩의 실제 잔액 저장 구조를 확인하지 못했습니다.
+      아래는 독립적인 쿠폰 잔액에 보상을 적립하는 예시입니다.
+      기존 게임의 잔액에 자동으로 더해지는 코드는 아닙니다.
+    */
+
+    let wallet;
+
+    try {
+      wallet = Number(localStorage.getItem("coinlab_coupon_wallet") || 0);
+
+      if (!Number.isSafeInteger(wallet) || wallet < 0 ||
+          !Number.isSafeInteger(wallet + COUPONS[code])) {
+        showMessage("잔액 데이터가 올바르지 않습니다.", "error");
+        return;
+      }
+
+      // 먼저 저장 가능한지 확인한 뒤 지급 내역을 기록합니다.
+      localStorage.setItem(
+        "coinlab_coupon_wallet",
+        String(wallet + COUPONS[code])
+      );
+
+      used.push(code);
+      localStorage.setItem(
+        "coinlab_used_coupons",
+        JSON.stringify(used)
+      );
+    } catch {
+      showMessage("저장에 실패했습니다. 다시 시도해 주세요.", "error");
+      return;
+    }
+
+    showMessage(
+      "🎉 쿠폰 사용 완료! 50,000 COIN이 쿠폰 지갑에 적립됐습니다. 기존 게임 잔액과는 별도입니다.",
+      "success"
+    );
+
+    input.disabled = true;
+    button.disabled = true;
+  });
+})();
+</script>
+</body>
+</html>
