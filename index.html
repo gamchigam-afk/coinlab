@@ -1936,13 +1936,13 @@ function bet(){
 
   if(!Number.isInteger(amount)||amount<=0){
     msg.className="message lose";
-    msg.textContent="⚠️ 1코인 이상의 정수 금액을 입력하세요.";
+    msg.textContent="⚠️ 1코인 이상의 정수 금액을 입력해야지 .";
     return;
   }
 
   if(amount>balance){
     msg.className="message lose";
-    msg.textContent="🚫 현재 자산보다 큰 금액은 배팅할 수 없습니다.";
+    msg.textContent="🚫 니 그만큼 돈 없어 그지야.";
     return;
   }
 
